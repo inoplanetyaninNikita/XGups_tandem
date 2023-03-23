@@ -28,6 +28,7 @@ import okhttp3.Dispatcher
 class LoginFragment : Fragment() {
 
     private val viewModel by viewModels<LoginViewModel>()
+
     private var _binding: FragmentLoginBinding? = null
     private val binding
         get() = _binding!!
@@ -75,7 +76,12 @@ class LoginFragment : Fragment() {
         viewModel.loginSuccessADFS.observe(viewLifecycleOwner) {
             if(it)
             {
-                controller.navigate(R.id.scheduleFragment,null)
+                val bundle = Bundle()
+
+                bundle.putString("second_name", viewModel.secondName.value)
+                bundle.putString("first_name", viewModel.firstName.value)
+
+                controller.navigate(R.id.scheduleFragment, bundle)
             }
         }
 

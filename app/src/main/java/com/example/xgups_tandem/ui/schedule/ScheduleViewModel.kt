@@ -12,7 +12,12 @@ class ScheduleViewModel : ViewModel() {
     val lessonList : MutableLiveData<List<Lesson>> by lazy {
         MutableLiveData<List<Lesson>>()
     }
-
+    val name : MutableLiveData<String> by lazy {
+        MutableLiveData<String>()
+    }
+    val image : MutableLiveData<String> by lazy {
+        MutableLiveData<String>()
+    }
     init {
         setLessonList()
         setDayList()

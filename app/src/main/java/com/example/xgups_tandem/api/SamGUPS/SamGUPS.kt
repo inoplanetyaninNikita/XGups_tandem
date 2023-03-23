@@ -2,6 +2,8 @@ package com.example.xgups_tandem.api.SamGUPS
 
 import com.example.xgups_tandem.BuildConfig
 import com.google.gson.GsonBuilder
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
@@ -9,20 +11,18 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.POST
-import java.util.concurrent.TimeUnit
 
 interface SamGUPS {
 
     data class Auth(val username: String,
                     val password: String)
-    data class AuthResponse(val username: String,
-                            val password: String,
-                            val first_token_piece: String,
-                            val second_token_piece: String,
-    )
-
+    data class AuthResponse(val roleID : String,
+                            val human : String,
+                            val bookNumber : String,
+                            val group : String,
+                            val course : String)
     @POST("information/")
-    suspend fun login(@Body auth : Auth): Response<AuthResponse>
+    suspend fun login(@Body auth : Auth): Response<String>
 
     companion object {
 
@@ -50,6 +50,28 @@ interface SamGUPS {
                 .build()
 
             retrofit.create(SamGUPS::class.java)
+        }
+        fun convertToAuthResponse(response : String) : AuthResponse?
+        {
+            val moshi = Moshi.Builder().build()
+            val adapter = moshi.adapter<Map<String, Any>>(
+                Types.newParameterizedType(Map::class.java, String::class.java,
+                    Object::class.java)
+            )
+            val yourMap =  adapter.fromJson(response)
+
+            yourMap!!.mapValues {
+                val aa = it.value
+                val test = ((aa as ArrayList<Map<String,String>>)[0])
+
+                return AuthResponse(
+                    test["roleID"]!!,
+                    test["human"]!!,
+                    test["bookNumber"]!!,
+                    test["group"]!!,
+                    test["course"]!!)
+            }
+            return null
         }
 
     }
