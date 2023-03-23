@@ -2,7 +2,10 @@ package com.example.xgups_tandem.api.ADFS
 
 import com.example.xgups_tandem.BuildConfig
 import com.example.xgups_tandem.MainActivity
+import com.example.xgups_tandem.api.SamGUPS.SamGUPS
 import com.example.xgups_tandem.api.convertJsonToClass
+import com.example.xgups_tandem.ui.login.LoginViewModel
+import com.example.xgups_tandem.ui.schedule.ScheduleFragment
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.SerializedName
 import okhttp3.OkHttpClient
@@ -15,6 +18,16 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.collections.HashMap
 
+/** Подключение к [ADFS],
+ * нужно для авторизации пользователя в систему. В приложении оно нужно для шифрования данных.
+ * Чтобы отправить данные,нужно создать хэшмапу с помощью [getHashMapForLogin] и кинуть ее в [login].
+ * Если авторизация прошла успешно, то получаем [ADFSTokenResponse], а в нем мы можем
+ * раскодировать данные из [ADFSTokenResponse.accessToken] с помощью [ADFSTokenResponse.getADFSUser]
+ * @author Nikita Toropovsky
+ * @sample LoginViewModel.login
+ * @since 23.03.2023
+ * @see SamGUPS.API
+ * */
 interface ADFS {
 
     /**Ответ сервера со статус кодом *200* при [ADFS.login]. */
@@ -71,7 +84,6 @@ interface ADFS {
                 readTimeout(20, TimeUnit.SECONDS)
                 writeTimeout(20, TimeUnit.SECONDS)
             }
-
             if (BuildConfig.DEBUG) {
                 HttpLoggingInterceptor().apply {
                     setLevel(HttpLoggingInterceptor.Level.BODY)

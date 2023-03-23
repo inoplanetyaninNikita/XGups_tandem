@@ -14,7 +14,7 @@ inline fun <reified T> String.convertJsonToClass() : T
     return  jsonAdapter.fromJson(this)!!
 }
 
-/** Конвертировать из [Any]-класса строчку JSON */
+/** Конвертировать из [Any]-класса в строчку JSON. */
 inline fun Any.convertClassToJson(): String
 {
     val moshi = Moshi.Builder()

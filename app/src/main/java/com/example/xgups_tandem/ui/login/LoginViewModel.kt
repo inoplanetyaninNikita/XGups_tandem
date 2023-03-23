@@ -30,27 +30,14 @@ class LoginViewModel : ViewModel() {
     val loginSuccessSamGUPS : MutableLiveData<Boolean> by lazy {
         MutableLiveData<Boolean>()
     }
+    /** Логин в систему */
     fun login(email: String, password: String) {
 
         if(!validateEmail(email) && !password.isEmpty()) return
 
         //Коннект с АДФС
         viewModelScope.launch {
-            val api = ADFS.API
-            val login = loginSuccessADFS
-
-            try {
-                var response = api.login(ADFS.getHashMapForLogin(email, password))
-                if(response.isSuccessful) {
-                    firstName.value = response.body()?.getADFSUser()?.unique_name
-                    secondName.value = response.body()?.getADFSUser()?.family_name
-                }
-
-                login.value = response.isSuccessful
-
-            } catch (Ex : java.lang.Exception) {
-                //TODO : Надо сделать заглушку при получении таймаута
-            }
+            loginToADFS(email,password)
         }
 
         //Коннект с СамГУПСом
@@ -58,6 +45,7 @@ class LoginViewModel : ViewModel() {
             val api = SamGUPS.API
             val login = loginSuccessSamGUPS
 
+            //TODO : ЛОГИН НАДО ДОДЕЛАТЬ!
             val test = "{\n" +
                     "    \"78567\": [\n" +
                     "        {\n" +
@@ -70,19 +58,11 @@ class LoginViewModel : ViewModel() {
                     "    ]\n" +
                     "}"
 
-            val moshi = Moshi.Builder().build()
-            val adapter = moshi.adapter<Map<String, Any>>(
-                Types.newParameterizedType(Map::class.java, String::class.java,
-                    Object::class.java)
-            )
-            val yourMap =  adapter.fromJson(test)
-
-            val a = yourMap?.values
-
             val aa = SamGUPS.convertToAuthResponse(test)
-            var book = aa?.bookNumber
-            println(aa?.bookNumber)
             try {
+//
+//                Пока в комментах, потому что валяется сервак
+//
 //                var response = api.login(SamGUPS.Auth(email, password))
 //                login.value = response.isSuccessful
 //                if(response.isSuccessful)
@@ -95,11 +75,33 @@ class LoginViewModel : ViewModel() {
             }
         }
     }
+    /** *(Временное решение).*
+     * Подключаемся к [ADFS], если все хорошо, можно выкидывать в расписание.
+     *  */
+    private suspend fun loginToADFS(email: String, password: String)
+    {
+        val api = ADFS.API
+        val login = loginSuccessADFS
 
-    private val emailValidator = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" +
-            "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,64})$"
-    private val emailPattern: Pattern = Pattern.compile(emailValidator)
+        try {
+            var response = api.login(ADFS.getHashMapForLogin(email, password))
+            if(response.isSuccessful) {
+                firstName.value = response.body()?.getADFSUser()?.unique_name
+                secondName.value = response.body()?.getADFSUser()?.family_name
+            }
+
+            login.value = response.isSuccessful
+
+        } catch (Ex : java.lang.Exception) {
+        //TODO : Надо сделать заглушку при получении таймаута
+        }
+    }
+
+    /** Валидатор емайла Regex */
     fun validateEmail(email: String): Boolean {
+        val emailValidator = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" +
+                "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,64})$"
+        val emailPattern: Pattern = Pattern.compile(emailValidator)
         val matcher = emailPattern.matcher(email)
         return matcher.matches()
     }

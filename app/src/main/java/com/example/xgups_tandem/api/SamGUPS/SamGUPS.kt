@@ -1,6 +1,7 @@
 package com.example.xgups_tandem.api.SamGUPS
 
 import com.example.xgups_tandem.BuildConfig
+import com.example.xgups_tandem.api.convertJsonToClass
 import com.google.gson.GsonBuilder
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
@@ -13,16 +14,21 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface SamGUPS {
-
-    data class Auth(val username: String,
-                    val password: String)
+    /**Отправляем данные на сервер
+     * @param username email.
+     * @param password пароль.
+     * */
+    data class AuthRequest(val username: String,
+                           val password: String)
+    /** Тип нужен, чтобы привести данные с [login] в нормальный вид. Нужно воспользоваться [convertToAuthResponse]. */
     data class AuthResponse(val roleID : String,
                             val human : String,
                             val bookNumber : String,
                             val group : String,
                             val course : String)
     @POST("information/")
-    suspend fun login(@Body auth : Auth): Response<String>
+    /** Чтобы привести [Response] к определенному типу, нужно прогнать его через [convertToAuthResponse]. */
+    suspend fun login(@Body auth : AuthRequest): Response<String>
 
     companion object {
 
@@ -36,7 +42,6 @@ interface SamGUPS {
 //                readTimeout(20, TimeUnit.SECONDS)
 //                writeTimeout(20, TimeUnit.SECONDS)
             }
-
             if (BuildConfig.DEBUG) {
                 HttpLoggingInterceptor().apply {
                     setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -51,6 +56,7 @@ interface SamGUPS {
 
             retrofit.create(SamGUPS::class.java)
         }
+        /** Переводит [String] к типу [AuthResponse], сделано так, потому что работаю с динамическим ключом в JSON, а [String.convertJsonToClass] выбивает в этом случае [Exception].*/
         fun convertToAuthResponse(response : String) : AuthResponse?
         {
             val moshi = Moshi.Builder().build()
