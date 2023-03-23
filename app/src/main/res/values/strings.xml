@@ -1,0 +1,76 @@
+<resources>
+    <string name="app_name" translatable="false">XGups</string>
+
+    <string-array name="months">
+        <item>Январь</item>
+        <item>Февраль</item>
+        <item>Март</item>
+        <item>Апрель</item>
+        <item>Май</item>
+        <item>Июнь</item>
+        <item>Июль</item>
+        <item>Август</item>
+        <item>Сентябрь</item>
+        <item>Октябрь</item>
+        <item>Ноябрь</item>
+        <item>Декабрь</item>
+    </string-array>
+    <string-array name="short_months">
+        <item>Янв</item>
+        <item>Фев</item>
+        <item>Март</item>
+        <item>Апр</item>
+        <item>Май</item>
+        <item>Июнь</item>
+        <item>Июль</item>
+        <item>Авг</item>
+        <item>Сен</item>
+        <item>Окт</item>
+        <item>Ноя</item>
+        <item>Дек</item>
+    </string-array>
+    <string-array name="days">
+        <item>Понедельник</item>
+        <item>Вторник</item>
+        <item>Среда</item>
+        <item>Четверг</item>
+        <item>Пятница</item>
+        <item>Суббота</item>
+        <item>Воскресенье</item>
+    </string-array>
+    <string-array name="short_days">
+        <item>-</item>
+        <item>пн</item>
+        <item>вт</item>
+        <item>ср</item>
+        <item>чт</item>
+        <item>пт</item>
+        <item>сб</item>
+        <item>вс</item>
+    </string-array>
+
+    <!-- login fragment -->
+    <string name="login_xgups">XGups</string>
+    <string name="login_desc">Удобное приложение для студента</string>
+    <string name="login_email">Email</string>
+    <string name="login_login">Логин</string>
+    <string name="login_password">Пароль</string>
+
+    <!-- schedule fragment -->
+    <string name="schedule_group">%1$s</string>
+    <string name="schedule_names">%1$s %2$s</string>
+
+    <!-- item day -->
+    <string name="day_name">%1$s</string>
+    <string name="day_number">%1$s</string>
+
+    <!-- item lesson -->
+    <string name="lesson_name">%1$s</string>
+    <string name="lesson_teacher">%1$s</string>
+    <string name="lesson_auditorium">%1$s</string>
+    <string name="lesson_startTime">%1$s : %2$s</string>
+    <string name="lesson_endTime">%1$s : %2$s</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
