@@ -80,8 +80,8 @@ class LoginViewModel : ViewModel() {
      *  */
     private suspend fun loginToADFS(email: String, password: String)
     {
-        val api = ADFS.API
-        val login = loginSuccessADFS
+        val api = ADFS.API // Клиент АДФС
+        val login = loginSuccessADFS //Переменная в которую кинем результаты логина
 
         try {
             var response = api.login(ADFS.getHashMapForLogin(email, password))

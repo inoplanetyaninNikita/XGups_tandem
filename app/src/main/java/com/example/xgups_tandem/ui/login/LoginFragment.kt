@@ -56,6 +56,7 @@ class LoginFragment : Fragment() {
         val controller = findNavController()
 
         binding.btnLogin.setOnClickListener {
+            (activity as MainActivity).show()
             viewModel.login(binding.email.text.toString(),
                             binding.password.text.toString())
         }

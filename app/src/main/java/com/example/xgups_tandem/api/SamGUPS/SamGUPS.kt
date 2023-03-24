@@ -14,7 +14,7 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface SamGUPS {
-    /**Отправляем данные на сервер
+    /**Отправляем данные на сервер для авторизации
      * @param username email.
      * @param password пароль.
      * */

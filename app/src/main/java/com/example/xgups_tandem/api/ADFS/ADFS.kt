@@ -24,7 +24,7 @@ import kotlin.collections.HashMap
  * Если авторизация прошла успешно, то получаем [ADFSTokenResponse], а в нем мы можем
  * раскодировать данные из [ADFSTokenResponse.accessToken] с помощью [ADFSTokenResponse.getADFSUser]
  * @author Nikita Toropovsky
- * @sample LoginViewModel.login
+ * @sample LoginViewModel.loginToADFS
  * @since 23.03.2023
  * @see SamGUPS.API
  * */
@@ -99,7 +99,7 @@ interface ADFS {
             retrofit.create(ADFS::class.java)
         }
 
-        /** Получить хэшмапу с данными для [ADFS.login]*/
+        /** Получить хэшмапу с данными для авторизации [ADFS.login]*/
         fun getHashMapForLogin(email: String, password : String) : HashMap<String, String>
         {
             val fields: HashMap<String, String> = HashMap()
