@@ -5,10 +5,11 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
-    namespace 'com.example.xgups_tandem'
+    // namespace 'com.example.xgups_tandem'
     compileSdk 33
 
     defaultConfig {
@@ -39,6 +40,7 @@ android {
         viewBinding true
     }
     //
+
     apply plugin: 'kotlin-kapt'
 }
 

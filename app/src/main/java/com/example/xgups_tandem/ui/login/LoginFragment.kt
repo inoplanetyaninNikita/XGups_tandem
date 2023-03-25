@@ -6,23 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import androidx.transition.FragmentTransitionSupport
 import com.example.xgups_tandem.MainActivity
 import com.example.xgups_tandem.R
-import com.example.xgups_tandem.api.SamGUPS.SamGUPS
-import com.example.xgups_tandem.api.convertClassToJson
 import com.example.xgups_tandem.databinding.FragmentLoginBinding
-import com.example.xgups_tandem.ui.schedule.dayadapter.DayModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import okhttp3.Dispatcher
 
 
 class LoginFragment : Fragment() {
@@ -79,10 +67,13 @@ class LoginFragment : Fragment() {
             {
                 val bundle = Bundle()
 
+
                 bundle.putString("second_name", viewModel.secondName.value)
                 bundle.putString("first_name", viewModel.firstName.value)
-
-                controller.navigate(R.id.scheduleFragment, bundle)
+                val a = LoginFragmentDirections.actionLoginFragmentToScheduleFragment("a","b")
+                findNavController().navigate(a)
+                //controller.navigate(R.id.scheduleFragment, bundle)
+                //
             }
         }
 
