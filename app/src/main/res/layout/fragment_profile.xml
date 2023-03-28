@@ -1,16 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/border_fail"
+    android:orientation="vertical"
     tools:context=".ui.profile.ProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/texxxt"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp">
 
-</FrameLayout>
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imageProfile2"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@mipmap/user"
+            app:shapeAppearanceOverlay="@style/circleImageView"
+            app:strokeColor="@android:color/darker_gray" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/addPhoto"
+            android:layout_width="59dp"
+            android:layout_height="45dp"
+            android:layout_gravity="bottom"
+            android:layout_margin="-15dp"
+            android:adjustViewBounds="false"
+            android:background="#FFFFFF"
+            android:contextClickable="true"
+            android:cropToPadding="false"
+            android:importantForAutofill="no"
+            android:scaleType="fitCenter"
+            android:scaleX="1"
+            android:scaleY="1"
+            android:src="@mipmap/camera"
+            app:shapeAppearanceOverlay="@style/circleImageView"
+            app:strokeColor="@android:color/darker_gray" />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/names2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:baselineAligned="false"
+        android:fontFamily="@font/poppins_bold"
+        android:gravity="center"
+        android:text="@string/schedule_names"
+        android:textColor="@color/black"
+        android:textColorHighlight="@color/black"
+        android:textColorHint="@color/black"
+        android:textSize="24sp"
+        android:textStyle="normal"
+        tools:text="Тороповский Никита" />
+
+    <TextView
+        android:id="@+id/group2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="-10dp"
+        android:fontFamily="@font/poppins_bold"
+        android:gravity="center"
+        android:text="@string/schedule_group"
+        android:textAllCaps="true"
+        android:textSize="18sp"
+        tools:text="эжд-91" />
+
+</LinearLayout>

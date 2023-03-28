@@ -43,7 +43,6 @@ class MainActivity : AppCompatActivity() {
         return super.onCreateView(name, context, attrs)
     }
     override fun onSupportNavigateUp(): Boolean {
-        val controller = findNavController(R.id.fragmentContainerView)
         return super.onSupportNavigateUp()
     }
 
@@ -56,8 +55,8 @@ class MainActivity : AppCompatActivity() {
     fun show() {
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         packageName
-        val contentView = RemoteViews(packageName, R.layout.fragment_profile)
-        contentView.setTextViewText(R.id.texxxt, "Сегодня в школу!")
+        //val contentView = RemoteViews(packageName, R.layout.fragment_profile)
+        //contentView.setTextViewText(R.id.texxxt, "Сегодня в школу!")
 
         // checking if android version is greater than oreo(API 26) or not
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -68,9 +67,10 @@ class MainActivity : AppCompatActivity() {
             notificationManager.createNotificationChannel(notificationChannel)
 
             builder = Notification.Builder(this, channelId)
-                .setContent(contentView)
-                //.setContentTitle("Напоминание")
-                //.setContentText("Пора покормить кота")
+                //.setContent(contentView)
+                .setTicker("finder")
+                .setContentTitle("Напоминание")
+                .setContentText("Пора покормить кота")
                 .setSmallIcon(R.drawable.ic_launcher_background)
                 .setLargeIcon(BitmapFactory.decodeResource(this.resources, R.drawable.ic_launcher_background))
                 .setActions()

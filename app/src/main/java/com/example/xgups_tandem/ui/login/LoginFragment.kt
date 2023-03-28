@@ -67,11 +67,11 @@ class LoginFragment : Fragment() {
             {
                 val bundle = Bundle()
 
-
                 bundle.putString("second_name", viewModel.secondName.value)
                 bundle.putString("first_name", viewModel.firstName.value)
-                val a = LoginFragmentDirections.actionLoginFragmentToScheduleFragment("a","b")
-                findNavController().navigate(a)
+                findNavController().navigate(
+                    LoginFragmentDirections.actionLoginFragmentToScheduleFragment("a","b")
+                )
                 //controller.navigate(R.id.scheduleFragment, bundle)
                 //
             }
