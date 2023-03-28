@@ -1,41 +1,36 @@
 package com.example.xgups_tandem
 
-import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.AttributeSet
 import android.view.View
-import android.widget.RemoteViews
 import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import com.example.xgups_tandem.api.SamGUPS.SamGUPS
 import com.example.xgups_tandem.databinding.ActivityMainBinding
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
-import com.example.xgups_tandem.databinding.FragmentGradesBinding
-import com.example.xgups_tandem.ui.grades.GradesFragment
-import com.example.xgups_tandem.ui.profile.ProfileFragment
+import kotlinx.coroutines.launch
+
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     val viewModel by viewModels<MainViewModel>()
-
-    @SuppressLint("RemoteViewLayout")
+// val mainActivityViewModel = ViewModelProvider(this)[MainViewModel::class.java]
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
 
     }
 
@@ -49,8 +44,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var notificationManager: NotificationManager
     lateinit var notificationChannel: NotificationChannel
     lateinit var builder: Notification.Builder
-    private val channelId = "i.apps.notifications"
-    private val description = "Test notification"
+    private val channelId = "xgups.apps.notifications"
+    private val description = "Schedule notification"
 
     fun show() {
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

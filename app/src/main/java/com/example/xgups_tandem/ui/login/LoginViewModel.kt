@@ -3,6 +3,7 @@ package com.example.xgups_tandem.ui.login
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.xgups_tandem.api.ADFS.ADFS
 import com.example.xgups_tandem.api.SamGUPS.SamGUPS
@@ -20,6 +21,10 @@ class LoginViewModel : ViewModel() {
     val loginSuccessADFS : MutableLiveData<Boolean> by lazy {
         MutableLiveData<Boolean>()
     }
+    val loginSuccessSamGUPS : MutableLiveData<Boolean> by lazy {
+        MutableLiveData<Boolean>()
+    }
+
     val firstName : MutableLiveData<String> by lazy {
         MutableLiveData<String>()
     }
@@ -27,8 +32,8 @@ class LoginViewModel : ViewModel() {
         MutableLiveData<String>()
     }
 
-    val loginSuccessSamGUPS : MutableLiveData<Boolean> by lazy {
-        MutableLiveData<Boolean>()
+    val schedule : MutableLiveData<SamGUPS.ScheduleResponse> by lazy {
+        MutableLiveData<SamGUPS.ScheduleResponse>()
     }
     /** Логин в систему */
     fun login(email: String, password: String) {
@@ -37,7 +42,7 @@ class LoginViewModel : ViewModel() {
 
         //Коннект с АДФС
         viewModelScope.launch {
-            loginToADFS(email,password)
+           // loginToADFS(email,password)
         }
 
         //Коннект с СамГУПСом
@@ -57,7 +62,6 @@ class LoginViewModel : ViewModel() {
                     "        }\n" +
                     "    ]\n" +
                     "}"
-
             val aa = SamGUPS.convertToAuthResponse(test)
             try {
 //
@@ -73,6 +77,35 @@ class LoginViewModel : ViewModel() {
             } catch (Ex : java.lang.Exception) {
                 //TODO : Надо сделать заглушку при получении таймаута
             }
+
+
+            val data = listOf(
+                listOf("22.Марта", "тест1", "тест2", "тест3", "тест4","тест5", "тест6", "тест7", "тест8"),
+                listOf("23.Марта", "тест1", "тест2", "тест3", "тест4","тест5", "тест6", "тест7", "тест8"),
+                listOf("24.Марта", "тест1", "тест2", "тест3", "тест4","тест5", "тест6", "тест7", "тест8"),
+                listOf("25.Марта", "тест1", "тест2", "тест3", "тест4","тест5", "тест6", "тест7", "тест8"),
+                listOf("26.Марта", "тест1", "тест2", "тест3", "тест4","тест5", "тест6", "тест7", "тест8"),
+                listOf("27.Марта", "тест1", "тест2", "тест3", "тест4","тест5", "тест6", "тест7", "тест8"),
+                listOf("28.Марта", "тест1", "тест2", "тест3", "тест4","тест5", "тест6", "тест7", "тест8"),
+                listOf("29.Марта", "тест1", "тест2", "тест3", "тест4","тест5", "тест6", "тест7", "тест8"),
+                listOf("30.Марта", "тест1", "тест2", "тест3", "тест4","тест5", "тест6", "тест7", "тест8"),
+                listOf("1.Марта", "тест1", "тест2", "тест3", "тест4","тест5", "тест6", "тест7", "тест8"),
+                listOf("2.Марта", "тест1", "тест2", "тест3", "тест4","тест5", "тест6", "тест7", "тест8"),
+                listOf("3.Марта", "тест1", "тест2", "тест3", "тест4","тест5", "тест6", "тест7", "тест8"),
+                listOf("4.Марта", "тест1", "тест2", "тест3", "тест4","тест5", "тест6", "тест7", "тест8"),
+                listOf("5.Марта", "тест1", "тест2", "тест3", "тест4","тест5", "тест6", "тест7", "тест8"),
+                listOf("6.Марта", "тест1", "тест2", "тест3", "тест4","тест5", "тест6", "тест7", "тест8"),
+                listOf("7.Марта", "тест1", "тест2", "тест3", "тест4","тест5", "тест6", "тест7", "тест8"),
+                listOf("8.Марта", "тест1", "тест2", "тест3", "тест4","тест5", "тест6", "тест7", "тест8"),
+                listOf("9.Марта", "тест1", "тест2", "тест3", "тест4","тест5", "тест6", "тест7", "тест8"),
+            )
+            schedule.value = SamGUPS.ScheduleResponse(data)
+            val a = SamGUPS.ScheduleResponse(data)
+//            var response = api.schedule(SamGUPS.ScheduleRequest("ИВТб01"))
+//            if(response.isSuccessful) {
+//                response.body()
+//                schedule.value = SamGUPS.ScheduleResponse(response.body()!!)
+//            }
         }
     }
     /** *(Временное решение).*

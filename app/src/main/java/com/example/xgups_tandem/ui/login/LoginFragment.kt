@@ -7,8 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.xgups_tandem.MainActivity
+import com.example.xgups_tandem.MainViewModel
 import com.example.xgups_tandem.R
 import com.example.xgups_tandem.databinding.FragmentLoginBinding
 
@@ -44,13 +47,13 @@ class LoginFragment : Fragment() {
         val controller = findNavController()
 
         binding.btnLogin.setOnClickListener {
+
             (activity as MainActivity).show()
             viewModel.login(binding.email.text.toString(),
                             binding.password.text.toString())
         }
 
         binding.email.setOnFocusChangeListener { _, it ->
-
             if(it)
                 binding.email.background = ContextCompat.getDrawable(binding.root.context, R.drawable.border_standart)
             else
@@ -66,9 +69,11 @@ class LoginFragment : Fragment() {
             if(it)
             {
                 val bundle = Bundle()
-
                 bundle.putString("second_name", viewModel.secondName.value)
                 bundle.putString("first_name", viewModel.firstName.value)
+
+                ViewModelProvider(this)[MainViewModel::class.java].schedule.value = viewModel.schedule.value
+
                 findNavController().navigate(
                     LoginFragmentDirections.actionLoginFragmentToScheduleFragment("a","b")
                 )
@@ -78,6 +83,10 @@ class LoginFragment : Fragment() {
         }
 
         viewModel.loginSuccessSamGUPS.observe(viewLifecycleOwner) {
+        }
+
+        ViewModelProvider(this)[MainViewModel::class.java].schedule.observe(viewLifecycleOwner) {
+            toString()
         }
 
     }

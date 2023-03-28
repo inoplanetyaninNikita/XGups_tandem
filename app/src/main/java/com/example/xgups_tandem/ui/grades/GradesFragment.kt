@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import com.example.xgups_tandem.MainViewModel
 import com.example.xgups_tandem.R
 
 // TODO: Rename parameter arguments, choose names that match
@@ -28,6 +30,7 @@ class GradesFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
     }
 
     override fun onCreateView(
