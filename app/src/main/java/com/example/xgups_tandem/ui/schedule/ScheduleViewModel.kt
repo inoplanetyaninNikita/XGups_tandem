@@ -2,7 +2,9 @@ package com.example.xgups_tandem.ui.schedule
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.xgups_tandem.api.SamGUPS.SamGUPS
 import com.example.xgups_tandem.ui.schedule.dayadapter.DayModel
+import com.example.xgups_tandem.api.SamGUPS.SamGUPS.ScheduleResponse
 import java.time.LocalDateTime
 
 class ScheduleViewModel : ViewModel() {
@@ -18,6 +20,7 @@ class ScheduleViewModel : ViewModel() {
     val image : MutableLiveData<String> by lazy {
         MutableLiveData<String>()
     }
+    private val lesson_list = mutableListOf<Lesson>()
     init {
         setLessonList()
         setDayList()
@@ -25,11 +28,22 @@ class ScheduleViewModel : ViewModel() {
 
     private fun setLessonList()
     {
-        val list = mutableListOf<Lesson>()
-        list.add(Lesson("nice","Москвичев","9319", LocalDateTime.now(),LocalDateTime.now()))
-        lessonList.value = list
+        lesson_list.add(Lesson("nice","Москвичев","9319", LocalDateTime.now(),LocalDateTime.now()))
+        lessonList.value = lesson_list
     }
-
+    fun viewLessonsOnDay(day : ScheduleResponse.Week.Day)
+    {
+        lesson_list.clear()
+        for (item in day.lessons)
+        {
+            lesson_list.add(Lesson(item.name,"Москвичев","9319", LocalDateTime.now(),LocalDateTime.now()))
+        }
+    }
+    fun clear()
+    {
+        lesson_list.clear()
+        lessonList.value = lesson_list
+    }
     private fun setDayList()
     {
         val list = mutableListOf<DayModel>()

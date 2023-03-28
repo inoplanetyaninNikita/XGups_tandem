@@ -75,7 +75,7 @@ interface SamGUPS {
             val name : String = fullName
         }
     }
-    @GET("student/schedule/")
+    @POST("student/schedule/")
     suspend fun schedule(@Body group: ScheduleRequest) : Response<List<List<String>>>
     companion object {
 

@@ -22,6 +22,7 @@ class DayAdapter : RecyclerView.Adapter<DayAdapter.Holder>()  {
     fun setListOnAdapter(list : List<DayModel>)
     {
         dateList = list
+        dateList
         setDataListOnAdapter()
     }
 
@@ -178,7 +179,8 @@ class DayAdapter : RecyclerView.Adapter<DayAdapter.Holder>()  {
     override fun getItemCount(): Int {
         return dateList.size
     }
-
-
-
+    fun NotifyChange()
+    {
+        notifyDataSetChanged()
+    }
 }

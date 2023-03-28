@@ -42,7 +42,7 @@ class LoginViewModel : ViewModel() {
 
         //Коннект с АДФС
         viewModelScope.launch {
-           // loginToADFS(email,password)
+            loginToADFS(email,password)
         }
 
         //Коннект с СамГУПСом
@@ -99,13 +99,14 @@ class LoginViewModel : ViewModel() {
                 listOf("8.Марта", "тест1", "тест2", "тест3", "тест4","тест5", "тест6", "тест7", "тест8"),
                 listOf("9.Марта", "тест1", "тест2", "тест3", "тест4","тест5", "тест6", "тест7", "тест8"),
             )
-            schedule.value = SamGUPS.ScheduleResponse(data)
-            val a = SamGUPS.ScheduleResponse(data)
+
 //            var response = api.schedule(SamGUPS.ScheduleRequest("ИВТб01"))
 //            if(response.isSuccessful) {
 //                response.body()
-//                schedule.value = SamGUPS.ScheduleResponse(response.body()!!)
+//            schedule.value = SamGUPS.ScheduleResponse(response.body()!!)
 //            }
+
+            schedule.value = SamGUPS.ScheduleResponse(data!!)
         }
     }
     /** *(Временное решение).*

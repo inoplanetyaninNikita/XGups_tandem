@@ -18,6 +18,7 @@ import com.example.xgups_tandem.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
 
+    lateinit var  activityViewModel : MainViewModel
     private val viewModel by viewModels<LoginViewModel>()
 
     private var _binding: FragmentLoginBinding? = null
@@ -26,6 +27,7 @@ class LoginFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        activityViewModel = (activity as MainActivity).viewModel
     }
 
     override fun onCreateView(
@@ -72,7 +74,8 @@ class LoginFragment : Fragment() {
                 bundle.putString("second_name", viewModel.secondName.value)
                 bundle.putString("first_name", viewModel.firstName.value)
 
-                ViewModelProvider(this)[MainViewModel::class.java].schedule.value = viewModel.schedule.value
+                activityViewModel.schedule.value = viewModel.schedule.value
+                activityViewModel.schedulee = viewModel.schedule.value!!
 
                 findNavController().navigate(
                     LoginFragmentDirections.actionLoginFragmentToScheduleFragment("a","b")
@@ -83,10 +86,6 @@ class LoginFragment : Fragment() {
         }
 
         viewModel.loginSuccessSamGUPS.observe(viewLifecycleOwner) {
-        }
-
-        ViewModelProvider(this)[MainViewModel::class.java].schedule.observe(viewLifecycleOwner) {
-            toString()
         }
 
     }

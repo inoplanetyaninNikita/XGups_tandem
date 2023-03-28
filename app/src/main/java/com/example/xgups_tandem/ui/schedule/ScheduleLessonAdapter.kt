@@ -1,17 +1,27 @@
 package com.example.xgups_tandem.ui.schedule
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.xgups_tandem.R
 import com.example.xgups_tandem.databinding.ItemLessonBinding
+import com.example.xgups_tandem.ui.schedule.dayadapter.DayModel
 
 class ScheduleLessonAdapter : RecyclerView.Adapter<ScheduleLessonAdapter.Holder>() {
 
     lateinit var lessonList : List<ScheduleViewModel.Lesson>
     private var actionOnClick: ((ScheduleViewModel.Lesson) -> Unit)? = null
 
+    @SuppressLint("NotifyDataSetChanged")
+    fun setListOnAdapter(list : List<ScheduleViewModel.Lesson>)
+    {
+        lessonList = list
+        notifyDataSetChanged()
+    }
+
+    /**Прикрепление коллекции.*/
     class Holder(item: View) : RecyclerView.ViewHolder(item) {
 
         private val binding = ItemLessonBinding.bind(item)
@@ -70,4 +80,5 @@ class ScheduleLessonAdapter : RecyclerView.Adapter<ScheduleLessonAdapter.Holder>
     fun setOnClickListner(action: ((ScheduleViewModel.Lesson) -> Unit)) {
         actionOnClick = action
     }
+
 }

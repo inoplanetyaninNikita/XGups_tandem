@@ -8,4 +8,5 @@ class MainViewModel : ViewModel() {
     val schedule : MutableLiveData<SamGUPS.ScheduleResponse> by lazy {
         MutableLiveData<SamGUPS.ScheduleResponse>()
     }
+    lateinit var schedulee  : SamGUPS.ScheduleResponse
 }

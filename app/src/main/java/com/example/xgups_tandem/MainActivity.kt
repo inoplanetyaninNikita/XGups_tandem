@@ -29,6 +29,8 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        viewModel
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
 
