@@ -1,14 +1,11 @@
 package com.example.xgups_tandem.ui.schedule
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ViewModelProvider
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.xgups_tandem.MainActivity
@@ -16,8 +13,7 @@ import com.example.xgups_tandem.MainViewModel
 import com.example.xgups_tandem.R
 import com.example.xgups_tandem.databinding.FragmentScheduleBinding
 import com.example.xgups_tandem.ui.schedule.dayadapter.DayAdapter
-import java.text.Format
-import java.text.Normalizer.Form
+import com.example.xgups_tandem.ui.schedule.lessonAdapter.ScheduleLessonAdapter
 
 class ScheduleFragment : Fragment() {
 
@@ -87,7 +83,8 @@ class ScheduleFragment : Fragment() {
         }
 
         dayAdapter.setOnClickListner {
-            viewModel.clear()
+            //viewModel.clear()
+            viewModel.viewLessonsOnDay(activityViewModel.schedule.value!!.even.days[0])
         }
     }
 }

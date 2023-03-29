@@ -2,17 +2,17 @@ package com.example.xgups_tandem.ui.schedule
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.xgups_tandem.api.SamGUPS.SamGUPS
 import com.example.xgups_tandem.ui.schedule.dayadapter.DayModel
 import com.example.xgups_tandem.api.SamGUPS.SamGUPS.ScheduleResponse
+import com.example.xgups_tandem.ui.schedule.lessonAdapter.LessonModel
 import java.time.LocalDateTime
 
 class ScheduleViewModel : ViewModel() {
     val dateList : MutableLiveData<List<DayModel>> by lazy {
         MutableLiveData<List<DayModel>>()
     }
-    val lessonList : MutableLiveData<List<Lesson>> by lazy {
-        MutableLiveData<List<Lesson>>()
+    val lessonList : MutableLiveData<List<LessonModel>> by lazy {
+        MutableLiveData<List<LessonModel>>()
     }
     val name : MutableLiveData<String> by lazy {
         MutableLiveData<String>()
@@ -20,7 +20,7 @@ class ScheduleViewModel : ViewModel() {
     val image : MutableLiveData<String> by lazy {
         MutableLiveData<String>()
     }
-    private val lesson_list = mutableListOf<Lesson>()
+    private val lesson_list = mutableListOf<LessonModel>()
     init {
         setLessonList()
         setDayList()
@@ -28,7 +28,7 @@ class ScheduleViewModel : ViewModel() {
 
     private fun setLessonList()
     {
-        lesson_list.add(Lesson("nice","Москвичев","9319", LocalDateTime.now(),LocalDateTime.now()))
+        lesson_list.add(LessonModel("nice","Москвичев","9319", LocalDateTime.now(),LocalDateTime.now()))
         lessonList.value = lesson_list
     }
     fun viewLessonsOnDay(day : ScheduleResponse.Week.Day)
@@ -36,14 +36,16 @@ class ScheduleViewModel : ViewModel() {
         lesson_list.clear()
         for (item in day.lessons)
         {
-            lesson_list.add(Lesson(item.name,"Москвичев","9319", LocalDateTime.now(),LocalDateTime.now()))
+            lesson_list.add(LessonModel(item.name,"Москвичев","9319", LocalDateTime.now(),LocalDateTime.now()))
         }
+        lessonList.value = lesson_list
     }
     fun clear()
     {
         lesson_list.clear()
         lessonList.value = lesson_list
     }
+
     private fun setDayList()
     {
         val list = mutableListOf<DayModel>()
@@ -55,9 +57,5 @@ class ScheduleViewModel : ViewModel() {
         dateList.value = list
     }
 
-    data class Lesson(val lessonName : String,
-                      val teacher : String,
-                      val auditorium : String,
-                      val startTime : LocalDateTime,
-                      val endTime : LocalDateTime)
+
 }

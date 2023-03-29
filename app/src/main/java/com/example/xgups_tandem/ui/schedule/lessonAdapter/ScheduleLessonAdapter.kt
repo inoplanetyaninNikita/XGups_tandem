@@ -1,4 +1,4 @@
-package com.example.xgups_tandem.ui.schedule
+package com.example.xgups_tandem.ui.schedule.lessonAdapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -7,15 +7,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.xgups_tandem.R
 import com.example.xgups_tandem.databinding.ItemLessonBinding
-import com.example.xgups_tandem.ui.schedule.dayadapter.DayModel
+import com.example.xgups_tandem.ui.schedule.ScheduleViewModel
 
 class ScheduleLessonAdapter : RecyclerView.Adapter<ScheduleLessonAdapter.Holder>() {
 
-    lateinit var lessonList : List<ScheduleViewModel.Lesson>
-    private var actionOnClick: ((ScheduleViewModel.Lesson) -> Unit)? = null
+    lateinit var lessonList : List<LessonModel>
+    private var actionOnClick: ((LessonModel) -> Unit)? = null
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setListOnAdapter(list : List<ScheduleViewModel.Lesson>)
+    fun setListOnAdapter(list : List<LessonModel>)
     {
         lessonList = list
         notifyDataSetChanged()
@@ -25,8 +25,8 @@ class ScheduleLessonAdapter : RecyclerView.Adapter<ScheduleLessonAdapter.Holder>
     class Holder(item: View) : RecyclerView.ViewHolder(item) {
 
         private val binding = ItemLessonBinding.bind(item)
-        fun bind(lesson: ScheduleViewModel.Lesson,
-                 onClick:((ScheduleViewModel.Lesson)-> Unit)? ) = with(binding)
+        fun bind(lesson: LessonModel,
+                 onClick:((LessonModel)-> Unit)? ) = with(binding)
         {
             val context = binding.root.context
 
@@ -77,7 +77,7 @@ class ScheduleLessonAdapter : RecyclerView.Adapter<ScheduleLessonAdapter.Holder>
         holder.bind(lessonList[position], actionOnClick)
     }
 
-    fun setOnClickListner(action: ((ScheduleViewModel.Lesson) -> Unit)) {
+    fun setOnClickListner(action: ((LessonModel) -> Unit)) {
         actionOnClick = action
     }
 
