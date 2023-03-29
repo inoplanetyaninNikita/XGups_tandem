@@ -184,3 +184,10 @@ class DayAdapter : RecyclerView.Adapter<DayAdapter.Holder>()  {
         notifyDataSetChanged()
     }
 }
+
+data class Day(
+    val isHoliday: Boolean,
+    val isSelected: Boolean,
+    val number: String,
+    val dayOfWeek: String
+)

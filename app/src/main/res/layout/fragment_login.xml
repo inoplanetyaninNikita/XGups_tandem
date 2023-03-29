@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -13,14 +12,14 @@
     tools:context=".ui.login.LoginFragment">
 
     <LinearLayout
-        android:id="@+id/DesignLayout"
+        android:id="@+id/llLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/x_xg"
+            android:id="@+id/tvTitleLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_extrabold"
@@ -32,7 +31,7 @@
             android:textStyle="normal|bold" />
 
         <TextView
-            android:id="@+id/x_desc"
+            android:id="@+id/tvDescLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_semibold"
@@ -47,7 +46,6 @@
         android:layout_height="120dp" />
 
     <LinearLayout
-        android:id="@+id/LoginLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">

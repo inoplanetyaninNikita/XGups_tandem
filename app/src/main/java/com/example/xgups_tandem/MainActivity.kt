@@ -15,32 +15,28 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.NavHostFragment
 import com.example.xgups_tandem.api.SamGUPS.SamGUPS
 import com.example.xgups_tandem.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    private val navController by lazy {
+        (supportFragmentManager.findFragmentById(R.id.containerMain) as NavHostFragment).navController
+    }
+
     lateinit var binding: ActivityMainBinding
-    val viewModel by viewModels<MainViewModel>()
-// val mainActivityViewModel = ViewModelProvider(this)[MainViewModel::class.java]
+    private val viewModel by viewModels<MainViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-
-    }
-
-    override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
-        return super.onCreateView(name, context, attrs)
-    }
-    override fun onSupportNavigateUp(): Boolean {
-        return super.onSupportNavigateUp()
     }
 
     //НАДО МУСОР УБРАТЬ

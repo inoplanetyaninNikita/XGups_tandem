@@ -1,23 +1,21 @@
 package com.example.xgups_tandem.ui.login
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.xgups_tandem.api.ADFS.ADFS
 import com.example.xgups_tandem.api.SamGUPS.SamGUPS
-import com.example.xgups_tandem.api.convertJsonToClass
-import com.google.gson.internal.LinkedHashTreeMap
-import com.squareup.moshi.JsonAdapter
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.Types
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.example.xgups_tandem.utils.ManagerUtils
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.lang.reflect.Type
 import java.util.regex.Pattern
+import javax.inject.Inject
 
-class LoginViewModel : ViewModel() {
+@HiltViewModel
+class LoginViewModel @Inject constructor(
+    val managerUtils: ManagerUtils
+): ViewModel() {
+
     val loginSuccessADFS : MutableLiveData<Boolean> by lazy {
         MutableLiveData<Boolean>()
     }
