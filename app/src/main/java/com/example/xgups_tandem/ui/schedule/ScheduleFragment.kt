@@ -45,6 +45,7 @@ class ScheduleFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.name.value = arguments?.getString("first_name") + " " + arguments?.getString("second_name")
+        activityViewModel.schedule.value
         viewModel.image.value = "https://sun7-13.userapi.com/impg/z2nfUVtnV_hFAaFEeN_oC0A7Iig22BRk1uXn_w/vKNF080jniU.jpg?size=1215x2160&quality=95&sign=cd8d8575e08036e92d9f79ce5a3b99cb&type=album"
 
     }
@@ -78,14 +79,16 @@ class ScheduleFragment : Fragment() {
         viewModel.lessonList.observe(viewLifecycleOwner) {
             lessonAdapter.setListOnAdapter(viewModel.lessonList.value!!)
 
-
             dayAdapter.setOnClickListner {
-                //viewModel.clear()
-                val fixedDate = LocalDate.parse("2023-03-20")
-                val today = it.localDate.toLocalDate()
-                val period = Period.between(fixedDate, today)
+                //TODO : ЛОГИКУ ПЕРЕНЕСТИ!
 
-                viewModel.viewLessonsOnDay(activityViewModel.schedule.value!!.firstWeek.days[0])
+                val day = activityViewModel.schedule.value!!.getDayByDate(it.localDate.toLocalDate())
+                if(day != null)
+                    viewModel.viewLessonsOnDay(day)
+                else
+                    viewModel.clear()
+
+
             }
         }
     }

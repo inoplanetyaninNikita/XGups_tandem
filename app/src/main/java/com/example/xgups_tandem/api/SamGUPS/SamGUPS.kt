@@ -12,6 +12,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.POST
+import java.time.LocalDate
+import java.time.LocalDateTime
 import java.util.concurrent.TimeUnit
 
 interface SamGUPS {
@@ -32,24 +34,33 @@ interface SamGUPS {
     suspend fun login(@Body auth : AuthRequest): Response<String>
     data class ScheduleRequest(val group: String)
     class ScheduleResponse(response : List<List<String>>) {
-        val firstWeek : Week
-        val secondWeek : Week
-        val thirdWeek : Week
+        var firstWeek : Week? = null
+        var secondWeek : Week? = null
+        var thirdWeek : Week? = null
+
         init {
             var week = mutableListOf<List<String>>()
-            for (i in 0..5)
-                week.add(response[i])
-            firstWeek = Week(week)
+            try {
+                for (i in 0..5)
+                    week.add(response[i])
+                firstWeek = Week(week)
+            } catch (ex : Exception){}
 
             week = mutableListOf()
-            for (i in 6..11)
-                week.add(response[i])
-            secondWeek = Week(week)
+            try {
+                for (i in 6..11)
+                    week.add(response[i])
+                secondWeek = Week(week)
+            } catch (ex : Exception){}
+
 
             week = mutableListOf()
-            for (i in 12..17)
-                week.add(response[i])
-            thirdWeek = Week(week)
+            try {
+                for (i in 12..17)
+                    week.add(response[i])
+                thirdWeek = Week(week)
+            } catch (ex : Exception){}
+
         }
         class Week(week : List<List<String>>) {
             val days : List<Day>
@@ -67,24 +78,61 @@ interface SamGUPS {
                 days = list
             }
             class Day(lessons : List<String>) {
-                val date : String = lessons[0]
+                var date : String = lessons[0]
+                val nDate : LocalDate
+
                 lateinit var lessons : List<Lesson>
                 init {
-                    try {
-                        val list = mutableListOf<Lesson>()
-                        for (i in 1..lessons.size - 1)
-                            list.add(Lesson(lessons[i]))
-                        this.lessons = list
-                    }
-                    catch (ex : java.lang.Exception)
-                    {
+                    val list = mutableListOf<Lesson>()
+                    for (i in 1 until lessons.size)
+                        list.add(Lesson(lessons[i]))
+                    this.lessons = list
 
-                    }
+                    date = date.replace("января",",01")
+                        .replace("февраля",",02")
+                        .replace("марта",",03")
+                        .replace("апреля",",04")
+                        .replace("мая",",05")
+                        .replace("июня",",06")
+                        .replace("июля",",07")
+                        .replace("августа",",08")
+                        .replace("сентября",",09")
+                        .replace("октября",",10")
+                        .replace("ноября",",11")
+                        .replace("декабря",",12")
+                    nDate = LocalDate.parse("${LocalDate.now().year}-${date.split(",")[2]}-${date.split(",")[1].replace("  ","")}")
+
                 }
             }
         }
         class Lesson(fullName : String) {
             val name : String = fullName
+        }
+
+        fun getDayByDate(localDate: LocalDate) : Week.Day?
+        {
+            var week: Week? = firstWeek
+            if (week == null) return null
+            for (day in week!!.days) {
+                if(localDate.month == day.nDate.month &&
+                    localDate.dayOfMonth == day.nDate.dayOfMonth) return day
+            }
+
+            week = secondWeek
+            if (week == null) return null
+            for (day in week!!.days) {
+                if(localDate.month == day.nDate.month &&
+                    localDate.dayOfMonth == day.nDate.dayOfMonth) return day
+            }
+
+            week = thirdWeek
+            if (week == null) return null
+            for (day in week!!.days) {
+                if(localDate.month == day.nDate.month &&
+                    localDate.dayOfMonth == day.nDate.dayOfMonth) return day
+            }
+
+            return null
         }
     }
     @POST("student/schedule/")
