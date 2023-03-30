@@ -9,12 +9,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import coil.load
 import coil.transform.CircleCropTransformation
-import com.example.xgups_tandem.MainActivity
 import com.example.xgups_tandem.MainViewModel
 import com.example.xgups_tandem.R
 import com.example.xgups_tandem.databinding.FragmentScheduleBinding
 import com.example.xgups_tandem.ui.schedule.dayadapter.DayAdapter
 import com.example.xgups_tandem.ui.schedule.lessonAdapter.ScheduleLessonAdapter
+import java.time.LocalDate
+import java.time.Period
 
 class ScheduleFragment : Fragment() {
 
@@ -76,11 +77,16 @@ class ScheduleFragment : Fragment() {
 
         viewModel.lessonList.observe(viewLifecycleOwner) {
             lessonAdapter.setListOnAdapter(viewModel.lessonList.value!!)
-        }
 
-        dayAdapter.setOnClickListner {
-            //viewModel.clear()
-            viewModel.viewLessonsOnDay(activityViewModel.schedule.value!!.even.days[0])
+
+            dayAdapter.setOnClickListner {
+                //viewModel.clear()
+                val fixedDate = LocalDate.parse("2023-03-20")
+                val today = it.localDate.toLocalDate()
+                val period = Period.between(fixedDate, today)
+
+                viewModel.viewLessonsOnDay(activityViewModel.schedule.value!!.firstWeek.days[0])
+            }
         }
     }
 }

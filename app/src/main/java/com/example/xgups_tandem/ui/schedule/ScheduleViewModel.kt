@@ -36,6 +36,7 @@ class ScheduleViewModel : ViewModel() {
         lesson_list.clear()
         for (item in day.lessons)
         {
+            if (item.name.isEmpty()) continue
             lesson_list.add(LessonModel(item.name,"Москвичев","9319", LocalDateTime.now(),LocalDateTime.now()))
         }
         lessonList.value = lesson_list

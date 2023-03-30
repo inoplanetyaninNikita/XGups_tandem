@@ -11,7 +11,6 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
-import retrofit2.http.GET
 import retrofit2.http.POST
 import java.util.concurrent.TimeUnit
 
@@ -33,21 +32,34 @@ interface SamGUPS {
     suspend fun login(@Body auth : AuthRequest): Response<String>
     data class ScheduleRequest(val group: String)
     class ScheduleResponse(response : List<List<String>>) {
-        val even : Week
-        val notEven : Week
+        val firstWeek : Week
+        val secondWeek : Week
+        val thirdWeek : Week
         init {
-            var listEven = mutableListOf<List<String>>()
+            var week = mutableListOf<List<String>>()
             for (i in 0..5)
-                listEven.add(response[i])
-            even = Week(listEven)
+                week.add(response[i])
+            firstWeek = Week(week)
 
-            var listNotEven = mutableListOf<List<String>>()
+            week = mutableListOf()
             for (i in 6..11)
-                listNotEven.add(response[i])
-            notEven = Week(listNotEven)
+                week.add(response[i])
+            secondWeek = Week(week)
+
+            week = mutableListOf()
+            for (i in 12..17)
+                week.add(response[i])
+            thirdWeek = Week(week)
         }
         class Week(week : List<List<String>>) {
             val days : List<Day>
+            fun monday() : Day =  days[0]
+            fun tuesday() : Day =  days[1]
+            fun wednesday() : Day =  days[2]
+            fun thursday() : Day =  days[3]
+            fun friday() : Day =  days[4]
+            fun saturday() : Day =  days[5]
+
             init {
                 val list = mutableListOf<Day>()
                 for (i in 0..5)
@@ -76,7 +88,7 @@ interface SamGUPS {
         }
     }
     @POST("student/schedule/")
-    suspend fun schedule(@Body group: ScheduleRequest) : Response<List<List<String>>>
+    suspend fun schedule(@Body group: ScheduleRequest) : Response<List<List<String>>>//Response<List<List<String>>>
     companion object {
 
         private val converter: GsonConverterFactory = GsonConverterFactory.create(GsonBuilder().setLenient().create())
