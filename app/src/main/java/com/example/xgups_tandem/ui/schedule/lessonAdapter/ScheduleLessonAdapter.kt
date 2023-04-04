@@ -43,11 +43,11 @@ class ScheduleLessonAdapter : RecyclerView.Adapter<ScheduleLessonAdapter.Holder>
             val startTime = String.format(
                 context.resources.getString(R.string.lesson_startTime),
                 lesson.startTime.hour,
-                lesson.startTime.minute)
+                if (lesson.startTime.minute > 9) "${lesson.startTime.minute}" else "0${lesson.startTime.minute}" )
             val endTime = String.format(
                 context.resources.getString(R.string.lesson_endTime),
                 lesson.endTime.hour,
-                lesson.endTime.minute)
+                if (lesson.endTime.minute > 9) "${lesson.endTime.minute}" else "0${lesson.endTime.minute}" )
 
             binding.nameLesson.text = name
             binding.teacherLesson.text = teacher
@@ -82,3 +82,5 @@ class ScheduleLessonAdapter : RecyclerView.Adapter<ScheduleLessonAdapter.Holder>
     }
 
 }
+
+

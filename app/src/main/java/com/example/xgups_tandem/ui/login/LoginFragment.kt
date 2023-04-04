@@ -15,12 +15,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginFragment: BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) {
-
     private val viewModel by viewModels<LoginViewModel>()
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
 
     override fun setListeners()  {
         binding.btnLogin.setOnClickListener {
@@ -31,7 +26,6 @@ class LoginFragment: BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::in
                 binding.password.text.toString()
             )
         }
-
         binding.email.setOnFocusChangeListener { _, it ->
             if (it)
                 binding.email.background =
@@ -48,37 +42,16 @@ class LoginFragment: BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::in
     }
 
     override fun setObservable() {
-        viewModel.loginSuccessSamGUPS.observe(viewLifecycleOwner) {
-
-        }
 
         viewModel.schedule.observe(viewLifecycleOwner)
         {
-            val bundle = Bundle()
-            bundle.putString("second_name", "Тороповский")
-            bundle.putString("first_name", "Никита")
-
             mainViewModel.schedule.value = viewModel.schedule.value
+            mainViewModel.user.value = viewModel.dataUser.value
 
             findNavController().navigate(
-                LoginFragmentDirections.actionLoginFragmentToScheduleFragment("a", "b")
+                LoginFragmentDirections.actionLoginFragmentToScheduleFragment(viewModel.dataUser.value!!.secondName,
+                    viewModel.dataUser.value!!.firstName)
             )
-        }
-        viewModel.loginSuccessADFS.observe(viewLifecycleOwner) {
-            if (it) {
-
-                val bundle = Bundle()
-                bundle.putString("second_name", "Тороповский")
-                bundle.putString("first_name", "Никита")
-
-                mainViewModel.schedule.value = viewModel.schedule.value
-
-                findNavController().navigate(
-                    LoginFragmentDirections.actionLoginFragmentToScheduleFragment("a", "b")
-                )
-                //controller.navigate(R.id.scheduleFragment, bundle)
-                //
-            }
         }
     }
 }

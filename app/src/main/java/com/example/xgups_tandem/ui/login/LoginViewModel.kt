@@ -1,13 +1,16 @@
 package com.example.xgups_tandem.ui.login
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.xgups_tandem.UserData
 import com.example.xgups_tandem.api.ADFS.ADFS
 import com.example.xgups_tandem.api.SamGUPS.SamGUPS
 import com.example.xgups_tandem.utils.ManagerUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import okhttp3.Cookie
 import java.util.regex.Pattern
 import javax.inject.Inject
 
@@ -23,13 +26,9 @@ class LoginViewModel @Inject constructor(
         MutableLiveData<Boolean>()
     }
 
-    val firstName : MutableLiveData<String> by lazy {
-        MutableLiveData<String>()
+    val dataUser :  MutableLiveData<UserData> by lazy {
+        MutableLiveData<UserData>()
     }
-    val secondName : MutableLiveData<String> by lazy {
-        MutableLiveData<String>()
-    }
-
     val schedule : MutableLiveData<SamGUPS.ScheduleResponse> by lazy {
         MutableLiveData<SamGUPS.ScheduleResponse>()
     }
@@ -38,14 +37,9 @@ class LoginViewModel @Inject constructor(
     /** Логин в систему */
     fun login(email: String, password: String) {
         if(!validateEmail(email) && !password.isEmpty()) return
-
-        viewModelScope.launch {
-            schedule("ЭЖД91")
-        }
-
         //Коннект с АДФС
         viewModelScope.launch {
-           // loginToADFS(email,password)
+            loginToADFS(email,password)
         }
 
         //Коннект с СамГУПСом
@@ -54,12 +48,21 @@ class LoginViewModel @Inject constructor(
             val login = loginSuccessSamGUPS
 
             try {
-
-                var response = api.login(SamGUPS.AuthRequest("78567@stud.samgups.ru","123Qwe"))
-                if(response.isSuccessful)
-                {
-                    val auth = SamGUPS.convertToAuthResponse(response.body()!!)
+                var response = api.login(SamGUPS.AuthRequest(email,password))
+                if(response.isSuccessful) {
+                    val auth = response.body()!!
+                    dataUser.value = UserData(auth.human.split(' ')[0],
+                        auth.human.split(' ')[1],
+                        auth.human.split(' ')[2],
+                        auth.bookNumber,
+                        auth.group,
+                        auth.roleID,
+                        auth.course
+                    )
+                    val cookie = response.headers()["Set-Cookie"]
                     login.value = response.isSuccessful
+
+                    schedule(cookie!!,email)
                 }
             } catch (Ex : java.lang.Exception) {
                 //TODO : Надо сделать заглушку при получении таймаута
@@ -75,24 +78,16 @@ class LoginViewModel @Inject constructor(
 
         try {
             var response = api.login(ADFS.getHashMapForLogin(email, password))
-            if(response.isSuccessful) {
-                firstName.value = response.body()?.getADFSUser()?.unique_name
-                secondName.value = response.body()?.getADFSUser()?.family_name
-            }
-
             login.value = response.isSuccessful
-
         } catch (Ex : java.lang.Exception) {
         //TODO : Надо сделать заглушку при получении таймаута
         }
     }
 
-    private suspend fun schedule(group: String) {
+    private suspend fun schedule(cookie : String, username: String) {
         val api = SamGUPS.API
-
-        var response = api.schedule(SamGUPS.ScheduleRequest(group))
+        var response = api.schedule(cookie, SamGUPS.ScheduleRequest(username))
         if(response.isSuccessful) {
-
             schedule.value = SamGUPS.ScheduleResponse(response.body()!!)
         }
     }

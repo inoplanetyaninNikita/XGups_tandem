@@ -9,48 +9,46 @@ import java.time.LocalDateTime
 
 class ScheduleViewModel : ViewModel() {
 
+    //Адаптеры
     val dateList : MutableLiveData<List<DayModel>> by lazy {
         MutableLiveData<List<DayModel>>()
     }
     val lessonList : MutableLiveData<List<LessonModel>> by lazy {
         MutableLiveData<List<LessonModel>>()
     }
+    private val lessonListValue = mutableListOf<LessonModel>()
+
+    //Данные о чуваке
     val name : MutableLiveData<String> by lazy {
+        MutableLiveData<String>()
+    }
+    val group : MutableLiveData<String> by lazy {
         MutableLiveData<String>()
     }
     val image : MutableLiveData<String> by lazy {
         MutableLiveData<String>()
     }
 
-    private val lesson_list = mutableListOf<LessonModel>()
-
     init {
-        setLessonList()
         setDayList()
-    }
-
-    private fun setLessonList() {
-        lesson_list.add(LessonModel("nice","Москвичев","9319", LocalDateTime.now(),LocalDateTime.now()))
-        lessonList.value = lesson_list
+        lessonList.value = lessonListValue
     }
 
     fun viewLessonsOnDay(day : ScheduleResponse.Week.Day) {
-        lesson_list.clear()
-        for (item in day.lessons)
-        {
+        lessonListValue.clear()
+        for (item in day.lessons) {
             if (item.name.isEmpty()) continue
-            lesson_list.add(LessonModel(item.name,"Москвичев","9319", LocalDateTime.now(),LocalDateTime.now()))
+            lessonListValue.add(LessonModel(item.name,item.teacher,item.auditorium, item.timeStart, item.timeFinish))
         }
-        lessonList.value = lesson_list
+        lessonList.value = lessonListValue
     }
 
     fun clear() {
-        lesson_list.clear()
-        lessonList.value = lesson_list
+        lessonListValue.clear()
+        lessonList.value = lessonListValue
     }
 
     private fun setDayList() {
-
         val list = mutableListOf<DayModel>()
         val firstDay = LocalDateTime.now().minusDays(10)
         repeat(40) {

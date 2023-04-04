@@ -11,8 +11,7 @@
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment_to_scheduleFragment"
-            app:destination="@id/scheduleFragment"
-            app:enterAnim="@anim/slide_out_left" />
+            app:destination="@id/scheduleFragment" />
     </fragment>
     <fragment
         android:id="@+id/scheduleFragment"
@@ -21,9 +20,28 @@
         tools:layout="@layout/fragment_schedule">
         <argument
             android:name="first_name"
-            app:argType="string" />
+            app:argType="string"
+            android:defaultValue="Тест2" />
         <argument
             android:name="second_name"
-            app:argType="string" />
+            app:argType="string"
+            android:defaultValue="Тест1" />
+        <argument
+            android:name="group"
+            app:argType="string"
+            android:defaultValue="ЭЖД91" />
+        <action
+            android:id="@+id/action_scheduleFragment_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:enterAnim="@anim/nav_default_pop_enter_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.xgups_tandem.ui.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_scheduleFragment"
+            app:destination="@id/scheduleFragment" />
     </fragment>
 </navigation>
