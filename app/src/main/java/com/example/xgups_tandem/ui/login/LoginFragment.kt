@@ -43,8 +43,7 @@ class LoginFragment: BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::in
 
     override fun setObservable() {
 
-        viewModel.schedule.observe(viewLifecycleOwner)
-        {
+        viewModel.schedule.observe(viewLifecycleOwner) {
             mainViewModel.schedule.value = viewModel.schedule.value
             mainViewModel.user.value = viewModel.dataUser.value
 
@@ -53,5 +52,8 @@ class LoginFragment: BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::in
                     viewModel.dataUser.value!!.firstName)
             )
         }
+    }
+
+    override fun onBackPressed() {
     }
 }
