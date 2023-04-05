@@ -16,6 +16,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
+import androidx.room.Room
 import com.example.xgups_tandem.api.SamGUPS.SamGUPS
 import com.example.xgups_tandem.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -79,6 +80,4 @@ class MainActivity : AppCompatActivity() {
         }
         notificationManager.notify(1234, builder.build())
     }
-
-
 }

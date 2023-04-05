@@ -6,6 +6,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.room.Room
 import com.example.xgups_tandem.R
 import com.example.xgups_tandem.base.BaseFragment
 import com.example.xgups_tandem.databinding.FragmentLoginBinding
@@ -17,6 +18,9 @@ import javax.inject.Inject
 class LoginFragment: BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) {
     private val viewModel by viewModels<LoginViewModel>()
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
     override fun setListeners()  {
         binding.btnLogin.setOnClickListener {
 

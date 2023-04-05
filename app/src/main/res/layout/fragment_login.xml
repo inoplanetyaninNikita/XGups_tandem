@@ -94,13 +94,16 @@
         <Button
             android:id="@+id/btnLogin"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="20dp"
+            android:background="@drawable/border_standart"
+            android:backgroundTint="@color/xgpurple"
             android:fontFamily="@font/poppins_semibold"
-            android:minHeight="64dp"
+            android:inputType="textAutoCorrect"
             android:text="@string/login_login"
+            android:textColor="#FFFFFF"
             android:textSize="18dp"
-            app:cornerRadius="16dp" />
+            app:cornerRadius="64dp" />
 
     </LinearLayout>
 

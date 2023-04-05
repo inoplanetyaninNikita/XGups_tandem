@@ -33,6 +33,7 @@ class ScheduleViewModel : ViewModel() {
     init {
         setDayList()
         lessonList.value = lessonListValue
+
     }
     private fun setDayList() {
         val list = mutableListOf<DayModel>()
@@ -47,6 +48,7 @@ class ScheduleViewModel : ViewModel() {
 
     private lateinit var today: DayModel
     fun getToday() : DayModel = today
+
     fun viewLessonsOnDay(day : ScheduleResponse.Week.Day) {
         lessonListValue.clear()
 

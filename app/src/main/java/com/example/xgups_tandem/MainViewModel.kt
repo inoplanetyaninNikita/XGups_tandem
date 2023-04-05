@@ -2,6 +2,7 @@ package com.example.xgups_tandem
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.room.*
 import com.example.xgups_tandem.api.SamGUPS.SamGUPS
 
 class MainViewModel : ViewModel() {
@@ -12,6 +13,7 @@ class MainViewModel : ViewModel() {
         MutableLiveData<UserData>()
     }
 }
+
 data class UserData(val secondName: String,
                     val firstName: String,
                     val thirdName: String,
