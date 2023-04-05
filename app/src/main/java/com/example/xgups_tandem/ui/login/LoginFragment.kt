@@ -1,18 +1,21 @@
 package com.example.xgups_tandem.ui.login
 
+import android.annotation.SuppressLint
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnTouchListener
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.room.Room
 import com.example.xgups_tandem.R
 import com.example.xgups_tandem.base.BaseFragment
 import com.example.xgups_tandem.databinding.FragmentLoginBinding
-import com.example.xgups_tandem.utils.ManagerUtils
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class LoginFragment: BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) {
@@ -21,6 +24,8 @@ class LoginFragment: BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::in
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
     }
+
+//    @SuppressLint("ClickableViewAccessibility")
     override fun setListeners()  {
         binding.btnLogin.setOnClickListener {
 

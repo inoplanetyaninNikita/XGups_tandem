@@ -23,7 +23,7 @@
             android:layout_height="match_parent"
             android:layout_margin="20dp"
             android:layout_weight="1"
-            android:src="@mipmap/logout" />
+            android:src="@mipmap/test" />
 
         <TextView
             android:layout_width="match_parent"
@@ -34,9 +34,9 @@
             android:foregroundGravity="center_vertical"
             android:gravity="center_vertical"
             android:paddingStart="30dp"
-            android:text="Выйти из аккаунта"
+            android:text="Посмотреть оценки"
             android:textAllCaps="false"
-            android:textColor="@color/xgfail"
+            android:textColor="@color/black"
             android:textSize="18sp" />
 
     </LinearLayout>

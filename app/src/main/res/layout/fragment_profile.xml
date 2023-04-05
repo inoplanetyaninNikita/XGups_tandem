@@ -80,10 +80,20 @@
         tools:text="эжд-91" />
 
     <include
+        android:id="@+id/grade"
+        layout="@layout/item_grades"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="25dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp" />
+
+    <include
         android:id="@+id/logout"
         layout="@layout/item_logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="25dp" />
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp" />
 
 </LinearLayout>

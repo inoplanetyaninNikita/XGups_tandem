@@ -1,8 +1,12 @@
 package com.example.xgups_tandem.ui.profile
 
+import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.graphics.PorterDuff
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
@@ -25,16 +29,37 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         viewModel.group.value = mainViewModel.user.value!!.bookNumber
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun setListeners() {
         binding.backArrowProfile.setOnClickListener{
             onBackPressed()
         }
         binding.logout.root.setOnClickListener{
-            findNavController().navigate(
-                ProfileFragmentDirections.actionProfileFragmentToLoginFragment()
-            )
+            val alertDialogBuilder = AlertDialog.Builder(context)
+
+            alertDialogBuilder.setTitle("Аккаунт")
+            alertDialogBuilder.setMessage("Вы уверенны, что хотите выйти")
+            alertDialogBuilder.setCancelable(false)
+
+            alertDialogBuilder.setPositiveButton("Да") { dialog, id ->
+                findNavController().navigate(
+                    ProfileFragmentDirections.actionProfileFragmentToLoginFragment()
+                )
+                dialog.dismiss()
+            }
+            alertDialogBuilder.setNegativeButton("Нет"){ dialog, id ->
+                dialog.dismiss()
+            }
+
+// Создаем и отображаем диалог
+            val alertDialog = alertDialogBuilder.create()
+            alertDialog.show()
+        }
+        binding.grade.root.setOnClickListener{
+
         }
     }
+
     override fun setObservable() {
         viewModel.image.observe(viewLifecycleOwner) {
             binding.imageProfile2.load(it) {

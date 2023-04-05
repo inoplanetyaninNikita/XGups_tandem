@@ -96,16 +96,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="20dp"
+            android:fontFamily="@font/poppins_semibold"
             android:background="@drawable/border_standart"
             android:backgroundTint="@color/xgpurple"
-            android:fontFamily="@font/poppins_semibold"
-            android:inputType="textAutoCorrect"
             android:text="@string/login_login"
             android:textColor="#FFFFFF"
             android:textSize="18dp"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
             app:cornerRadius="64dp" />
 
     </LinearLayout>
 
 
 </LinearLayout>
+    <!--            android:background="@drawable/border_standart"     android:backgroundTint="@color/xgpurple"-->
