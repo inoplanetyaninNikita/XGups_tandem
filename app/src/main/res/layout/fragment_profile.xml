@@ -7,11 +7,20 @@
     android:orientation="vertical"
     tools:context=".ui.profile.ProfileFragment">
 
+    <ImageView
+        android:id="@+id/backArrowProfile"
+        android:layout_width="25dp"
+        android:layout_height="20dp"
+
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:src="@mipmap/leftarrow" />
+
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="40dp">
+        android:layout_marginTop="-20dp">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imageProfile2"
@@ -69,5 +78,12 @@
         android:textAllCaps="true"
         android:textSize="18sp"
         tools:text="эжд-91" />
+
+    <include
+        android:id="@+id/logout"
+        layout="@layout/item_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="25dp" />
 
 </LinearLayout>

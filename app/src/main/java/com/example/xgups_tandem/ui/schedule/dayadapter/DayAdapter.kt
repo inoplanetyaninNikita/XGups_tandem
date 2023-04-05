@@ -90,6 +90,7 @@ class DayAdapter : RecyclerView.Adapter<DayAdapter.Holder>()  {
             selectItem: (Holder, HolderData) -> Unit //событие для адаптера для изменения выделенного итема
         ) = with(binding)
         {
+            if (data.typeNow == SELECT) selectItem.invoke(this@Holder, data)
             this@Holder.data = data
 
             val num = date.localDate.dayOfMonth.toString()
@@ -103,6 +104,8 @@ class DayAdapter : RecyclerView.Adapter<DayAdapter.Holder>()  {
 
             dayName.text = name
             dayNumber.text = num
+
+
 
             updateColor()
         }
@@ -184,3 +187,10 @@ class DayAdapter : RecyclerView.Adapter<DayAdapter.Holder>()  {
         notifyDataSetChanged()
     }
 }
+
+data class Day(
+    val isHoliday: Boolean,
+    val isSelected: Boolean,
+    val number: String,
+    val dayOfWeek: String
+)

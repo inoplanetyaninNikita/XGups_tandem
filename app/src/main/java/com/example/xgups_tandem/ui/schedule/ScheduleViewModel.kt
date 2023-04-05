@@ -5,57 +5,62 @@ import androidx.lifecycle.ViewModel
 import com.example.xgups_tandem.ui.schedule.dayadapter.DayModel
 import com.example.xgups_tandem.api.SamGUPS.SamGUPS.ScheduleResponse
 import com.example.xgups_tandem.ui.schedule.lessonAdapter.LessonModel
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 class ScheduleViewModel : ViewModel() {
+
+    //Адаптеры
     val dateList : MutableLiveData<List<DayModel>> by lazy {
         MutableLiveData<List<DayModel>>()
     }
     val lessonList : MutableLiveData<List<LessonModel>> by lazy {
         MutableLiveData<List<LessonModel>>()
     }
+    private val lessonListValue = mutableListOf<LessonModel>()
+
+    //Данные о чуваке
     val name : MutableLiveData<String> by lazy {
+        MutableLiveData<String>()
+    }
+    val group : MutableLiveData<String> by lazy {
         MutableLiveData<String>()
     }
     val image : MutableLiveData<String> by lazy {
         MutableLiveData<String>()
     }
-    private val lesson_list = mutableListOf<LessonModel>()
+
     init {
-        setLessonList()
         setDayList()
-    }
+        lessonList.value = lessonListValue
 
-    private fun setLessonList()
-    {
-        lesson_list.add(LessonModel("nice","Москвичев","9319", LocalDateTime.now(),LocalDateTime.now()))
-        lessonList.value = lesson_list
     }
-    fun viewLessonsOnDay(day : ScheduleResponse.Week.Day)
-    {
-        lesson_list.clear()
-        for (item in day.lessons)
-        {
-            lesson_list.add(LessonModel(item.name,"Москвичев","9319", LocalDateTime.now(),LocalDateTime.now()))
-        }
-        lessonList.value = lesson_list
-    }
-    fun clear()
-    {
-        lesson_list.clear()
-        lessonList.value = lesson_list
-    }
-
-    private fun setDayList()
-    {
+    private fun setDayList() {
         val list = mutableListOf<DayModel>()
-        val firstDay = LocalDateTime.now().minusDays(3)
-
+        val firstDay = LocalDateTime.now().minusDays(10)
         repeat(40) {
-            list.add(DayModel(firstDay.plusDays(it.toLong())))
+            val day = DayModel(firstDay.plusDays(it.toLong()))
+            if(day.localDate.dayOfYear == LocalDate.now().dayOfYear) today = day
+            list.add(day)
         }
         dateList.value = list
     }
 
+    private lateinit var today: DayModel
+    fun getToday() : DayModel = today
+
+    fun viewLessonsOnDay(day : ScheduleResponse.Week.Day) {
+        lessonListValue.clear()
+
+        for (item in day.lessons) {
+            if (item.name.isEmpty()) continue
+            lessonListValue.add(LessonModel(item.name,item.teacher,item.auditorium, item.timeStart, item.timeFinish))
+        }
+        lessonList.value = lessonListValue
+    }
+    fun clear() {
+        lessonListValue.clear()
+        lessonList.value = lessonListValue
+    }
 
 }

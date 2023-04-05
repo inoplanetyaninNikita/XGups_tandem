@@ -4,4 +4,15 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
+
+    <!--  BottomSheetStyles -->
+    <style name="BottomSheetDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/bottom_dialog_slide_up</item>
+        <item name="android:windowExitAnimation">@anim/bottom_dialog_slide_down</item>
+    </style>
+
+    <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bgr_bottom_sheet</item>
+    </style>
+    <!--  /BottomSheetStyles -->
 </resources>
