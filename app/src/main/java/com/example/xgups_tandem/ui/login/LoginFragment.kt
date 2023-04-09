@@ -10,6 +10,7 @@ import android.view.View
 import android.view.View.OnTouchListener
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.xgups_tandem.R
 import com.example.xgups_tandem.base.BaseFragment
@@ -23,6 +24,8 @@ class LoginFragment: BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::in
 
 //    @SuppressLint("ClickableViewAccessibility")
     override fun setListeners()  {
+        viewModel.mainViewModel = mainViewModel
+
         binding.btnLogin.setOnClickListener {
 
             //(activity as MainActivity).show()
@@ -56,6 +59,11 @@ class LoginFragment: BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::in
                 LoginFragmentDirections.actionLoginFragmentToScheduleFragment(viewModel.dataUser.value!!.secondName,
                     viewModel.dataUser.value!!.firstName)
             )
+
+        }
+
+        viewModel.marks.observe(viewLifecycleOwnerLiveData.value!!){
+            mainViewModel.marks.value = it;
         }
     }
 

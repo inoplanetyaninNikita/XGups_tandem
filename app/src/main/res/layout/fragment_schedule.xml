@@ -33,22 +33,10 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/group"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="-10dp"
-                android:fontFamily="@font/poppins_bold"
-                android:text="@string/schedule_group"
-                android:textAllCaps="true"
-                android:textSize="18sp"
-                tools:text="эжд-91" />
-
-            <TextView
                 android:id="@+id/names"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
                 android:baselineAligned="false"
                 android:fontFamily="@font/poppins_bold"
                 android:text="@string/schedule_names"
@@ -58,6 +46,17 @@
                 android:textSize="24sp"
                 android:textStyle="normal"
                 tools:text="Тороповский Никита" />
+
+            <TextView
+                android:id="@+id/group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-5dp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/schedule_group"
+                android:textAllCaps="true"
+                android:textSize="18sp"
+                tools:text="эжд-91" />
 
         </LinearLayout>
 

@@ -38,7 +38,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             logoutAlert()
         }
         binding.grade.root.setOnClickListener{
-
+            findNavController().navigate(
+                ProfileFragmentDirections.actionProfileFragmentToGradesFragment()
+            )
         }
     }
 
@@ -50,9 +52,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                 transformations(CircleCropTransformation())
             }
         }
+
         viewModel.name.observe(viewLifecycleOwner){
             binding.names2.text  = viewModel.name.value
         }
+
         viewModel.group.observe(viewLifecycleOwner){
             binding.group2.text  = viewModel.group.value
         }

@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.xgups_tandem.MainViewModel
 import com.example.xgups_tandem.UserData
 import com.example.xgups_tandem.api.ADFS.ADFS
 import com.example.xgups_tandem.api.SamGUPS.SamGUPS
@@ -38,6 +39,7 @@ class LoginViewModel @Inject constructor(
 
     var data : List<List<String>> = emptyList()
 
+    lateinit var mainViewModel: MainViewModel
     /** Логин в систему */
     fun login(email: String, password: String) {
         if(!validateEmail(email) && !password.isEmpty()) return
@@ -100,7 +102,7 @@ class LoginViewModel @Inject constructor(
         val api = SamGUPS.API
         val response = api.marks(cookie, SamGUPS.MarksRequest(username,roleID))
         if(response.isSuccessful)
-            marks.value = response.body()!!
+            mainViewModel.marks.value = response.body()!!
     }
 
     fun validateEmail(email: String): Boolean {

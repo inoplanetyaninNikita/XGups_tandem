@@ -1,5 +1,6 @@
 package com.example.xgups_tandem.api.SamGUPS
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.xgups_tandem.BuildConfig
@@ -7,6 +8,7 @@ import com.example.xgups_tandem.api.convertJsonToClass
 import com.google.gson.GsonBuilder
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
+import kotlinx.parcelize.Parcelize
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
@@ -230,9 +232,10 @@ interface SamGUPS {
     @POST("student/marks/")
     suspend fun marks(@Header ("Cookie") cookie: String,
                       @Body body : MarksRequest) : Response<List<MarkResponse>>
+    @Parcelize
     data class MarkResponse(val documentName : String,
                             val name : String,
-                            val mark : String)
+                            val mark : String) : Parcelable
 
     companion object {
 

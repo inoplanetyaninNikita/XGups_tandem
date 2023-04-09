@@ -12,9 +12,15 @@ import com.example.xgups_tandem.R
 import com.example.xgups_tandem.base.BaseFragment
 import com.example.xgups_tandem.databinding.FragmentGradesBinding
 import com.example.xgups_tandem.databinding.FragmentLoginBinding
+import com.example.xgups_tandem.ui.grades.adapter.GradeAdapter
 
 class GradesFragment : BaseFragment<FragmentGradesBinding>(FragmentGradesBinding::inflate) {
     val viewModel by viewModels<GradesViewModel>()
-
-
+    val adapter = GradeAdapter()
+    override fun setAdapter() {
+        binding.rv.adapter = adapter;
+    }
+    override fun setObservable() {
+        adapter.submitList(mainViewModel.marks.value)
+    }
 }
