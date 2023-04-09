@@ -49,8 +49,11 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
 
 
-    implementation "androidx.room:room-runtime:2.5.1"
-    kapt "androidx.room:room-compiler:2.5.1"
+    def room_version = "2.4.0"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
 
     //Мое
     def navigation_version = '2.5.3'

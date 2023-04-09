@@ -9,17 +9,22 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.room.Room
 import com.example.xgups_tandem.api.SamGUPS.SamGUPS
 import com.example.xgups_tandem.databinding.ActivityMainBinding
+import com.example.xgups_tandem.room.AppDatabase
+import com.example.xgups_tandem.room.User
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -38,6 +43,21 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        val db = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java, "database-name"
+        ).build()
+        val userDao = db.userDao()
+        lifecycleScope.launch(Dispatchers.IO){
+//             userDao.insertAll(User(0,"Toropovsky", "Nikita"))
+        }
+        lifecycleScope.launch(Dispatchers.IO){
+            val users: List<User> = userDao.getAll()
+            Log.d("fq",users.size.toString())
+        }
+
+        Log.d("fq","fqf")
     }
 
     //НАДО МУСОР УБРАТЬ

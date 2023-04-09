@@ -1,5 +1,7 @@
 package com.example.xgups_tandem.api.SamGUPS
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.example.xgups_tandem.BuildConfig
 import com.example.xgups_tandem.api.convertJsonToClass
 import com.google.gson.GsonBuilder
@@ -27,12 +29,15 @@ interface SamGUPS {
      * */
     data class AuthRequest(val username: String,
                            val password: String)
+
+    @Entity
     /** Тип нужен, чтобы привести данные с [login] в нормальный вид. Нужно воспользоваться [convertToAuthResponse]. */
-    data class AuthResponse(val roleID : String,
-                            val human : String,
-                            val bookNumber : String,
-                            val group : String,
-                            val course : String)
+    data class AuthResponse(
+        val roleID : String,
+        val human : String,
+        val bookNumber : String,
+        val group : String,
+        val course : String)
     @POST("information/")
     /** Чтобы привести [Response] к определенному типу, нужно прогнать его через [convertToAuthResponse]. */
     suspend fun login(@Body auth : AuthRequest): Response<AuthResponse>
