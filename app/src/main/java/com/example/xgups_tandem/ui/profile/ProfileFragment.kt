@@ -62,8 +62,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         }
     }
 
-    private fun logoutAlert()
-    {
+    private fun logoutAlert() {
         val alertDialogBuilder = AlertDialog.Builder(context)
 
         alertDialogBuilder.setTitle("Аккаунт")

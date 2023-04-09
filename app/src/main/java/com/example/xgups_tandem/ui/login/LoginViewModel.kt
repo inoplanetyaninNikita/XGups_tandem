@@ -14,6 +14,7 @@ import kotlinx.coroutines.launch
 import okhttp3.Cookie
 import java.util.regex.Pattern
 import javax.inject.Inject
+import kotlin.math.log
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
@@ -54,6 +55,10 @@ class LoginViewModel @Inject constructor(
         }
     }
 
+    fun canPressToButton(login : String, password: String) : Boolean {
+        if (validateEmail(login) && password.isNotEmpty()) return true
+        return false
+    }
     private suspend fun loginToADFS(email: String, password: String) {
         val api = ADFS.API // Клиент АДФС
         val login = loginSuccessADFS //Переменная в которую кинем результаты логина
@@ -62,7 +67,7 @@ class LoginViewModel @Inject constructor(
             var response = api.login(ADFS.getHashMapForLogin(email, password))
             login.value = response.isSuccessful
         } catch (Ex : java.lang.Exception) {
-        //TODO : Надо сделать заглушку при получении таймаута
+            login.value = false
         }
     }
 
@@ -88,7 +93,7 @@ class LoginViewModel @Inject constructor(
                 marks(cookie,email,auth.roleID);
             }
         } catch (Ex : java.lang.Exception) {
-            //TODO : Надо сделать заглушку при получении таймаута
+            login.value = false
         }
     }
     private suspend fun schedule(cookie : String, username: String) {

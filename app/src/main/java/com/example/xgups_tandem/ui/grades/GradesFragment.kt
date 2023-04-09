@@ -1,11 +1,14 @@
 package com.example.xgups_tandem.ui.grades
 
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.xgups_tandem.R
+import com.example.xgups_tandem.api.SamGUPS.SamGUPS
 import com.example.xgups_tandem.base.BaseFragment
 import com.example.xgups_tandem.databinding.FragmentGradesBinding
 import com.example.xgups_tandem.ui.grades.adapter.GradeAdapter
@@ -20,10 +23,6 @@ class GradesFragment : BaseFragment<FragmentGradesBinding>(FragmentGradesBinding
     }
     override fun setAdapter() {
         binding.rv.adapter = adapter;
-
-        val values : Array<String> = arrayOf("USD", "UAH", "GBD", "EUR", "BIT", "RUB")
-        val adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item, values)
-        binding.spinner.adapter = adapter
     }
     override fun setObservable() {
         binding.names.text = "${mainViewModel.user.value?.secondName} ${mainViewModel.user.value?.firstName}"
@@ -34,11 +33,46 @@ class GradesFragment : BaseFragment<FragmentGradesBinding>(FragmentGradesBinding
             transformations(CircleCropTransformation())
         }
 
-
+//        mainViewModel.marks.value
 
         adapter.submitList(mainViewModel.marks.value)
+        spinnerConfigure()
+
         mainViewModel.marks.observe(viewLifecycleOwner){
             adapter.submitList(mainViewModel.marks.value)
+            spinnerConfigure()
+        }
+
+//
+    }
+    fun spinnerConfigure()
+    {
+        if(mainViewModel.marks.value != null) {
+            val values = arrayListOf<String>()
+            for (item in mainViewModel.marks.value!!)
+            {
+                if(!values.contains(item.documentName)) {
+                    values.add(item.documentName)
+                }
+            }
+            val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, values)
+            binding.spinner.adapter = spinnerAdapter
+
+            binding.spinner?.onItemSelectedListener = object :  AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val list = mutableListOf<SamGUPS.MarkResponse>()
+                for (item in mainViewModel.marks.value!!)
+                {
+                    if(item.documentName == values[position])
+                        list.add(item)
+                }
+                adapter.submitList(list)
+            }
+        }
         }
     }
 }

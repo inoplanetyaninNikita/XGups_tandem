@@ -36,7 +36,7 @@
                 android:text="fqfq"
                 android:textAllCaps="false"
                 android:textColor="@color/xgpefecto"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tv_mark"
@@ -50,7 +50,7 @@
                 android:text="Неявка по неизвестной причине"
                 android:textAllCaps="false"
                 android:textColor="@color/xggray"
-                android:textSize="14sp" />
+                android:textSize="13sp" />
 
             <ImageView
                 android:id="@+id/iv_mark"
