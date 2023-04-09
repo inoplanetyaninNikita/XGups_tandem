@@ -5,6 +5,8 @@ import android.graphics.Color
 import android.os.Parcelable
 import android.util.Log
 import androidx.core.content.ContextCompat
+import coil.load
+import coil.transform.CircleCropTransformation
 import com.example.xgups_tandem.R
 import com.example.xgups_tandem.api.SamGUPS.SamGUPS
 import com.example.xgups_tandem.base.adapter.BaseListAdapter
@@ -20,6 +22,8 @@ class GradeAdapter: BaseListAdapter<SamGUPS.MarkResponse>()
             binding.run {
                 binding.tvName.text = it.name
                 binding.tvMark.text = it.mark
+
+
                 when(it.mark) {
                     "Отлично"->  {
                         ivMark.setImageDrawable(ContextCompat.getDrawable(binding.root.context,R.mipmap.badgecheck))
