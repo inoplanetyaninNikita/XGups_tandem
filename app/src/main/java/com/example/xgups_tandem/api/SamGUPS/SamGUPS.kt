@@ -23,25 +23,24 @@ import java.util.concurrent.TimeUnit
 
 
 interface SamGUPS {
-    /**Отправляем данные на сервер для авторизации
-     * @param username email.
-     * @param password пароль.
-     * */
+
     data class AuthRequest(val username: String,
                            val password: String)
-
-    @Entity
-    /** Тип нужен, чтобы привести данные с [login] в нормальный вид. Нужно воспользоваться [convertToAuthResponse]. */
+    @POST("information/")
+    suspend fun login(@Body auth : AuthRequest): Response<AuthResponse>
     data class AuthResponse(
         val roleID : String,
         val human : String,
         val bookNumber : String,
         val group : String,
         val course : String)
-    @POST("information/")
-    /** Чтобы привести [Response] к определенному типу, нужно прогнать его через [convertToAuthResponse]. */
-    suspend fun login(@Body auth : AuthRequest): Response<AuthResponse>
+
+
+
     data class ScheduleRequest(val username: String)
+    @POST("student/schedule/")
+    suspend fun schedule(@Header ("Cookie") cookie: String,
+                         @Body body : ScheduleRequest) : Response<List<List<String>>>
     class ScheduleResponse(response : List<List<String>>) {
         var firstWeek : Week? = null
         var secondWeek : Week? = null
@@ -50,9 +49,9 @@ interface SamGUPS {
         init {
             var week = mutableListOf<List<String>>()
 //            try {
-                for (i in 0..5)
-                    week.add(response[i])
-                firstWeek = Week(week)
+            for (i in 0..5)
+                week.add(response[i])
+            firstWeek = Week(week)
 //            } catch (ex : Exception){}
 
             week = mutableListOf()
@@ -65,9 +64,9 @@ interface SamGUPS {
 
             week = mutableListOf()
 //            try {
-                for (i in 12..17)
-                    week.add(response[i])
-                thirdWeek = Week(week)
+            for (i in 12..17)
+                week.add(response[i])
+            thirdWeek = Week(week)
 //            } catch (ex : Exception){}
 
         }
@@ -223,9 +222,18 @@ interface SamGUPS {
             return null
         }
     }
-    @POST("student/schedule/")
-    suspend fun schedule(@Header ("Cookie") cookie: String,
-                         @Body body : ScheduleRequest) : Response<List<List<String>>>//Response<List<List<String>>>
+
+
+
+    data class MarksRequest(val username: String,
+                            val roleID: String)
+    @POST("student/marks/")
+    suspend fun marks(@Header ("Cookie") cookie: String,
+                      @Body body : MarksRequest) : Response<List<MarkResponse>>
+    data class MarkResponse(val documentName : String,
+                            val name : String,
+                            val mark : String)
+
     companion object {
 
         private val converter: GsonConverterFactory = GsonConverterFactory.create(GsonBuilder().setLenient().create())

@@ -28,8 +28,10 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(FragmentScheduleB
         viewModel.name.value = "${mainViewModel.user.value!!.secondName} ${mainViewModel.user.value!!.firstName}"
         viewModel.group.value = mainViewModel.user.value!!.group
 
-        val today = mainViewModel.schedule.value!!.getDayByDate(LocalDate.now())!!
-        viewModel.viewLessonsOnDay(today)
+        val today = mainViewModel.schedule.value!!.getDayByDate(LocalDate.now())
+        today?.let {
+            viewModel.viewLessonsOnDay(it)
+        }
         binding.daysRecycler.scrollToPosition(viewModel.dateList.value!!.indexOf(viewModel.getToday()) - 2)
     }
 

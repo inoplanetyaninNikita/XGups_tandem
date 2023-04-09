@@ -21,10 +21,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class LoginFragment: BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) {
     private val viewModel by viewModels<LoginViewModel>()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
-
 //    @SuppressLint("ClickableViewAccessibility")
     override fun setListeners()  {
         binding.btnLogin.setOnClickListener {

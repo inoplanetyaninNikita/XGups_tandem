@@ -32,8 +32,12 @@ class LoginViewModel @Inject constructor(
     val schedule : MutableLiveData<SamGUPS.ScheduleResponse> by lazy {
         MutableLiveData<SamGUPS.ScheduleResponse>()
     }
+    val marks : MutableLiveData<List<SamGUPS.MarkResponse>> by lazy {
+        MutableLiveData<List<SamGUPS.MarkResponse>>()
+    }
 
     var data : List<List<String>> = emptyList()
+
     /** Логин в систему */
     fun login(email: String, password: String) {
         if(!validateEmail(email) && !password.isEmpty()) return
@@ -44,34 +48,10 @@ class LoginViewModel @Inject constructor(
 
         //Коннект с СамГУПСом
         viewModelScope.launch {
-            val api = SamGUPS.API
-            val login = loginSuccessSamGUPS
-
-            try {
-                var response = api.login(SamGUPS.AuthRequest(email,password))
-                if(response.isSuccessful) {
-                    val auth = response.body()!!
-                    dataUser.value = UserData(auth.human.split(' ')[0],
-                        auth.human.split(' ')[1],
-                        auth.human.split(' ')[2],
-                        auth.bookNumber,
-                        auth.group,
-                        auth.roleID,
-                        auth.course
-                    )
-                    val cookie = response.headers()["Set-Cookie"]
-                    login.value = response.isSuccessful
-
-                    schedule(cookie!!,email)
-                }
-            } catch (Ex : java.lang.Exception) {
-                //TODO : Надо сделать заглушку при получении таймаута
-            }
+            loginToGups(email, password)
         }
     }
-    /** *(Временное решение).*
-     * Подключаемся к [ADFS], если все хорошо, можно выкидывать в расписание.
-     *  */
+
     private suspend fun loginToADFS(email: String, password: String) {
         val api = ADFS.API // Клиент АДФС
         val login = loginSuccessADFS //Переменная в которую кинем результаты логина
@@ -84,15 +64,45 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    private suspend fun schedule(cookie : String, username: String) {
+    private suspend fun loginToGups(email: String, password: String) {
         val api = SamGUPS.API
-        var response = api.schedule(cookie, SamGUPS.ScheduleRequest(username))
-        if(response.isSuccessful) {
-            schedule.value = SamGUPS.ScheduleResponse(response.body()!!)
+        val login = loginSuccessSamGUPS
+        try {
+            val response = api.login(SamGUPS.AuthRequest(email,password))
+            if(response.isSuccessful) {
+                val auth = response.body()!!
+                dataUser.value = UserData(auth.human.split(' ')[0],
+                    auth.human.split(' ')[1],
+                    auth.human.split(' ')[2],
+                    auth.bookNumber,
+                    auth.group,
+                    auth.roleID,
+                    auth.course
+                )
+                val cookie = response.headers()["Set-Cookie"]!!
+                login.value = response.isSuccessful
+
+                schedule(cookie,email)
+                marks(cookie,email,auth.roleID);
+            }
+        } catch (Ex : java.lang.Exception) {
+            //TODO : Надо сделать заглушку при получении таймаута
         }
     }
+    private suspend fun schedule(cookie : String, username: String) {
+        val api = SamGUPS.API
+        val response = api.schedule(cookie, SamGUPS.ScheduleRequest(username))
+        if(response.isSuccessful)
+            schedule.value = SamGUPS.ScheduleResponse(response.body()!!)
 
-    /** Валидатор емайла Regex */
+    }
+    private suspend fun marks(cookie: String, username: String, roleID: String) {
+        val api = SamGUPS.API
+        val response = api.marks(cookie, SamGUPS.MarksRequest(username,roleID))
+        if(response.isSuccessful)
+            marks.value = response.body()!!
+    }
+
     fun validateEmail(email: String): Boolean {
         val emailValidator = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" +
                 "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,64})$"

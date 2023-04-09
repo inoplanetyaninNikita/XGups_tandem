@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="20dp"
+    app:cardBackgroundColor="#F2F2F2"
+    app:cardCornerRadius="15dp"
+    app:cardElevation="0dp"
+    app:cardMaxElevation="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="?attr/selectableItemBackground"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:fontFamily="@font/poppins_bold"
+                android:foregroundGravity="center_vertical"
+                android:gravity="center_vertical"
+                android:paddingStart="30dp"
+                android:text="Иностранный язык"
+                android:textAllCaps="false"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:fontFamily="@font/poppins"
+                android:foregroundGravity="center_vertical"
+                android:gravity="center_vertical"
+                android:paddingStart="30dp"
+                android:text="Зачет"
+                android:textAllCaps="false"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:hapticFeedbackEnabled="false"
+                android:scaleType="centerInside"
+                android:scaleX="0.5"
+                android:scaleY="0.5"
+                android:tint="#60A66A"
+                tools:srcCompat="@mipmap/badgecheck" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

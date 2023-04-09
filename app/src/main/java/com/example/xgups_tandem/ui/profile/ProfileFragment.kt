@@ -35,25 +35,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             onBackPressed()
         }
         binding.logout.root.setOnClickListener{
-            val alertDialogBuilder = AlertDialog.Builder(context)
-
-            alertDialogBuilder.setTitle("Аккаунт")
-            alertDialogBuilder.setMessage("Вы уверенны, что хотите выйти")
-            alertDialogBuilder.setCancelable(false)
-
-            alertDialogBuilder.setPositiveButton("Да") { dialog, id ->
-                findNavController().navigate(
-                    ProfileFragmentDirections.actionProfileFragmentToLoginFragment()
-                )
-                dialog.dismiss()
-            }
-            alertDialogBuilder.setNegativeButton("Нет"){ dialog, id ->
-                dialog.dismiss()
-            }
-
-// Создаем и отображаем диалог
-            val alertDialog = alertDialogBuilder.create()
-            alertDialog.show()
+            logoutAlert()
         }
         binding.grade.root.setOnClickListener{
 
@@ -74,5 +56,27 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         viewModel.group.observe(viewLifecycleOwner){
             binding.group2.text  = viewModel.group.value
         }
+    }
+
+    private fun logoutAlert()
+    {
+        val alertDialogBuilder = AlertDialog.Builder(context)
+
+        alertDialogBuilder.setTitle("Аккаунт")
+        alertDialogBuilder.setMessage("Вы уверены, что хотите выйти")
+        alertDialogBuilder.setCancelable(false)
+
+        alertDialogBuilder.setPositiveButton("Да") { dialog, id ->
+            findNavController().navigate(
+                ProfileFragmentDirections.actionProfileFragmentToLoginFragment()
+            )
+            dialog.dismiss()
+        }
+        alertDialogBuilder.setNegativeButton("Нет"){ dialog, id ->
+            dialog.dismiss()
+        }
+
+        val alertDialog = alertDialogBuilder.create()
+        alertDialog.show()
     }
 }

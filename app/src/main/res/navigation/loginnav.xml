@@ -49,5 +49,17 @@
             android:id="@+id/action_profileFragment_to_loginFragment"
             app:destination="@id/loginFragment"
             app:launchSingleTop="false" />
+        <action
+            android:id="@+id/action_profileFragment_to_gradesFragment"
+            app:destination="@id/gradesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/gradesFragment"
+        android:name="com.example.xgups_tandem.ui.grades.GradesFragment"
+        android:label="fragment_grades"
+        tools:layout="@layout/fragment_grades" >
+        <action
+            android:id="@+id/action_gradesFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
 </navigation>
