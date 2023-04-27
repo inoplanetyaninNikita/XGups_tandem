@@ -38,9 +38,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             logoutAlert()
         }
         binding.grade.root.setOnClickListener{
+//            findNavController().navigate(
+//                ProfileFragmentDirections.actionProfileFragmentToGradesFragment()
+//            )
             findNavController().navigate(
-                ProfileFragmentDirections.actionProfileFragmentToGradesFragment()
+                ProfileFragmentDirections.actionProfileFragmentToHelpFragment()
             )
+
         }
     }
 

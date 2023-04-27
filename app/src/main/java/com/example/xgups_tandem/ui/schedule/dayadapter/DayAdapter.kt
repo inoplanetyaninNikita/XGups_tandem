@@ -5,6 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.xgups_tandem.R
+import com.example.xgups_tandem.api.SamGUPS.SamGUPS
+import com.example.xgups_tandem.base.adapter.BaseListAdapter
 import com.example.xgups_tandem.databinding.ItemDayBinding
 import com.example.xgups_tandem.ui.schedule.ScheduleFragment
 import java.time.LocalDateTime
@@ -19,8 +21,7 @@ class DayAdapter : RecyclerView.Adapter<DayAdapter.Holder>()  {
     /** Лист для отображения. */
     private lateinit var dateList : List<DayModel>
     /**Прикрепление коллекции.*/
-    fun setListOnAdapter(list : List<DayModel>)
-    {
+    fun setListOnAdapter(list : List<DayModel>) {
         dateList = list
         dateList
         setDataListOnAdapter()
@@ -29,18 +30,15 @@ class DayAdapter : RecyclerView.Adapter<DayAdapter.Holder>()  {
     /**Коллекция для хранения данных View. */
     private lateinit var data : MutableList<HolderData>
     /**Создание пустой коллекции для данных View.*/
-    private fun setDataListOnAdapter()
-    {
+    private fun setDataListOnAdapter() {
         val today = LocalDateTime.now().dayOfYear
         data = emptyList<HolderData>().toMutableList()
         repeat(dateList.size)
         {
-            if(dateList[it].localDate.dayOfYear == today)
-            {
+            if(dateList[it].localDate.dayOfYear == today) {
                 data.add(HolderData(1,1))
             }
-            else
-            {
+            else {
                 data.add(HolderData(0,0))
             }
 
@@ -194,3 +192,10 @@ data class Day(
     val number: String,
     val dayOfWeek: String
 )
+
+class DaySeregaAdapter : BaseListAdapter<DayModel>() {
+    override fun build() {
+        TODO("Not yet implemented")
+    }
+
+}

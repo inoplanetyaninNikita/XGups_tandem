@@ -45,9 +45,13 @@ class LoginFragment: BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::in
         viewModel.mainViewModel = mainViewModel
 
         binding.btnLogin.setOnClickListener {
+//            viewModel.login(
+//                binding.email.text.toString(),
+//                binding.password.text.toString()
+//            )
             viewModel.login(
-                binding.email.text.toString(),
-                binding.password.text.toString()
+                "78567@stud.samgups.ru",
+                "123Qwe"
             )
         }
         binding.email.setOnFocusChangeListener { _, it ->
@@ -96,6 +100,7 @@ class LoginFragment: BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::in
     private fun loginButton() {
         val login = viewModel.canPressToButton(binding.email.text.toString(),
             binding.password.text.toString())
+
         binding.btnLogin.isEnabled = login
         if (login)
             binding.btnLogin.backgroundTintList =  ColorStateList.valueOf(ContextCompat.getColor(binding.root.context, R.color.xgpurple))

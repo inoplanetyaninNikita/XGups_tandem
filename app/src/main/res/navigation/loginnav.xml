@@ -52,6 +52,9 @@
         <action
             android:id="@+id/action_profileFragment_to_gradesFragment"
             app:destination="@id/gradesFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_helpFragment"
+            app:destination="@id/helpFragment" />
     </fragment>
     <fragment
         android:id="@+id/gradesFragment"
@@ -60,6 +63,15 @@
         tools:layout="@layout/fragment_grades" >
         <action
             android:id="@+id/action_gradesFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/helpFragment"
+        android:name="com.example.xgups_tandem.ui.HelpFragment"
+        android:label="fragment_helpgpt"
+        tools:layout="@layout/fragment_helpgpt" >
+        <action
+            android:id="@+id/action_helpFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
     </fragment>
 </navigation>
