@@ -17,6 +17,7 @@
         android:text="XGupsGPT" />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cvChatMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -34,12 +35,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine"
+                android:maxWidth="325dp"
                 android:paddingLeft="15dp"
                 android:paddingTop="15dp"
                 android:paddingEnd="15dp"
                 android:paddingRight="15dp"
                 android:paddingBottom="15dp"
-                android:text="привет"
+                android:text="Хей"
                 android:textColor="@color/black" />
 
             <androidx.cardview.widget.CardView

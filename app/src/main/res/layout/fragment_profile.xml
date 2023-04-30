@@ -46,7 +46,6 @@
             android:scaleX="1"
             android:scaleY="1"
             android:src="@mipmap/camera"
-            android:visibility="invisible"
             app:shapeAppearanceOverlay="@style/circleImageView"
             app:strokeColor="@android:color/darker_gray" />
 
