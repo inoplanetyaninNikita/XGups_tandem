@@ -88,6 +88,7 @@ class LoginFragment: BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::in
         viewModel.schedule.observe(viewLifecycleOwner) {
             mainViewModel.schedule.value = viewModel.schedule.value
             mainViewModel.user.value = viewModel.dataUser.value
+            mainViewModel.login.value = binding.email.text.toString().split("@")[0]
 
             findNavController().navigate(
                 LoginFragmentDirections.actionLoginFragmentToScheduleFragment(viewModel.dataUser.value!!.secondName,

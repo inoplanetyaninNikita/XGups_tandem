@@ -12,11 +12,12 @@ class MainViewModel : ViewModel() {
     val user : MutableLiveData<UserData> by lazy {
         MutableLiveData<UserData>()
     }
-
     val marks : MutableLiveData<List<SamGUPS.MarkResponse>> by lazy {
         MutableLiveData<List<SamGUPS.MarkResponse>>()
     }
-
+    val login : MutableLiveData<String> by lazy {
+        MutableLiveData<String>()
+    }
 }
 
 data class UserData(val secondName: String,

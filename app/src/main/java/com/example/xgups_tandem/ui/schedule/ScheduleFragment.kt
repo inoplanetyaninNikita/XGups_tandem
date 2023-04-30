@@ -17,14 +17,13 @@ import java.time.LocalDate
 @AndroidEntryPoint
 class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(FragmentScheduleBinding::inflate)  {
     private val viewModel by viewModels<ScheduleViewModel>()
-
     private val dayAdapter = DayAdapter()
     private val lessonAdapter = ScheduleLessonAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.image.value = "https://sun7-13.userapi.com/impg/z2nfUVtnV_hFAaFEeN_oC0A7Iig22BRk1uXn_w/vKNF080jniU.jpg?size=1215x2160&quality=95&sign=cd8d8575e08036e92d9f79ce5a3b99cb&type=album"
+        viewModel.image.value = getProfileLogo()
         viewModel.name.value = "${mainViewModel.user.value!!.secondName} ${mainViewModel.user.value!!.firstName}"
         viewModel.group.value = mainViewModel.user.value!!.group
 
@@ -53,19 +52,17 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(FragmentScheduleB
     }
 
     override fun setObservable() {
-
         viewModel.name.observe(viewLifecycleOwner) {
             binding.names.text  = binding.root.context.resources.getString(R.string.schedule_names,it)
         }
-
         viewModel.image.observe(viewLifecycleOwner) {
             binding.imageProfile.load(it) {
-                crossfade(true)
+                crossfade(250)
                 placeholder(R.mipmap.user)
+                error(R.mipmap.user)
                 transformations(CircleCropTransformation())
             }
         }
-
         viewModel.group.observe(viewLifecycleOwner) {
             binding.group.text = binding.root.context.resources.getString(R.string.schedule_group,it)
         }

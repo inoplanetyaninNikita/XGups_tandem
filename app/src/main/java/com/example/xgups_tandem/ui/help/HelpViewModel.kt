@@ -1,5 +1,6 @@
 package com.example.xgups_tandem.ui.help
 
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope

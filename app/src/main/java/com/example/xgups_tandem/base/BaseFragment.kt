@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
 import androidx.viewbinding.ViewBinding
 import com.example.xgups_tandem.MainViewModel
+import kotlin.io.path.Path
 
 abstract class BaseFragment<VB : ViewBinding>(
     private val vbInflate: (LayoutInflater, ViewGroup?, Boolean) -> VB
@@ -82,5 +83,14 @@ abstract class BaseFragment<VB : ViewBinding>(
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    // МОЕ //
+
+    protected fun getProfileLogo() : String{
+        return Path(requireContext().cacheDir.path, "${mainViewModel.login}.jpeg").toString()
+    }
+    protected fun getProfileLogo(login: String) : String{
+        return Path(requireContext().cacheDir.path, "${login}.jpeg").toString()
     }
 }
