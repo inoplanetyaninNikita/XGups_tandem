@@ -28,6 +28,13 @@ import kotlin.math.log
 class LoginFragment: BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) {
     private val viewModel by viewModels<LoginViewModel>()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.login(
+            "78567@stud.samgups.ru",
+            "123Qwe"
+        )
+    }
     override fun setListeners()  {
         loginButton()
         val tw = object : TextWatcher {

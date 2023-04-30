@@ -67,7 +67,7 @@
     </fragment>
     <fragment
         android:id="@+id/helpFragment"
-        android:name="com.example.xgups_tandem.ui.HelpFragment"
+        android:name="com.example.xgups_tandem.ui.help.HelpFragment"
         android:label="fragment_helpgpt"
         tools:layout="@layout/fragment_helpgpt" >
         <action
