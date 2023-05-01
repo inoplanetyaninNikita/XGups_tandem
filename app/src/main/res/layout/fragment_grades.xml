@@ -9,13 +9,16 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="20dp" />
+        android:layout_height="20dp"
+        android:translationZ="20dp" />
 
     <LinearLayout
         android:id="@+id/ProfileLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:scaleY="1"
+        android:translationZ="20dp">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_grade"
@@ -64,7 +67,8 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="20dp" />
+        android:layout_height="20dp"
+        android:translationZ="20dp" />
 
     <View
         android:id="@+id/divider"
@@ -72,11 +76,18 @@
         android:layout_height="2dp"
         android:background="?android:attr/listDivider" />
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:translationZ="20dp" />
+
     <Spinner
         android:id="@+id/spinner"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_margin="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
         android:dropDownWidth="match_parent" />
 
     <View

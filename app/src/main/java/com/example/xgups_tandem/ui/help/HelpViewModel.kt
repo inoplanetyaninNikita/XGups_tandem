@@ -34,10 +34,24 @@ class HelpViewModel : ViewModel() {
             false,
             "XGPT",
             "Вы можете посмотреть оценки за сессии на сайте.\nНажмите на кнопку, чтоб перейти на сайт.",
-            "https://www.samgups.ru/students/uspevaimost/"))
+            "https://www.samgups.ru/payment/"))
+    }
+    private val service = Answer("Об оплате услуг") {
+        addToMessageList(Message(
+            false,
+            "XGPT",
+            "Оплатить услуги за обучение/проживание в общажитии или гостинице вы можете на сайте.\nНажмите на кнопку, чтоб перейти на сайт.",
+            "https://www.samgups.ru/payment/"))
+    }
+    private val lifeInUniversity = Answer("Об активной жизни в университете") {
+        addToMessageList(Message(
+            false,
+            "XGPT",
+            "В университете есть несколько видов активностей.\nНауная - СНО\nАктерская\nСпортивная",
+            ))
     }
 
-    private val testQuest : Question = OpenAI.TestQuestion(listOf(marksAnswer, scheduleAnswer))
+    private val testQuest : Question = OpenAI.TestQuestion(listOf(marksAnswer, scheduleAnswer, service, lifeInUniversity))
 
     init {
         messages.value = messageList

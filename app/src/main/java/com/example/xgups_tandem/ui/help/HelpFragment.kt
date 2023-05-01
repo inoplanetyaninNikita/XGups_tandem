@@ -3,21 +3,13 @@ package com.example.xgups_tandem.ui.help
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
+import android.view.View
+import android.widget.AbsListView.OnScrollListener
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import com.example.xgups_tandem.api.convertClassToJson
-import com.example.xgups_tandem.api.convertJsonToClass
+import androidx.recyclerview.widget.RecyclerView
 import com.example.xgups_tandem.base.BaseFragment
 import com.example.xgups_tandem.databinding.FragmentHelpgptBinding
-import com.squareup.moshi.Json
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
-import java.io.IOException
 
 class HelpFragment : BaseFragment<FragmentHelpgptBinding>(FragmentHelpgptBinding::inflate) {
     val viewModel by viewModels<HelpViewModel>()
@@ -37,6 +29,16 @@ class HelpFragment : BaseFragment<FragmentHelpgptBinding>(FragmentHelpgptBinding
         binding.btnSubmit.setOnClickListener{
             sendMessage()
         }
+        binding.backArrowProfile2.setOnClickListener{
+            onBackPressed()
+        }
+        binding.rvChat.addOnLayoutChangeListener{
+                view: View, i: Int, i1: Int, i2: Int, i3: Int, i4: Int, i5: Int, i6: Int, i7: Int ->
+
+            viewModel.messages.value?.let { binding.rvChat.scrollToPosition(it.lastIndex) }
+
+        }
+
     }
     override fun setObservable() {
 
@@ -49,6 +51,7 @@ class HelpFragment : BaseFragment<FragmentHelpgptBinding>(FragmentHelpgptBinding
     @SuppressLint("NotifyDataSetChanged")
     private fun updateList() {
         adapter.notifyDataSetChanged()
+        viewModel.messages.value?.let { binding.rvChat.scrollToPosition(it.lastIndex) }
     }
     private fun urlOpen(url : String){
         val urlIntent = Intent(

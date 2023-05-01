@@ -41,8 +41,8 @@ fun Any.convertClassToJson(): String
 //endregion
 //region Bitmap
 
-//region Blur
-fun Bitmap.blurRenderScript(context: Context?, radius: Int): Bitmap? {
+    //region Blur
+    fun Bitmap.blurRenderScript(context: Context?, radius: Int): Bitmap? {
     var smallBitmap = this
     try {
         smallBitmap = RGB565toARGB888(this)!!
@@ -67,7 +67,7 @@ fun Bitmap.blurRenderScript(context: Context?, radius: Int): Bitmap? {
     renderScript.destroy()
     return bitmap
 }
-private fun RGB565toARGB888(img: Bitmap): Bitmap? {
+    private fun RGB565toARGB888(img: Bitmap): Bitmap? {
     val numPixels = img.width * img.height
     val pixels = IntArray(numPixels)
 
@@ -82,7 +82,7 @@ private fun RGB565toARGB888(img: Bitmap): Bitmap? {
     return result
 }
 
-//endregion
+    //endregion
 
 fun saveImage(bitmap: Bitmap, path: String, updateImage: MutableLiveData<String>? = null){
     val f = File(path)
@@ -98,4 +98,5 @@ fun saveImage(bitmap: Bitmap, path: String, updateImage: MutableLiveData<String>
 fun loadImage(path: String) : Bitmap{
     return BitmapFactory.decodeFile(path)
 }
+
 //endregion

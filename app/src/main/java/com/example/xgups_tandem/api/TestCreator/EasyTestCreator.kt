@@ -68,7 +68,7 @@ class EasyTestCreator {
     class OpenAI{
 
         companion object{
-            val Bearer : String = "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"
+            val Bearer : String = "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"
             fun generateText(mes : List<Message>) : String {
                 val values = mapOf(
                     "model" to "gpt-3.5-turbo",

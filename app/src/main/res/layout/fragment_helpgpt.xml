@@ -6,17 +6,45 @@
     android:layout_height="match_parent"
     tools:context=".ui.help.HelpFragment">
 
+    <ImageView
+        android:id="@+id/backArrowProfile2"
+        android:layout_width="25dp"
+        android:layout_height="20dp"
+
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:src="@mipmap/leftarrow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvChatTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:baselineAligned="false"
+        android:fontFamily="@font/poppins_bold"
+        android:gravity="center"
+        android:text="Чат-бот"
+        android:textColor="@color/black"
+        android:textColorHighlight="@color/black"
+        android:textColorHint="@color/black"
+        android:textSize="24sp"
+        android:textStyle="normal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvChat"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/item_message"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/backArrowProfile2"
+        tools:listitem="@layout/item_message" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -35,11 +63,11 @@
             android:layout_weight="5"
             android:background="@android:color/white"
             android:ems="10"
+            android:hint="Введите сообщение"
             android:inputType="textLongMessage|textPersonName"
             android:nestedScrollingEnabled="true"
             android:outlineProvider="none"
             android:paddingLeft="20dp"
-            android:text="Name"
             android:textAlignment="textStart" />
 
         <ImageButton

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.opengl.Visibility
 import android.util.DisplayMetrics
+import android.view.Gravity.LEFT
 import android.view.Gravity.RIGHT
 import android.view.View
 import androidx.core.content.ContextCompat.startActivity
@@ -34,11 +35,17 @@ class ChatAdapter: BaseListAdapter<Message>() {
                 binding.tvChatUsername.gravity = RIGHT
             } else {
                 binding.tvChatUsername.text = "XGPT 3.5"
+
+                binding.root.gravity = LEFT
+                binding.tvChatUsername.gravity = LEFT
             }
 
             //Скрываем кнопку, если ссылка пустая
             if(it.url == ""){
                 binding.cvChatURL.visibility = View.GONE
+            }
+            else{
+                binding.cvChatURL.visibility = View.VISIBLE
             }
 
             binding.root.setOnClickListener{
@@ -48,10 +55,13 @@ class ChatAdapter: BaseListAdapter<Message>() {
     }
 
     private fun urlOpen(url : String, context: Context){
-        val urlIntent = Intent(
-            Intent.ACTION_VIEW,
-            Uri.parse(url)
-        )
-        startActivity(context, urlIntent, null)
+        if(url != ""){
+            val urlIntent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(url)
+            )
+            startActivity(context, urlIntent, null)
+        }
+
     }
 }

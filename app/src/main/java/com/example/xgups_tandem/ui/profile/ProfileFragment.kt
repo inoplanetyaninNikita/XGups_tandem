@@ -44,14 +44,16 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             logoutAlert()
         }
         binding.grade.root.setOnClickListener{
-//            findNavController().navigate(
-//                ProfileFragmentDirections.actionProfileFragmentToGradesFragment()
-//            )
+            findNavController().navigate(
+                ProfileFragmentDirections.actionProfileFragmentToGradesFragment()
+            )
+        }
+        binding.chatbot.root.setOnClickListener{
             findNavController().navigate(
                 ProfileFragmentDirections.actionProfileFragmentToHelpFragment()
             )
-
         }
+
         binding.addPhoto.setOnClickListener{
             openCameraIntent()
         }

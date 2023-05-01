@@ -51,7 +51,7 @@ abstract class BaseFragment<VB : ViewBinding>(
         val transition =
             TransitionInflater
                 .from(requireContext())
-                .inflateTransition(android.R.transition.move)
+                .inflateTransition(android.R.transition.slide_right)
                 .setDuration(250L)
 
         sharedElementEnterTransition = transition
@@ -88,9 +88,9 @@ abstract class BaseFragment<VB : ViewBinding>(
     // МОЕ //
 
     protected fun getProfileLogo() : String{
-        return Path(requireContext().cacheDir.path, "${mainViewModel.login}.jpeg").toString()
+        return Path(requireContext().dataDir.path, "${mainViewModel.login}.jpeg").toString()
     }
     protected fun getProfileLogo(login: String) : String{
-        return Path(requireContext().cacheDir.path, "${login}.jpeg").toString()
+        return Path(requireContext().dataDir.path, "${login}.jpeg").toString()
     }
 }

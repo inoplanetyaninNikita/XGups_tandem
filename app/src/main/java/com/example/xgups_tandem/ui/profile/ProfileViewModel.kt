@@ -10,7 +10,7 @@ import java.io.OutputStream
 
 class ProfileViewModel : ViewModel() {
 
-    //Данные о чуваке
+
     val name : MutableLiveData<String> by lazy {
         MutableLiveData<String>()
     }
@@ -20,6 +20,5 @@ class ProfileViewModel : ViewModel() {
     val image : MutableLiveData<String> by lazy {
         MutableLiveData<String>()
     }
-
 
 }
