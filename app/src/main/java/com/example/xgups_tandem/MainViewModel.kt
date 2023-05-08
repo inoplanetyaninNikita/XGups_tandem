@@ -4,8 +4,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.room.*
 import com.example.xgups_tandem.api.SamGUPS.SamGUPS
+import com.example.xgups_tandem.di.PushNotification
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class MainViewModel : ViewModel() {
+@HiltViewModel
+class MainViewModel  @Inject constructor() : ViewModel() {
+
+
     val schedule : MutableLiveData<SamGUPS.ScheduleResponse> by lazy {
         MutableLiveData<SamGUPS.ScheduleResponse>()
     }

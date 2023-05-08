@@ -1,31 +1,27 @@
 package com.example.xgups_tandem
 
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.content.Context
-import android.graphics.BitmapFactory
-import android.graphics.Color
+import android.annotation.SuppressLint
+import android.app.*
 import android.os.Build
 import android.os.Bundle
-import android.util.AttributeSet
 import android.util.Log
-import android.view.View
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.room.Room
-import com.example.xgups_tandem.api.SamGUPS.SamGUPS
 import com.example.xgups_tandem.databinding.ActivityMainBinding
+import com.example.xgups_tandem.di.PushNotification
+import com.example.xgups_tandem.di.PushNotificationData
 import com.example.xgups_tandem.room.AppDatabase
 import com.example.xgups_tandem.room.User
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.*
+import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -37,13 +33,19 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     private val viewModel by viewModels<MainViewModel>()
 
+    @Inject lateinit var push : PushNotification
+
+    @SuppressLint("UnspecifiedImmutableFlag")
+    @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
+        push.show(PushNotificationData("Пара", "13:00"))
+
+        //region start
         val db = Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java, "database-name"
@@ -57,47 +59,11 @@ class MainActivity : AppCompatActivity() {
             Log.d("fq",users.size.toString())
         }
 
-        Log.d("fq","fqf")
+        //endregion
+
+        val context = binding.root.context
+
     }
 
-    //НАДО МУСОР УБРАТЬ
-    lateinit var notificationManager: NotificationManager
-    lateinit var notificationChannel: NotificationChannel
-    lateinit var builder: Notification.Builder
-    private val channelId = "xgups.apps.notifications"
-    private val description = "Schedule notification"
 
-    fun show() {
-        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        packageName
-        //val contentView = RemoteViews(packageName, R.layout.fragment_profile)
-        //contentView.setTextViewText(R.id.texxxt, "Сегодня в школу!")
-
-        // checking if android version is greater than oreo(API 26) or not
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            notificationChannel = NotificationChannel(channelId, description, NotificationManager.IMPORTANCE_HIGH)
-            notificationChannel.enableLights(true)
-            notificationChannel.lightColor = Color.GREEN
-            notificationChannel.enableVibration(false)
-            notificationManager.createNotificationChannel(notificationChannel)
-
-            builder = Notification.Builder(this, channelId)
-                //.setContent(contentView)
-                .setTicker("finder")
-                .setContentTitle("Напоминание")
-                .setContentText("Пора покормить кота")
-                .setSmallIcon(R.drawable.ic_launcher_background)
-                .setLargeIcon(BitmapFactory.decodeResource(this.resources, R.drawable.ic_launcher_background))
-                .setActions()
-        } else {
-
-            builder = Notification.Builder(this)
-                //.setContent(contentView)
-                .setContentTitle("Напоминание")
-                .setContentText("Пора покормить кота")
-                .setSmallIcon(R.drawable.ic_launcher_background)
-                .setLargeIcon(BitmapFactory.decodeResource(this.resources, R.drawable.ic_launcher_background))
-        }
-        notificationManager.notify(1234, builder.build())
-    }
 }

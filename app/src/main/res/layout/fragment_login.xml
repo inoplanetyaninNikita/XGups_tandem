@@ -22,19 +22,19 @@
             android:id="@+id/tvTitleLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_extrabold"
+            android:fontFamily="sans-serif-black"
             android:includeFontPadding="false"
             android:text="@string/login_xgups"
             android:textAllCaps="true"
             android:textColor="@color/xgpurple"
-            android:textSize="32dp"
+            android:textSize="48sp"
             android:textStyle="normal|bold" />
 
         <TextView
             android:id="@+id/tvDescLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_semibold"
+            android:fontFamily="sans-serif-light"
             android:includeFontPadding="false"
             android:text="@string/login_desc"
             android:textColor="#AAAAAA"
@@ -55,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:fontFamily="@font/poppins_extrabold"
+            android:fontFamily="sans-serif"
             android:includeFontPadding="false"
             android:text="@string/login_email"
             android:textColor="@color/black"
@@ -76,12 +76,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:fontFamily="@font/poppins_extrabold"
+            android:fontFamily="sans-serif-light"
             android:includeFontPadding="false"
             android:text="@string/login_password"
             android:textColor="@color/black"
             android:textSize="14sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:text="ПриыGG" />
 
         <EditText
             android:id="@+id/password"

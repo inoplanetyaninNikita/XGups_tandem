@@ -55,6 +55,9 @@
         <action
             android:id="@+id/action_profileFragment_to_helpFragment"
             app:destination="@id/helpFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_tester"
+            app:destination="@id/tester" />
     </fragment>
     <fragment
         android:id="@+id/gradesFragment"
@@ -72,6 +75,15 @@
         tools:layout="@layout/fragment_helpgpt" >
         <action
             android:id="@+id/action_helpFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tester"
+        android:name="com.example.xgups_tandem.tester"
+        android:label="fragment_tester"
+        tools:layout="@layout/fragment_tester" >
+        <action
+            android:id="@+id/action_tester_to_profileFragment"
             app:destination="@id/profileFragment" />
     </fragment>
 </navigation>

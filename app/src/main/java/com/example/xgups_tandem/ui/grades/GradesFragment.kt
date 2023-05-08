@@ -2,10 +2,8 @@ package com.example.xgups_tandem.ui.grades
 
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -15,11 +13,11 @@ import androidx.fragment.app.viewModels
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.xgups_tandem.R
+import com.example.xgups_tandem.base.OnSwipeTouchListener
 import com.example.xgups_tandem.api.SamGUPS.SamGUPS
 import com.example.xgups_tandem.base.BaseFragment
 import com.example.xgups_tandem.databinding.FragmentGradesBinding
 import com.example.xgups_tandem.ui.grades.adapter.GradeAdapter
-import java.lang.Math.abs
 
 
 class GradesFragment : BaseFragment<FragmentGradesBinding>(FragmentGradesBinding::inflate) {
@@ -90,19 +88,7 @@ class GradesFragment : BaseFragment<FragmentGradesBinding>(FragmentGradesBinding
         super.onStart()
 
     }
-    private fun increaseViewSize(view: View, isShow : Boolean, maxHeight : Int) {
-        val valueAnimator = if(isShow) ValueAnimator.ofInt(view.measuredHeight, maxHeight)
-        else ValueAnimator.ofInt(view.measuredHeight, 0)
-        valueAnimator.duration = 50L
-        valueAnimator.addUpdateListener {
-            val animatedValue = valueAnimator.animatedValue as Int
-            val layoutParams = view.layoutParams
 
-            layoutParams.height = animatedValue
-            view.layoutParams = layoutParams
-        }
-        valueAnimator.start()
-    }
 
     override fun setObservable() {
         adapter.submitList(mainViewModel.marks.value)
@@ -154,72 +140,5 @@ class GradesFragment : BaseFragment<FragmentGradesBinding>(FragmentGradesBinding
 
 
 
-    open class OnSwipeTouchListener internal constructor(ctx:Context, mainView: View):View.OnTouchListener{
-        private val gestureDetector: GestureDetector
-        private var context: Context
-        private lateinit var onSwipe:OnSwipeListener
-        init{
-            gestureDetector = GestureDetector(ctx, GestureListener())
-            mainView.setOnTouchListener(this)
-            context = ctx
-        }
-        override fun onTouch(v:View, event: MotionEvent):Boolean {
-            return gestureDetector.onTouchEvent(event)
-        }
-        private companion object {
-            private const val swipeThreshold = 100
-            private const val swipeVelocityThreshold = 100
-        }
-        inner class GestureListener: GestureDetector.SimpleOnGestureListener() {
-            override fun onDown(e:MotionEvent):Boolean {
-                return true
-            }
-            override fun onFling(e1:MotionEvent, e2:MotionEvent, velocityX:Float, velocityY:Float):Boolean {
-                var result = false
-                try{
-                    val diffY = e2.y - e1.y
-                    val diffX = e2.x - e1.x
-                    if (abs(diffX) > abs(diffY)){
-                        if (abs(diffX) > swipeThreshold && abs(velocityX) > swipeVelocityThreshold){
-                            if (diffX > 0){
-                                onSwipeRight()
-                            }
-                            else{
-                                onSwipeLeft()
-                            }
-                            result = true
-                        }
-                    }
-                    else if (abs(diffY) > swipeThreshold && abs(velocityY) > swipeVelocityThreshold){
-                        if (diffY > 0){
-                            onSwipeBottom()
-                        }
-                        else{
-                            onSwipeTop()
-                        }
-                        result = true
-                    }
-                }
-                catch (exception:Exception) {
-                    exception.printStackTrace()
-                }
-                return result
-            }
-        }
-        internal fun onSwipeRight() {
-        }
-        internal fun onSwipeLeft() {
-        }
-        internal fun onSwipeTop() {
-        }
-        internal fun onSwipeBottom() {
-        }
-        internal interface OnSwipeListener {
-            fun swipeRight()
-            fun swipeTop()
-            fun swipeBottom()
-            fun swipeLeft()
-        }
-    }
 
 }

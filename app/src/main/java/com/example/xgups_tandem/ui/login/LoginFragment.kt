@@ -1,7 +1,11 @@
 package com.example.xgups_tandem.ui.login
 
 import android.annotation.SuppressLint
+import android.app.AlarmManager
 import android.app.AlertDialog
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.PorterDuff
@@ -52,13 +56,9 @@ class LoginFragment: BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::in
         viewModel.mainViewModel = mainViewModel
 
         binding.btnLogin.setOnClickListener {
-//            viewModel.login(
-//                binding.email.text.toString(),
-//                binding.password.text.toString()
-//            )
             viewModel.login(
-                "78567@stud.samgups.ru",
-                "123Qwe"
+                binding.email.text.toString(),
+                binding.password.text.toString()
             )
         }
         binding.email.setOnFocusChangeListener { _, it ->
