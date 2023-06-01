@@ -4,17 +4,15 @@ import android.app.*
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import androidx.core.app.NotificationCompat
 import com.example.xgups_tandem.R
 import com.example.xgups_tandem.api.convertJsonToClass
+import com.example.xgups_tandem.di.PushNotification
 import com.example.xgups_tandem.di.PushNotificationData
 
 class NotificationAlarmManager : BroadcastReceiver() {
 
-    private val channelId = "xgups.apps.notifications"
     private lateinit var notificationManager: NotificationManager
-
     override fun onReceive(context: Context?, intent: Intent?) {
         if (context == null || intent == null) return
 
@@ -25,12 +23,11 @@ class NotificationAlarmManager : BroadcastReceiver() {
         val notification = intent.getStringExtra(notifyClass.name)?.convertJsonToClass<PushNotificationData>()  ?: return
 
         //endregion
-
         //region Builder
 
         //region Init
 
-        var builder = NotificationCompat.Builder(context, channelId)
+        var builder = NotificationCompat.Builder(context, PushNotification.Channel.id)
             .setContentTitle(notification.title)
             .setContentText(notification.text)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -61,8 +58,6 @@ class NotificationAlarmManager : BroadcastReceiver() {
         notificationManager.notify(notificationID, builder.build())
 
     }
-
-
 }
 
 //region Content view

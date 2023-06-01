@@ -50,11 +50,11 @@ interface SamGUPS {
 
         init {
             var week = mutableListOf<List<String>>()
-//            try {
+            try {
             for (i in 0..5)
                 week.add(response[i])
             firstWeek = Week(week)
-//            } catch (ex : Exception){}
+            } catch (ex : Exception){}
 
             week = mutableListOf()
             try {
@@ -65,11 +65,11 @@ interface SamGUPS {
 
 
             week = mutableListOf()
-//            try {
+            try {
             for (i in 12..17)
                 week.add(response[i])
             thirdWeek = Week(week)
-//            } catch (ex : Exception){}
+            } catch (ex : Exception){}
 
         }
         class Week(week : List<List<String>>) {

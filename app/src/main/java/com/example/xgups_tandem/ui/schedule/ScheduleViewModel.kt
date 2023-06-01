@@ -10,16 +10,8 @@ import java.time.LocalDateTime
 
 class ScheduleViewModel : ViewModel() {
 
-    //Адаптеры
-    val dateList : MutableLiveData<List<DayModel>> by lazy {
-        MutableLiveData<List<DayModel>>()
-    }
-    val lessonList : MutableLiveData<List<LessonModel>> by lazy {
-        MutableLiveData<List<LessonModel>>()
-    }
-    private val lessonListValue = mutableListOf<LessonModel>()
+    //region Profile
 
-    //Данные о чуваке
     val name : MutableLiveData<String> by lazy {
         MutableLiveData<String>()
     }
@@ -29,12 +21,15 @@ class ScheduleViewModel : ViewModel() {
     val image : MutableLiveData<String> by lazy {
         MutableLiveData<String>()
     }
+    //endregion
+    //region DayAdapter
 
-    init {
-        setDayList()
-        lessonList.value = lessonListValue
-
+    val dateList : MutableLiveData<List<DayModel>> by lazy {
+        MutableLiveData<List<DayModel>>()
     }
+    private lateinit var today: DayModel
+
+    fun getToday() : DayModel = today
     private fun setDayList() {
         val list = mutableListOf<DayModel>()
         val firstDay = LocalDateTime.now().minusDays(10)
@@ -43,11 +38,16 @@ class ScheduleViewModel : ViewModel() {
             if(day.localDate.dayOfYear == LocalDate.now().dayOfYear) today = day
             list.add(day)
         }
+
         dateList.value = list
     }
+    //endregion
+    //region LessonAdapter - отображение пар
 
-    private lateinit var today: DayModel
-    fun getToday() : DayModel = today
+    val lessonList : MutableLiveData<List<LessonModel>> by lazy {
+        MutableLiveData<List<LessonModel>>()
+    }
+    private val lessonListValue = mutableListOf<LessonModel>()
 
     fun viewLessonsOnDay(day : ScheduleResponse.Week.Day) {
         lessonListValue.clear()
@@ -60,6 +60,12 @@ class ScheduleViewModel : ViewModel() {
     }
     fun clear() {
         lessonListValue.clear()
+        lessonList.value = lessonListValue
+    }
+    //endregion
+
+    init {
+        setDayList()
         lessonList.value = lessonListValue
     }
 

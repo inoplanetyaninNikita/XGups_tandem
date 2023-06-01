@@ -21,27 +21,10 @@ class LoginViewModel @Inject constructor(
     val managerUtils: ManagerUtils
 ): ViewModel() {
 
-    val loginSuccessADFS : MutableLiveData<Boolean> by lazy {
-        MutableLiveData<Boolean>()
-    }
-    val loginSuccessSamGUPS : MutableLiveData<Boolean> by lazy {
-        MutableLiveData<Boolean>()
-    }
-
-    val dataUser :  MutableLiveData<UserData> by lazy {
-        MutableLiveData<UserData>()
-    }
-    val schedule : MutableLiveData<SamGUPS.ScheduleResponse> by lazy {
-        MutableLiveData<SamGUPS.ScheduleResponse>()
-    }
-    val marks : MutableLiveData<List<SamGUPS.MarkResponse>> by lazy {
-        MutableLiveData<List<SamGUPS.MarkResponse>>()
-    }
-
-    var data : List<List<String>> = emptyList()
-
     lateinit var mainViewModel: MainViewModel
-    /** Логин в систему */
+
+    //region UI Fragment
+
     fun login(email: String, password: String) {
         if(!validateEmail(email) && !password.isEmpty()) return
         //Коннект с АДФС
@@ -54,23 +37,41 @@ class LoginViewModel @Inject constructor(
             loginToGups(email, password)
         }
     }
-
     fun canPressToButton(login : String, password: String) : Boolean {
         if (validateEmail(login) && password.isNotEmpty()) return true
         return false
     }
+    private fun validateEmail(email: String): Boolean {
+        val emailValidator = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" +
+                "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,64})$"
+        val emailPattern: Pattern = Pattern.compile(emailValidator)
+        val matcher = emailPattern.matcher(email)
+        return matcher.matches()
+    }
+    //endregion
+    //region Login
+
+    val loginSuccessADFS : MutableLiveData<Boolean> by lazy {
+        MutableLiveData<Boolean>()
+    }
+    val loginSuccessSamGUPS : MutableLiveData<Boolean> by lazy {
+        MutableLiveData<Boolean>()
+    }
+    val dataUser :  MutableLiveData<UserData> by lazy {
+        MutableLiveData<UserData>()
+    }
+
     private suspend fun loginToADFS(email: String, password: String) {
         val api = ADFS.API // Клиент АДФС
         val login = loginSuccessADFS //Переменная в которую кинем результаты логина
 
         try {
-            var response = api.login(ADFS.getHashMapForLogin(email, password))
+            val response = api.login(ADFS.getHashMapForLogin(email, password))
             login.value = response.isSuccessful
         } catch (Ex : java.lang.Exception) {
             login.value = false
         }
     }
-
     private suspend fun loginToGups(email: String, password: String) {
         val api = SamGUPS.API
         val login = loginSuccessSamGUPS
@@ -96,6 +97,15 @@ class LoginViewModel @Inject constructor(
             login.value = false
         }
     }
+    //endregion
+    //region Sucsess login and load data
+    val schedule : MutableLiveData<SamGUPS.ScheduleResponse> by lazy {
+        MutableLiveData<SamGUPS.ScheduleResponse>()
+    }
+    val marks : MutableLiveData<List<SamGUPS.MarkResponse>> by lazy {
+        MutableLiveData<List<SamGUPS.MarkResponse>>()
+    }
+
     private suspend fun schedule(cookie : String, username: String) {
         val api = SamGUPS.API
         val response = api.schedule(cookie, SamGUPS.ScheduleRequest(username))
@@ -109,13 +119,6 @@ class LoginViewModel @Inject constructor(
         if(response.isSuccessful)
             mainViewModel.marks.value = response.body()!!
     }
-
-    fun validateEmail(email: String): Boolean {
-        val emailValidator = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" +
-                "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,64})$"
-        val emailPattern: Pattern = Pattern.compile(emailValidator)
-        val matcher = emailPattern.matcher(email)
-        return matcher.matches()
-    }
+    //endregion
 
 }

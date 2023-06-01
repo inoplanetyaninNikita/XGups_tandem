@@ -34,7 +34,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         viewModel.name.value = "${mainViewModel.user.value!!.secondName} ${mainViewModel.user.value!!.firstName} ${mainViewModel.user.value!!.thirdName}"
         viewModel.group.value = mainViewModel.user.value!!.bookNumber
     }
-
     @SuppressLint("ClickableViewAccessibility")
     override fun setListeners() {
         binding.backArrowProfile.setOnClickListener{
@@ -62,7 +61,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             openCameraIntent()
         }
     }
-
     override fun setObservable() {
         viewModel.image.observe(viewLifecycleOwner) {
             binding.imageProfile2.load(it) {
@@ -103,7 +101,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         val alertDialog = alertDialogBuilder.create()
         alertDialog.show()
     }
-
     //endregion
     //region Работа с Intent'а ми
 
@@ -142,7 +139,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             startActivityForResult(takePictureIntent, ACTIVITY_PHOTO_CAMERA)
         } catch (_: ActivityNotFoundException) { }
     }
-
     //endregion
 
 }

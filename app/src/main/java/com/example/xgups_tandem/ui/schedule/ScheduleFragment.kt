@@ -23,24 +23,38 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(FragmentScheduleB
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //region Profile
+
         viewModel.image.value = getProfileLogo()
         viewModel.name.value = "${mainViewModel.user.value!!.secondName} ${mainViewModel.user.value!!.firstName}"
         viewModel.group.value = mainViewModel.user.value!!.group
+        //endregion
+        //region Отображение пар, на сегодня
 
         val today = mainViewModel.schedule.value!!.getDayByDate(LocalDate.now())
         today?.let {
             viewModel.viewLessonsOnDay(it)
         }
+        //endregion
+
         binding.daysRecycler.scrollToPosition(viewModel.dateList.value!!.indexOf(viewModel.getToday()) - 2)
+
     }
 
     override fun setAdapter() {
+
+        //region Day adapter
+
         dayAdapter.setListOnAdapter(viewModel.dateList.value!!)
         binding.daysRecycler.adapter = dayAdapter
+        binding.daysRecycler.scrollToPosition(10)
+        //endregion
+        //region Lesson adapter
 
         lessonAdapter.setListOnAdapter(viewModel.lessonList.value!!)
         binding.lessonsRecycler.adapter = lessonAdapter
-        binding.daysRecycler.scrollToPosition(10)
+        //endregion
+
     }
 
     override fun setListeners() {
@@ -52,6 +66,9 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(FragmentScheduleB
     }
 
     override fun setObservable() {
+
+        //region Profie
+
         viewModel.name.observe(viewLifecycleOwner) {
             binding.names.text  = binding.root.context.resources.getString(R.string.schedule_names,it)
         }
@@ -66,17 +83,17 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(FragmentScheduleB
         viewModel.group.observe(viewLifecycleOwner) {
             binding.group.text = binding.root.context.resources.getString(R.string.schedule_group,it)
         }
+        //endregion
+        //region Переключение дня и обновление адаптера с парами
 
         viewModel.lessonList.observe(viewLifecycleOwner) {
             lessonAdapter.setListOnAdapter(viewModel.lessonList.value!!)
             dayAdapter.setOnClickListner {
-                //TODO : ЛОГИКУ ПЕРЕНЕСТИ!
                 val day = mainViewModel.schedule.value!!.getDayByDate(it.localDate.toLocalDate())
-                if(day != null)
-                    viewModel.viewLessonsOnDay(day)
-                else
-                    viewModel.clear()
+                if (day != null) viewModel.viewLessonsOnDay(day) else viewModel.clear()
             }
         }
+        //endregion
+
     }
 }

@@ -11,7 +11,6 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel  @Inject constructor() : ViewModel() {
 
-
     val schedule : MutableLiveData<SamGUPS.ScheduleResponse> by lazy {
         MutableLiveData<SamGUPS.ScheduleResponse>()
     }
