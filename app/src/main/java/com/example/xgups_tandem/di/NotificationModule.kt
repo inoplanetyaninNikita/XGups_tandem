@@ -1,6 +1,5 @@
 package com.example.xgups_tandem.di
 
-import android.R
 import android.app.*
 import android.content.Context
 import android.content.Intent
@@ -29,6 +28,7 @@ object PushNotificationModule {
 class PushNotification(val context : Context){
 
     //region Channel
+    val channel = createNotificationChannel()
 
     object Channel {
         const val id = "xgups.apps.notifications"
@@ -36,10 +36,10 @@ class PushNotification(val context : Context){
         const val descrption = "Notify events"
         const val importance = NotificationManager.IMPORTANCE_DEFAULT
     }
-    val channel = createNotificationChannel()
+
 
     private fun createNotificationChannel() : NotificationChannel {
-        val channel = NotificationChannel(Channel.name, Channel.name, Channel.importance)
+        val channel = NotificationChannel(Channel.id, Channel.name, Channel.importance)
         channel.description = Channel.descrption
 
         val notificationManager: NotificationManager? = getSystemService(context,
@@ -53,6 +53,7 @@ class PushNotification(val context : Context){
 
     private val notificationManager = context.getSystemService(NotificationManager::class.java)
     fun show(notification: PushNotificationData, triggerTime : Int = 0, id : Int = 0){
+        createNotificationChannel()
         val alarmManager = context.getSystemService(AppCompatActivity.ALARM_SERVICE) as AlarmManager
 
         //region Intent
@@ -61,7 +62,6 @@ class PushNotification(val context : Context){
         val intent = Intent(context, NotificationAlarmManager::class.java)
         intent.putExtra("${notifyClass}ID", id)
         intent.putExtra(notifyClass.name, notification.convertClassToJson())
-
 
         //endregion
 

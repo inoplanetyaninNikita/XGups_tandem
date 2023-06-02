@@ -2,6 +2,9 @@ package com.example.xgups_tandem
 
 import android.annotation.SuppressLint
 import android.app.*
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -16,11 +19,16 @@ import com.example.xgups_tandem.di.PushNotificationData
 import com.example.xgups_tandem.di.Room
 import com.example.xgups_tandem.room.AppDatabase
 import com.example.xgups_tandem.room.User
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.FirebaseMessagingService
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.HashMap
 
 
 @AndroidEntryPoint
@@ -38,14 +46,34 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("UnspecifiedImmutableFlag")
     @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        push.show(PushNotificationData("Пара", "13:54"))
+        FirebaseMessaging.getInstance().token.addOnCompleteListener{
+            if(!it.isSuccessful){
+                return@addOnCompleteListener
+            }
+            Log.e("TOKEN", it.result)
+        }
+        val pushBroadcast = object : BroadcastReceiver(){
+            override fun onReceive(p0: Context?, p1: Intent?) {
+                TODO("Not yet implemented")
+            }
+        }
+        //registerReceiver(pushBroadcast)
 
-        //region start
+        //region firestore
+//        val firestore : FirebaseFirestore = FirebaseFirestore.getInstance()
+//        val users : HashMap<String, Any> = HashMap()
+//        users.put("test","kek")
+//        firestore.collection("users").add(users)
+        //endregion
+        //region mypush
+        push.show(PushNotificationData("Пара", "13:54"))
+        //endregion
+        //region DAO TEST
 
         val userDao = room.db.userDao()
         lifecycleScope.launch(Dispatchers.IO){

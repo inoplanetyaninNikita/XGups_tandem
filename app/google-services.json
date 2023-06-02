@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "120052512482",
+    "project_id": "xgupsmobile",
+    "storage_bucket": "xgupsmobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:120052512482:android:190868f80aa3d58bf7d0bb",
+        "android_client_info": {
+          "package_name": "com.example.xgups_tandem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "120052512482-4rubjrgot07p923613praaujfdsa43gd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.xgups_tandem",
+            "certificate_hash": "6db5f4f53e382199fdf79f833f5fe550a6be2a2d"
+          }
+        },
+        {
+          "client_id": "120052512482-04e4d4r9lo18qkgv6ukfo6070a13qa9f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAL5ygcdM7feKqOaJr_U1NeLIMk0lPcdkY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "120052512482-04e4d4r9lo18qkgv6ukfo6070a13qa9f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

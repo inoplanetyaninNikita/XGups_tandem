@@ -1,18 +1,19 @@
 package com.example.xgups_tandem.services
 
-import android.app.*
+import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
 import com.example.xgups_tandem.R
 import com.example.xgups_tandem.api.convertJsonToClass
-import com.example.xgups_tandem.di.PushNotification
 import com.example.xgups_tandem.di.PushNotificationData
 
 class NotificationAlarmManager : BroadcastReceiver() {
 
+    private val channelId = "xgups.apps.notifications"
     private lateinit var notificationManager: NotificationManager
+
     override fun onReceive(context: Context?, intent: Intent?) {
         if (context == null || intent == null) return
 
@@ -23,11 +24,12 @@ class NotificationAlarmManager : BroadcastReceiver() {
         val notification = intent.getStringExtra(notifyClass.name)?.convertJsonToClass<PushNotificationData>()  ?: return
 
         //endregion
+
         //region Builder
 
         //region Init
 
-        var builder = NotificationCompat.Builder(context, PushNotification.Channel.id)
+        var builder = NotificationCompat.Builder(context, channelId)
             .setContentTitle(notification.title)
             .setContentText(notification.text)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -59,12 +61,3 @@ class NotificationAlarmManager : BroadcastReceiver() {
 
     }
 }
-
-//region Content view
-
-//val contentView = RemoteViews(packageName, R.layout.fragment_profile)
-//contentView.setTextViewText(R.id.texxxt, "Сегодня в школу!")
-
-//builder.setContent(contentView)
-
-//endregion
