@@ -1,6 +1,7 @@
 package com.example.xgups_tandem.base
 
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
 import androidx.viewbinding.ViewBinding
 import com.example.xgups_tandem.MainViewModel
+import java.io.File
 import kotlin.io.path.Path
 
 abstract class BaseFragment<VB : ViewBinding>(
@@ -88,9 +90,9 @@ abstract class BaseFragment<VB : ViewBinding>(
     // МОЕ //
 
     protected fun getProfileLogo() : String{
-        return Path(requireContext().dataDir.path, "${mainViewModel.login}.jpeg").toString()
+        return Path(requireContext().externalCacheDir!!.path, "profile.jpeg").toString()
     }
     protected fun getProfileLogo(login: String) : String{
-        return Path(requireContext().dataDir.path, "${login}.jpeg").toString()
+        return Path(requireContext().externalCacheDir!!.path, "${login}.jpeg").toString()
     }
 }
