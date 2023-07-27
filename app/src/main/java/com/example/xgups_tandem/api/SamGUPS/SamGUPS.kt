@@ -1,14 +1,20 @@
 package com.example.xgups_tandem.api.SamGUPS
 
+import android.annotation.SuppressLint
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.xgups_tandem.BuildConfig
+import com.example.xgups_tandem.api.SamGUPS.SamGUPS.Companion.AESDemo.decrypt
+import com.example.xgups_tandem.api.SamGUPS.SamGUPS.Companion.AESDemo.encrypt
 import com.example.xgups_tandem.api.convertJsonToClass
 import com.google.gson.GsonBuilder
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
@@ -17,11 +23,17 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.Header
 import retrofit2.http.POST
+import java.io.UnsupportedEncodingException
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.ZoneOffset
 import java.util.*
 import java.util.concurrent.TimeUnit
+import javax.crypto.Cipher
+import javax.crypto.spec.SecretKeySpec
 
 
 interface SamGUPS {
@@ -29,7 +41,9 @@ interface SamGUPS {
     data class AuthRequest(val username: String,
                            val password: String)
     @POST("information/")
-    suspend fun login(@Body auth : AuthRequest): Response<AuthResponse>
+    suspend fun login(@Body auth : AuthRequest): Response<String>   //Response<AuthResponse>
+    //
+     @Serializable
     data class AuthResponse(
         val roleID : String,
         val human : String,
@@ -37,8 +51,7 @@ interface SamGUPS {
         val group : String,
         val course : String)
 
-
-
+    //{'roleID': 'f17c36fd-ad94-4cc5-990e-fd23b8165e6c', 'human': 'Тороповский Никита Сергеевич', 'bookNumber': '1910-ЭЖД-082', 'group': 'ЭЖД-91', 'course': '3'}
     data class ScheduleRequest(val username: String)
     @POST("student/schedule/")
     suspend fun schedule(@Header ("Cookie") cookie: String,
@@ -225,13 +238,11 @@ interface SamGUPS {
         }
     }
 
-
-
     data class MarksRequest(val username: String,
                             val roleID: String)
     @POST("student/marks/")
     suspend fun marks(@Header ("Cookie") cookie: String,
-                      @Body body : MarksRequest) : Response<List<MarkResponse>>
+                      @Body body : MarksRequest) : Response<String> //Response<List<MarkResponse>>
     @Parcelize
     data class MarkResponse(val documentName : String,
                             val name : String,
@@ -239,57 +250,112 @@ interface SamGUPS {
 
     companion object {
 
-        private val converter: GsonConverterFactory = GsonConverterFactory.create(GsonBuilder().setLenient().create())
+        private val converter: GsonConverterFactory =
+            GsonConverterFactory.create(GsonBuilder().setLenient().create())
 
         /** SamGUPS Client */
         val API: SamGUPS by lazy {
-            val okHttpClient = OkHttpClient.Builder().apply {
-                callTimeout(60, TimeUnit.SECONDS)
-                connectTimeout(60, TimeUnit.SECONDS)
-                readTimeout(60, TimeUnit.SECONDS)
-                writeTimeout(60, TimeUnit.SECONDS)
-            }
-            if (BuildConfig.DEBUG) {
-                HttpLoggingInterceptor().apply {
-                    setLevel(HttpLoggingInterceptor.Level.BODY)
-                    okHttpClient.addInterceptor(this)
+                val okHttpClient = OkHttpClient.Builder().apply {
+                        callTimeout(60, TimeUnit.SECONDS)
+                        connectTimeout(60, TimeUnit.SECONDS)
+                        readTimeout(60, TimeUnit.SECONDS)
+                        writeTimeout(60, TimeUnit.SECONDS)
+                    }
+                    if (BuildConfig.DEBUG) {
+                        HttpLoggingInterceptor().apply {
+                        setLevel(HttpLoggingInterceptor.Level.BODY)
+                        okHttpClient.addInterceptor(this)
+                    }
                 }
-            }
-            val retrofit = Retrofit.Builder()
-                .client(okHttpClient.build())
-                .baseUrl("https://lid.samgups.ru/")
-                .addConverterFactory(converter)
-                .build()
+                val retrofit = Retrofit.Builder()
+                    .client(okHttpClient.build())
+                    .baseUrl("https://lid.samgups.ru/")
+                    .addConverterFactory(converter)
+                    .build()
 
-            retrofit.create(SamGUPS::class.java)
-        }
+                retrofit.create(SamGUPS::class.java)
+            }
 
         /** Переводит [String] к типу [AuthResponse], сделано так, потому что работаю с динамическим ключом в JSON, а [String.convertJsonToClass] выбивает в этом случае [Exception].*/
-        fun convertToAuthResponse(response : String) : AuthResponse?
-        {
-            val moshi = Moshi.Builder().build()
-            val adapter = moshi.adapter<Map<String, Any>>(
-                Types.newParameterizedType(Map::class.java, String::class.java,
-                    Object::class.java)
-            )
-            val yourMap =  adapter.fromJson(response)
-
-            yourMap!!.mapValues {
-                val aa = it.value
-                val test = ((aa as ArrayList<Map<String,String>>)[0])
-
-                return AuthResponse(
-                    test["roleID"]!!,
-                    test["human"]!!,
-                    test["bookNumber"]!!,
-                    test["group"]!!,
-                    test["course"]!!)
-            }
-            return null
+      fun jsonToAuthResponse(jsonString: String): AuthResponse {
+          return Json.decodeFromString(jsonString)
+      }
+        fun AESDecrypt(login: String, cryptoText: String): String? {
+            return decrypt(cryptoText, getKeyForDecrypt(login))
         }
 
+        //region Шифрование
+        private fun getKeyForDecrypt(login: String): String {
+            val date = LocalDate.now()
+                .atStartOfDay()
+                .toEpochSecond(ZoneOffset.UTC)
+
+            val base64date = Base64.getEncoder()
+                .encodeToString(
+                    date.toString()
+                        .toByteArray(charset("UTF-8"))
+                )
+
+            val key = encrypt(login, base64date)
+            return key.toString()
+        }
+
+        private object AESDemo {
+            private var secretKey: SecretKeySpec? = null
+            private lateinit var key: ByteArray
+
+            // set Key
+            fun setKey(myKey: String) {
+                var sha: MessageDigest? = null
+                try {
+                    key = myKey.toByteArray(charset("UTF-8"))
+                    sha = MessageDigest.getInstance("SHA-256")
+                    key = sha.digest(key)
+                    key = Arrays.copyOf(key, 16)
+                    secretKey = SecretKeySpec(key, "AES")
+                } catch (e: NoSuchAlgorithmException) {
+                    e.printStackTrace()
+                } catch (e: UnsupportedEncodingException) {
+                    e.printStackTrace()
+                }
+            }
+
+            @SuppressLint("GetInstance")
+            fun encrypt(strToEncrypt: String, secret: String): String? {
+                try {
+                    setKey(secret)
+                    val cipher = Cipher.getInstance("AES/ECB/PKCS5Padding")
+                    cipher.init(Cipher.ENCRYPT_MODE, secretKey)
+                    return Base64.getEncoder().encodeToString(
+                        cipher.doFinal
+                            (strToEncrypt.toByteArray(charset("UTF-8")))
+                    )
+                } catch (e: Exception) {
+
+                    println("Error while encrypting: $e")
+                }
+                return null
+            }
+
+            // method to encrypt the secret text using key
+            fun decrypt(strToDecrypt: String?, secret: String): String? {
+                try {
+                    setKey(secret)
+                    val cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING")
+                    cipher.init(Cipher.DECRYPT_MODE, secretKey)
+                    return String(
+                        cipher.doFinal(
+                            Base64.getDecoder().decode(strToDecrypt)
+                        )
+                    )
+                } catch (e: Exception) {
+                    println("Error while decrypting: $e")
+                }
+                return null
+            }
+
+
+        }
+        //endregion
     }
-
-
-
 }

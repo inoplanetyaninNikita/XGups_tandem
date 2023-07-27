@@ -8,6 +8,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -17,18 +18,12 @@ import com.example.xgups_tandem.databinding.ActivityMainBinding
 import com.example.xgups_tandem.di.PushNotification
 import com.example.xgups_tandem.di.PushNotificationData
 import com.example.xgups_tandem.di.Room
-import com.example.xgups_tandem.room.AppDatabase
-import com.example.xgups_tandem.room.User
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.messaging.FirebaseMessaging
-import com.google.firebase.messaging.FirebaseMessagingService
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
-import kotlin.collections.HashMap
 
 
 @AndroidEntryPoint
@@ -50,6 +45,7 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
 
         FirebaseMessaging.getInstance().token.addOnCompleteListener{
             if(!it.isSuccessful){
@@ -89,6 +85,4 @@ class MainActivity : AppCompatActivity() {
         val context = binding.root.context
 
     }
-
-
 }

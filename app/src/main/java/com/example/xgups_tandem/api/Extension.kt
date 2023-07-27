@@ -28,7 +28,8 @@ inline fun <reified T> String.convertJsonToClass() : T
     val moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
         .build()
-    val jsonAdapter: JsonAdapter<T> = moshi.adapter(T::class.java)
+
+    val jsonAdapter: JsonAdapter<T> = moshi.adapter(T::class.java).lenient()
     return  jsonAdapter.fromJson(this)!!
 }
 

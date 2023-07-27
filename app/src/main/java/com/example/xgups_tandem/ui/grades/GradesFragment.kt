@@ -33,9 +33,6 @@ class GradesFragment : BaseFragment<FragmentGradesBinding>(FragmentGradesBinding
 
         binding.names.text = "${mainViewModel.user.value?.secondName} ${mainViewModel.user.value?.firstName}"
         binding.group.text = mainViewModel.user.value?.bookNumber
-
-
-
         }
 
     override fun setAdapter() {

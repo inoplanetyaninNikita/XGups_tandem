@@ -8,6 +8,8 @@ import com.example.xgups_tandem.MainViewModel
 import com.example.xgups_tandem.UserData
 import com.example.xgups_tandem.api.ADFS.ADFS
 import com.example.xgups_tandem.api.SamGUPS.SamGUPS
+import com.example.xgups_tandem.api.convertClassToJson
+import com.example.xgups_tandem.api.convertJsonToClass
 import com.example.xgups_tandem.utils.ManagerUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -75,10 +77,12 @@ class LoginViewModel @Inject constructor(
     private suspend fun loginToGups(email: String, password: String) {
         val api = SamGUPS.API
         val login = loginSuccessSamGUPS
-        try {
+//        try {
             val response = api.login(SamGUPS.AuthRequest(email,password))
             if(response.isSuccessful) {
-                val auth = response.body()!!
+
+                val aes = SamGUPS.AESDecrypt(email,response.body()!!)
+                val auth = aes?.convertJsonToClass<SamGUPS.AuthResponse>()!!
                 dataUser.value = UserData(auth.human.split(' ')[0],
                     auth.human.split(' ')[1],
                     auth.human.split(' ')[2],
@@ -90,12 +94,15 @@ class LoginViewModel @Inject constructor(
                 val cookie = response.headers()["Set-Cookie"]!!
                 login.value = response.isSuccessful
 
+                println(auth.group)
+
                 schedule(cookie,email)
                 marks(cookie,email,auth.roleID);
             }
-        } catch (Ex : java.lang.Exception) {
-            login.value = false
-        }
+//       }
+//    catch (Ex : java.lang.Exception) {
+//           login.value = false
+//        }
     }
     //endregion
     //region Sucsess login and load data
@@ -117,7 +124,11 @@ class LoginViewModel @Inject constructor(
         val api = SamGUPS.API
         val response = api.marks(cookie, SamGUPS.MarksRequest(username,roleID))
         if(response.isSuccessful)
-            mainViewModel.marks.value = response.body()!!
+        {
+            val aes = SamGUPS.AESDecrypt(username,response.body()!!)
+            mainViewModel.marks.value = aes?.convertJsonToClass<List<SamGUPS.MarkResponse>>()!!
+        }
+
     }
     //endregion
 

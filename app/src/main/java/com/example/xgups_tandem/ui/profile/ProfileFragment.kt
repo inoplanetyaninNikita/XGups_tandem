@@ -49,13 +49,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             logoutAlert()
         }
         binding.grade.root.setOnClickListener{
-//            findNavController().navigate(
-//                ProfileFragmentDirections.actionProfileFragmentToGradesFragment()
-//            )
-
             findNavController().navigate(
-                ProfileFragmentDirections.actionProfileFragmentToTester()
+                ProfileFragmentDirections.actionProfileFragmentToGradesFragment()
             )
+
+//            findNavController().navigate(
+//                ProfileFragmentDirections.actionProfileFragmentToTester()
+//            )
         }
         binding.chatbot.root.setOnClickListener{
             findNavController().navigate(
