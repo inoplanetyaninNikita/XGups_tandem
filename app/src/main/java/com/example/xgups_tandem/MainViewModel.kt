@@ -3,6 +3,7 @@ package com.example.xgups_tandem
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.room.*
+import com.example.xgups_tandem.api.SamGUPS.Moodle
 import com.example.xgups_tandem.api.SamGUPS.SamGUPS
 import com.example.xgups_tandem.di.PushNotification
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,6 +23,11 @@ class MainViewModel  @Inject constructor() : ViewModel() {
     }
     val login : MutableLiveData<String> by lazy {
         MutableLiveData<String>()
+    }
+
+
+    val courses : MutableLiveData<List<Moodle.Course>> by lazy{
+        MutableLiveData<List<Moodle.Course>>()
     }
 }
 

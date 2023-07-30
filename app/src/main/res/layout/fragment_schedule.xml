@@ -3,26 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="700dp"
-        android:layout_height="165dp"
-        android:alpha="0.2"
-        android:src="@drawable/elipse"
-        android:translationX="-200dp"
-        android:translationY="-50dp" />
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="1400dp"
-        android:layout_height="500dp"
-        android:alpha="0.1"
-        android:src="@drawable/elipse"
-        android:translationX="-500dp"
-        android:translationY="-215dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,7 +15,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="20dp" />
+            android:layout_height="8dp" />
 
         <LinearLayout
             android:id="@+id/ProfileLayout"
@@ -43,8 +25,8 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imageProfile"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:layout_margin="15dp"
                 android:src="@mipmap/user"
@@ -60,9 +42,9 @@
                     android:id="@+id/names"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginVertical="20dp"
                     android:baselineAligned="false"
-                    android:fontFamily="@font/poppins"
+                    android:fontFamily="sans-serif-black"
                     android:text="@string/schedule_names"
                     android:textColor="@color/black"
                     android:textColorHighlight="@color/black"
@@ -71,24 +53,13 @@
                     android:textStyle="normal"
                     tools:text="Toropovsky" />
 
-                <TextView
-                    android:id="@+id/group"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="-5dp"
-                    android:fontFamily="@font/poppins"
-                    android:text="@string/schedule_group"
-                    android:textAllCaps="true"
-                    android:textSize="18sp"
-                    tools:text="эжд-91" />
-
             </LinearLayout>
 
         </LinearLayout>
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="20dp" />
+            android:layout_height="1dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/daysRecycler"
@@ -107,11 +78,33 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/lessonsRecycler"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="2"
-            tools:listitem="@layout/item_lesson" />
+            tools:listitem="@layout/item_lesson">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <ImageView
+            android:id="@+id/ivLessonEmpty"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center_horizontal"
+            android:visibility="invisible"
+            app:srcCompat="@mipmap/love" />
+
+        <TextView
+            android:id="@+id/tvLessonEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Сегодня нет пар!"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:visibility="invisible" />
 
     </LinearLayout>
+
 </FrameLayout>

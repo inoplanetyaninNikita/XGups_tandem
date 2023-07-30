@@ -56,6 +56,7 @@ class ScheduleViewModel : ViewModel() {
             if (item.name.isEmpty()) continue
             lessonListValue.add(LessonModel(item.name,item.teacher,item.auditorium, item.timeStart, item.timeFinish))
         }
+
         lessonList.value = lessonListValue
     }
     fun clear() {

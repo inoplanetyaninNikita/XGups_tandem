@@ -26,21 +26,23 @@
                 android:id="@+id/startTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_extrabold"
+                android:fontFamily="sans-serif"
                 android:gravity="center_horizontal"
                 android:text="@string/lesson_startTime"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                tools:text="8:30" />
 
             <TextView
                 android:id="@+id/endTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_extrabold"
+                android:fontFamily="sans-serif"
                 android:gravity="center_horizontal"
                 android:text="@string/lesson_endTime"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                tools:text="10:00" />
         </LinearLayout>
 
         <LinearLayout
@@ -54,26 +56,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginTop="25dp"
-                android:fontFamily="@font/poppins_bold"
+                android:layout_marginTop="17dp"
+                android:fontFamily="sans-serif-black"
                 android:foregroundGravity="center_vertical"
                 android:gravity="center_vertical"
                 android:text="@string/lesson_name"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="24sp"
+                tools:text="пр.Математика" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginBottom="15dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/teacherLesson"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="@string/lesson_teacher" />
+                    android:fontFamily="sans-serif"
+                    android:text="@string/lesson_teacher"
+                    tools:text="Москвичев" />
 
                 <TextView
                     android:id="@+id/auditoriumLesson"
@@ -81,11 +85,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
                     android:layout_weight="1"
-                    android:fontFamily="@font/poppins_bold"
+                    android:fontFamily="sans-serif"
                     android:gravity="right"
                     android:text="@string/lesson_auditorium"
                     android:textAlignment="viewEnd"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    tools:text="5139" />
             </LinearLayout>
 
         </LinearLayout>

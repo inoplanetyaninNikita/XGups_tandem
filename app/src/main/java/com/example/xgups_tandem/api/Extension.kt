@@ -11,14 +11,19 @@ import android.renderscript.ScriptIntrinsicBlur
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.messaging.FirebaseMessagingService
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
+import com.squareup.moshi.adapter
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
 import java.io.OutputStreamWriter
+import java.lang.reflect.Type
 
 //region JSON
 
@@ -32,6 +37,12 @@ inline fun <reified T> String.convertJsonToClass() : T
     val jsonAdapter: JsonAdapter<T> = moshi.adapter(T::class.java).lenient()
     return  jsonAdapter.fromJson(this)!!
 }
+
+
+inline fun <reified T> String.convertJsonToClassGSON(): T {
+    return Gson().fromJson(this, object : TypeToken<T>() {}.type)
+}
+
 
 /** Конвертировать из [Any]-класса в строчку JSON. */
 fun Any.convertClassToJson(): String

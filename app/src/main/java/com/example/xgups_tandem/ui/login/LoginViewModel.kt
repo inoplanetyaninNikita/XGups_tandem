@@ -1,22 +1,21 @@
 package com.example.xgups_tandem.ui.login
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.xgups_tandem.MainViewModel
 import com.example.xgups_tandem.UserData
 import com.example.xgups_tandem.api.ADFS.ADFS
+import com.example.xgups_tandem.api.SamGUPS.Moodle
 import com.example.xgups_tandem.api.SamGUPS.SamGUPS
-import com.example.xgups_tandem.api.convertClassToJson
 import com.example.xgups_tandem.api.convertJsonToClass
+import com.example.xgups_tandem.api.convertJsonToClassGSON
 import com.example.xgups_tandem.utils.ManagerUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import okhttp3.Cookie
+import java.lang.reflect.Modifier
 import java.util.regex.Pattern
 import javax.inject.Inject
-import kotlin.math.log
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
@@ -76,8 +75,13 @@ class LoginViewModel @Inject constructor(
     }
     private suspend fun loginToGups(email: String, password: String) {
         val api = SamGUPS.API
+        val apiMoodle = Moodle.API
+
         val login = loginSuccessSamGUPS
-//        try {
+        val response = api.login(SamGUPS.AuthRequest(email,password))
+
+
+        try {
             val response = api.login(SamGUPS.AuthRequest(email,password))
             if(response.isSuccessful) {
 
@@ -94,15 +98,20 @@ class LoginViewModel @Inject constructor(
                 val cookie = response.headers()["Set-Cookie"]!!
                 login.value = response.isSuccessful
 
-                println(auth.group)
-
                 schedule(cookie,email)
                 marks(cookie,email,auth.roleID);
+
+                val loginMoodle = apiMoodle.login(email.split("@")[0],password)
+                Moodle.token = loginMoodle.body()!!.token
+                val getUser = apiMoodle.getUserInfo()
+
+                Moodle.userID = getUser.body()!!.userid
+                mainViewModel.courses.value = apiMoodle.getAllCourses().body()!!
             }
-//       }
-//    catch (Ex : java.lang.Exception) {
-//           login.value = false
-//        }
+       }
+    catch (Ex : java.lang.Exception) {
+           login.value = false
+        }
     }
     //endregion
     //region Sucsess login and load data
@@ -126,7 +135,7 @@ class LoginViewModel @Inject constructor(
         if(response.isSuccessful)
         {
             val aes = SamGUPS.AESDecrypt(username,response.body()!!)
-            mainViewModel.marks.value = aes?.convertJsonToClass<List<SamGUPS.MarkResponse>>()!!
+            mainViewModel.marks.value = aes?.convertJsonToClassGSON<List<SamGUPS.MarkResponse>>()!!
         }
 
     }

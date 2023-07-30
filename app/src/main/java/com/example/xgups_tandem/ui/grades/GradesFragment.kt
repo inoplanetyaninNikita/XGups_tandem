@@ -109,9 +109,13 @@ class GradesFragment : BaseFragment<FragmentGradesBinding>(FragmentGradesBinding
     private fun spinnerConfigure() {
         if(mainViewModel.marks.value != null) {
             val values = arrayListOf<String>()
-            for (item in mainViewModel.marks.value!!) {
-                if(!values.contains(item.documentName)) {
-                    values.add(item.documentName)
+            val list = mainViewModel.marks.value
+            if (list != null) {
+                println(list[0])
+                for (item in list) {
+                    if(!values.contains(item.documentName)) {
+                        values.add(item.documentName)
+                    }
                 }
             }
             val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, values)
@@ -134,8 +138,5 @@ class GradesFragment : BaseFragment<FragmentGradesBinding>(FragmentGradesBinding
         }
         }
     }
-
-
-
 
 }

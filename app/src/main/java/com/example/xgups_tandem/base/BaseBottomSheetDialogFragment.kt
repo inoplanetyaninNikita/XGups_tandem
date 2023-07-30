@@ -41,7 +41,8 @@ abstract class BaseBottomSheetDialogFragment<VB : ViewBinding>(
     ): View {
         _binding = vbInflate(inflater, container, false)
         onCreateView()
-        windowInsetsController.show(WindowInsetsCompat.Type.ime())
+//        Зачем то включается клава :/
+//        windowInsetsController.show(WindowInsetsCompat.Type.ime())
         return binding.root
     }
 

@@ -8,13 +8,11 @@ import com.example.xgups_tandem.BuildConfig
 import com.example.xgups_tandem.api.SamGUPS.SamGUPS.Companion.AESDemo.decrypt
 import com.example.xgups_tandem.api.SamGUPS.SamGUPS.Companion.AESDemo.encrypt
 import com.example.xgups_tandem.api.convertJsonToClass
+import com.example.xgups_tandem.ui.schedule.lessonAdapter.LessonModel
 import com.google.gson.GsonBuilder
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import kotlinx.parcelize.Parcelize
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
@@ -43,7 +41,7 @@ interface SamGUPS {
     @POST("information/")
     suspend fun login(@Body auth : AuthRequest): Response<String>   //Response<AuthResponse>
     //
-     @Serializable
+
     data class AuthResponse(
         val roleID : String,
         val human : String,
@@ -277,9 +275,6 @@ interface SamGUPS {
             }
 
         /** Переводит [String] к типу [AuthResponse], сделано так, потому что работаю с динамическим ключом в JSON, а [String.convertJsonToClass] выбивает в этом случае [Exception].*/
-      fun jsonToAuthResponse(jsonString: String): AuthResponse {
-          return Json.decodeFromString(jsonString)
-      }
         fun AESDecrypt(login: String, cryptoText: String): String? {
             return decrypt(cryptoText, getKeyForDecrypt(login))
         }
