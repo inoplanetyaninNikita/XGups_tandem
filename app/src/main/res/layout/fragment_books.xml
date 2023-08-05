@@ -11,19 +11,30 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="50dp"
+            android:layout_height="7dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            app:cardBackgroundColor="#AEAEAE"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="0dp" />
+
         <TextView
             android:id="@+id/tvCourse"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:text="Привет"
+            android:shadowRadius="0"
+            android:text="Методички"
+            android:textColor="#000000"
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvBooks"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="300dp"
             android:layerType="none"
             android:layoutMode="clipBounds"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

@@ -52,10 +52,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             findNavController().navigate(
                 ProfileFragmentDirections.actionProfileFragmentToGradesFragment()
             )
-
-//            findNavController().navigate(
-//                ProfileFragmentDirections.actionProfileFragmentToTester()
-//            )
         }
         binding.chatbot.root.setOnClickListener{
             findNavController().navigate(
@@ -95,8 +91,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         alertDialogBuilder.setCancelable(false)
 
         alertDialogBuilder.setPositiveButton("Да") { dialog, id ->
-            findNavController().navigate(
-                ProfileFragmentDirections.actionProfileFragmentToLoginFragment()
+            navigationController.navigate(
+                ProfileFragmentDirections.actionProfileFragmentToLoginnav()
             )
             dialog.dismiss()
         }

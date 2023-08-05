@@ -1,100 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="10dp"
-    app:cardBackgroundColor="#F2F2F2"
-    app:cardCornerRadius="15dp"
-    app:cardElevation="0dp"
-    app:cardMaxElevation="0dp">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/startTime"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="10:30"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/endTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10:20"
+            android:textColor="@color/xggray"
+            android:textSize="16dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imageProfile4"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="start"
+            android:layout_marginTop="5dp"
+            android:background="#665353DC"
+            app:shapeAppearanceOverlay="@style/circleImageView"
+            app:strokeColor="@android:color/darker_gray" />
+
+        <View
+            android:id="@+id/divider7"
+            android:layout_width="2dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:background="#665353DC" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/TimeLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="20dp">
-
-            <TextView
-                android:id="@+id/startTime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif"
-                android:gravity="center_horizontal"
-                android:text="@string/lesson_startTime"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                tools:text="8:30" />
-
-            <TextView
-                android:id="@+id/endTime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif"
-                android:gravity="center_horizontal"
-                android:text="@string/lesson_endTime"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                tools:text="10:00" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/InfoLayout"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/nameLesson"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginTop="17dp"
-                android:fontFamily="sans-serif-black"
-                android:foregroundGravity="center_vertical"
-                android:gravity="center_vertical"
-                android:text="@string/lesson_name"
-                android:textColor="@color/black"
-                android:textSize="24sp"
-                tools:text="пр.Математика" />
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            app:cardBackgroundColor="#335353DC"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="0dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:orientation="horizontal">
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/nameLesson"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="15dp"
+                        android:text="Технические средства обеспечения безопасности на железнодорожном транспорте"
+                        android:textColor="#000000"
+                        android:textSize="14dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/teacherLesson"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/textView7"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif"
-                    android:text="@string/lesson_teacher"
-                    tools:text="Москвичев" />
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Практика"
+                    android:textSize="12dp" />
 
-                <TextView
-                    android:id="@+id/auditoriumLesson"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="20dp"
-                    android:layout_weight="1"
-                    android:fontFamily="sans-serif"
-                    android:gravity="right"
-                    android:text="@string/lesson_auditorium"
-                    android:textAlignment="viewEnd"
-                    android:textSize="16sp"
-                    tools:text="5139" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/imageProfile"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="start"
+                        android:layout_marginLeft="15dp"
+                        android:src="@mipmap/account"
+                        app:shapeAppearanceOverlay="@style/circleImageView"
+                        app:strokeColor="@android:color/darker_gray" />
+
+                    <TextView
+                        android:id="@+id/teacherLesson"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="1"
+                        android:text="Тороповский Н.C."
+                        android:textSize="12dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="15dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/imageProfile3"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="start"
+                        android:layout_marginLeft="15dp"
+                        android:src="@mipmap/address"
+                        app:shapeAppearanceOverlay="@style/circleImageView"
+                        app:strokeColor="@android:color/darker_gray" />
+
+                    <TextView
+                        android:id="@+id/auditoriumLesson"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="1"
+                        android:text="9418"
+                        android:textSize="12dp" />
+
+                </LinearLayout>
+
             </LinearLayout>
-
-        </LinearLayout>
-
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+</LinearLayout>

@@ -1,5 +1,7 @@
 package com.example.xgups_tandem.api
 
+import android.animation.Animator
+import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -9,6 +11,11 @@ import android.renderscript.Element
 import android.renderscript.RenderScript
 import android.renderscript.ScriptIntrinsicBlur
 import android.util.Log
+import android.view.View
+import android.view.ViewGroup
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
+import androidx.core.view.forEach
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.gson.Gson
@@ -28,8 +35,7 @@ import java.lang.reflect.Type
 //region JSON
 
 /** Конвертировать из JSON строки в любой [T]-класс. */
-inline fun <reified T> String.convertJsonToClass() : T
-{
+inline fun <reified T> String.convertJsonToClass() : T {
     val moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
         .build()
@@ -45,8 +51,7 @@ inline fun <reified T> String.convertJsonToClassGSON(): T {
 
 
 /** Конвертировать из [Any]-класса в строчку JSON. */
-fun Any.convertClassToJson(): String
-{
+fun Any.convertClassToJson(): String {
     val moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
         .build()
@@ -115,4 +120,59 @@ fun loadImage(path: String) : Bitmap{
     return BitmapFactory.decodeFile(path)
 }
 
+
+//endregion
+//region VIEW
+
+fun View.dropDownList(viewGroup: ViewGroup){
+    this.setOnClickListener{
+        viewGroup.forEach {
+//            it.visibility = if (it.visibility == View.GONE)
+//                View.VISIBLE else View.GONE
+        }
+            val it = viewGroup
+            val isOpen = it.visibility == View.VISIBLE
+            val startHeight: Int
+            val endHeight: Int
+
+            if (isOpen) {
+                startHeight = it.height
+                endHeight = 0
+            } else {
+                startHeight = 0
+                it.measure(
+                    View.MeasureSpec.makeMeasureSpec(it.width, View.MeasureSpec.EXACTLY),
+                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+                )
+                endHeight = it.measuredHeight
+            }
+
+            val animator = ValueAnimator.ofInt(startHeight, endHeight)
+            animator.addUpdateListener { valueAnimator ->
+                val value = valueAnimator.animatedValue as Int
+                val layoutParams = it.layoutParams
+                layoutParams.height = value
+                it.layoutParams = layoutParams
+            }
+
+            animator.addListener(object : Animator.AnimatorListener {
+                override fun onAnimationStart(animation: Animator) {
+                    it.visibility = View.VISIBLE
+                }
+
+                override fun onAnimationEnd(animation: Animator) {
+                    if (isOpen) {
+                        it.visibility = View.GONE
+                    }
+                }
+
+                override fun onAnimationCancel(animation: Animator) {}
+                override fun onAnimationRepeat(animation: Animator) {}
+            })
+
+            animator.duration = 300
+            animator.start()
+
+    }
+}
 //endregion

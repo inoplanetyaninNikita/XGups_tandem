@@ -57,7 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:baselineAligned="false"
-        android:fontFamily="@font/poppins_bold"
+        android:fontFamily="sans-serif-black"
         android:gravity="center"
         android:text="@string/schedule_names"
         android:textColor="@color/black"
@@ -72,7 +72,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="-10dp"
-        android:fontFamily="@font/poppins_bold"
+        android:fontFamily="sans-serif-medium"
         android:gravity="center"
         android:text="@string/schedule_group"
         android:textAllCaps="true"
@@ -84,9 +84,10 @@
         layout="@layout/item_grades"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="25dp"
         android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp" />
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="10dp" />
 
     <include
         android:id="@+id/chatbot"
@@ -95,7 +96,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
-        android:layout_marginBottom="25dp" />
+        android:layout_marginBottom="10dp" />
 
     <include
         android:id="@+id/logout"

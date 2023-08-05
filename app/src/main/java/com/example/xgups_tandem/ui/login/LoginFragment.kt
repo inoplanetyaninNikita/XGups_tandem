@@ -35,8 +35,8 @@ class LoginFragment: BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::in
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.login(
-            "78567@stud.samgups.ru",
-            "123Qwe"
+            "76299@stud.samgups.ru",
+            "Xjk"
         )
     }
     override fun setListeners()  {
@@ -90,16 +90,16 @@ class LoginFragment: BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::in
             mainViewModel.user.value = viewModel.dataUser.value
             mainViewModel.login.value = binding.email.text.toString().split("@")[0]
 
-            findNavController().navigate(
-                LoginFragmentDirections.actionLoginFragmentToScheduleFragment(viewModel.dataUser.value!!.secondName,
-                    viewModel.dataUser.value!!.firstName)
+            navigationController.navigate(
+                LoginFragmentDirections.actionLoginFragmentToSchedulenav()
             )
-
+//            findNavController().setGraph(R.navigation.schedulenav)
         }
 
         viewModel.marks.observe(viewLifecycleOwnerLiveData.value!!){
             mainViewModel.marks.value = it;
         }
+
     }
 
     override fun onBackPressed() {

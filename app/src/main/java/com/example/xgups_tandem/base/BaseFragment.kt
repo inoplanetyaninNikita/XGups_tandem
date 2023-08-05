@@ -95,4 +95,5 @@ abstract class BaseFragment<VB : ViewBinding>(
     protected fun getProfileLogo(login: String) : String{
         return Path(requireContext().externalCacheDir!!.path, "${login}.jpeg").toString()
     }
+
 }

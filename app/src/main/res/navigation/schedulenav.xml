@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/schedulenav"
+    app:startDestination="@id/scheduleFragment">
+    <fragment
+        android:id="@+id/scheduleFragment"
+        android:name="com.example.xgups_tandem.ui.schedule.ScheduleFragment"
+        android:label="ScheduleFragment" >
+        <action
+            android:id="@+id/action_scheduleFragment_to_booksFragment"
+            app:destination="@id/booksFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/booksFragment"
+        android:name="com.example.xgups_tandem.ui.schedule.bottomSheetDialog.BooksFragment"
+        android:label="fragment_books"
+        tools:layout="@layout/fragment_books" >
+        <argument
+            android:name="books"
+            app:argType="com.example.xgups_tandem.api.SamGUPS.Moodle$Content[]" />
+    </dialog>
+</navigation>

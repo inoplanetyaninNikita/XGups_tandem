@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profilenav"
+    app:startDestination="@id/profileFragment">
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.xgups_tandem.ui.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_loginnav"
+            app:destination="@id/loginnav" />
+        <action
+            android:id="@+id/action_profileFragment_to_gradesFragment"
+            app:destination="@id/gradesFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_helpFragment"
+            app:destination="@id/helpFragment" />
+    </fragment>
+    <include app:graph="@navigation/loginnav" />
+    <fragment
+        android:id="@+id/gradesFragment"
+        android:name="com.example.xgups_tandem.ui.grades.GradesFragment"
+        android:label="fragment_grades"
+        tools:layout="@layout/fragment_grades" />
+    <fragment
+        android:id="@+id/helpFragment"
+        android:name="com.example.xgups_tandem.ui.help.HelpFragment"
+        android:label="fragment_helpgpt"
+        tools:layout="@layout/fragment_helpgpt" />
+</navigation>

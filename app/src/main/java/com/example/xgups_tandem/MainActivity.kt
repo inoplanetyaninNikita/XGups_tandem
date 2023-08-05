@@ -7,17 +7,24 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.AttributeSet
 import android.util.Log
+import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.xgups_tandem.databinding.ActivityMainBinding
 import com.example.xgups_tandem.di.PushNotification
 import com.example.xgups_tandem.di.PushNotificationData
 import com.example.xgups_tandem.di.Room
+import com.example.xgups_tandem.ui.login.LoginFragmentDirections
+import com.example.xgups_tandem.ui.schedule.ScheduleFragment
+import com.example.xgups_tandem.ui.schedule.ScheduleFragmentDirections
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -67,7 +74,7 @@ class MainActivity : AppCompatActivity() {
 //        firestore.collection("users").add(users)
         //endregion
         //region mypush
-        push.show(PushNotificationData("Пара", "13:54"))
+//        push.show(PushNotificationData("Пара", "13:54"))
         //endregion
         //region DAO TEST
 
@@ -82,7 +89,32 @@ class MainActivity : AppCompatActivity() {
 
         //endregion
 
+
+//        navHostFragment.parentFragment
+
         val context = binding.root.context
 
+        val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+
+
+        bottomNavigation.setOnNavigationItemSelectedListener { item ->
+            val navHostFragment = supportFragmentManager.findFragmentById(R.id.containerMain) as NavHostFragment
+
+
+//            app:navGraph="@navigation/loginnav"
+
+            when (item.itemId) {
+                R.id .bottom_navigation_profile-> {
+                    navHostFragment.navController.setGraph(R.navigation.profilenav)
+                    true
+                }
+                R.id .bottom_navigation_schedule -> {
+                    navHostFragment.navController.setGraph(R.navigation.schedulenav)
+                    true
+                }
+                else -> false
+            }
+        }
     }
+
 }

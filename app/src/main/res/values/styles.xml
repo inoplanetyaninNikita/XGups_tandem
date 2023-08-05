@@ -15,4 +15,10 @@
         <item name="android:background">@drawable/bgr_bottom_sheet</item>
     </style>
     <!--  /BottomSheetStyles -->
+
+    <style name="BottomNavigationViewStyle" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="android:background">@color/white</item> <!-- Фоновый цвет -->
+        <item name="itemIconTint">@color/xgpurple</item> <!-- Цвет неактивных иконок -->
+        <item name="itemTextColor">@color/xgpurple</item> <!-- Цвет неактивных текстов -->
+    </style>
 </resources>

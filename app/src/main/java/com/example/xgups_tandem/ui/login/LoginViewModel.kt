@@ -52,7 +52,7 @@ class LoginViewModel @Inject constructor(
     //endregion
     //region Login
 
-    val loginSuccessADFS : MutableLiveData<Boolean> by lazy {
+    private val loginSuccessADFS : MutableLiveData<Boolean> by lazy {
         MutableLiveData<Boolean>()
     }
     val loginSuccessSamGUPS : MutableLiveData<Boolean> by lazy {
@@ -96,10 +96,12 @@ class LoginViewModel @Inject constructor(
                     auth.course
                 )
                 val cookie = response.headers()["Set-Cookie"]!!
-                login.value = response.isSuccessful
+
 
                 schedule(cookie,email)
                 marks(cookie,email,auth.roleID);
+
+                login.value = response.isSuccessful
 
                 val loginMoodle = apiMoodle.login(email.split("@")[0],password)
                 Moodle.token = loginMoodle.body()!!.token
@@ -107,6 +109,7 @@ class LoginViewModel @Inject constructor(
 
                 Moodle.userID = getUser.body()!!.userid
                 mainViewModel.courses.value = apiMoodle.getAllCourses().body()!!
+
             }
        }
     catch (Ex : java.lang.Exception) {

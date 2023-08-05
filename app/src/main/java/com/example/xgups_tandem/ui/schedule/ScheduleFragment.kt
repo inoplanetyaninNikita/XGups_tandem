@@ -1,10 +1,17 @@
 package com.example.xgups_tandem.ui.schedule
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.opengl.Visibility
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.LinearLayout
+import androidx.core.view.children
+import androidx.core.view.forEach
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
@@ -15,6 +22,7 @@ import coil.transform.CircleCropTransformation
 import com.example.xgups_tandem.R
 import com.example.xgups_tandem.api.SamGUPS.Moodle
 import com.example.xgups_tandem.api.SamGUPS.SamGUPS
+import com.example.xgups_tandem.api.dropDownList
 import com.example.xgups_tandem.base.BaseFragment
 import com.example.xgups_tandem.databinding.FragmentScheduleBinding
 import com.example.xgups_tandem.ui.schedule.bottomSheetDialog.BooksFragment
@@ -27,10 +35,14 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 
 @AndroidEntryPoint
-class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(FragmentScheduleBinding::inflate)  {
+class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(FragmentScheduleBinding::inflate) {
     private val viewModel by viewModels<ScheduleViewModel>()
     private val dayAdapter = DayAdapter()
     private val lessonAdapter = ScheduleLessonAdapter()
+
+    private val contents: MutableLiveData<List<Moodle.Content>> by lazy {
+        MutableLiveData<List<Moodle.Content>>()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -38,7 +50,8 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(FragmentScheduleB
         //region Profile
 
         viewModel.image.value = getProfileLogo()
-        viewModel.name.value = "${mainViewModel.user.value!!.secondName} ${mainViewModel.user.value!!.firstName}"
+        viewModel.name.value =
+            "${mainViewModel.user.value!!.secondName} ${mainViewModel.user.value!!.firstName}"
         viewModel.group.value = mainViewModel.user.value!!.group
         //endregion
         //region Отображение пар, на сегодня
@@ -70,11 +83,12 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(FragmentScheduleB
     }
 
     override fun setListeners() {
-        binding.ProfileLayout.setOnClickListener {
-            findNavController().navigate(
-                ScheduleFragmentDirections.actionScheduleFragmentToProfileFragment()
-            )
-        }
+//        binding.ProfileLayout.setOnClickListener {
+//            findNavController().navigate(
+//                ScheduleFragmentDirections.actionScheduleFragmentToProfileFragment()
+//            )
+//        }
+
     }
 
     override fun setObservable() {
@@ -82,35 +96,24 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(FragmentScheduleB
         //region Profie
 
         viewModel.name.observe(viewLifecycleOwner) {
-            binding.names.text =
-                binding.root.context.resources.getString(R.string.schedule_names, it)
+//            binding.names.text = "${it.split(' ')[1]} "
         }
         viewModel.image.observe(viewLifecycleOwner) {
-            binding.imageProfile.load(it) {
-                crossfade(250)
-                placeholder(R.mipmap.user)
-                error(R.mipmap.user)
-                transformations(CircleCropTransformation())
-            }
+//            binding.imageProfile.load(it) {
+//                crossfade(250)
+//                placeholder(R.mipmap.user)
+//                error(R.mipmap.user)
+//                transformations(CircleCropTransformation())
+//            }
         }
         viewModel.group.observe(viewLifecycleOwner) {
 //            binding.group.text = binding.root.context.resources.getString(R.string.schedule_group,it)
 
         }
 
-        contents.observe(viewLifecycleOwner){
-            try {
-                findNavController().navigate(
-                    ScheduleFragmentDirections.actionScheduleFragmentToBooksFragment(books = contents.value.orEmpty().toTypedArray())
-                )
-            } catch (_: Exception){
 
-            }
-
-        }
         //endregion
         //region Переключение дня и обновление адаптера с парами
-
         viewModel.lessonList.observe(viewLifecycleOwner) {
             lessonAdapter.setListOnAdapter(viewModel.lessonList.value!!)
             dayAdapter.setOnClickListner {
@@ -118,8 +121,11 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(FragmentScheduleB
                 day = SamGUPS.ScheduleResponse.Week.Day(
                     lessons = listOf(
                         "Птн,12  мая",
-                        "пр.Организация и управление производством Клюканов А.В. 9404/ДОТ",
-                        "пр.Технические средства обеспечения безопасности на железнодорожном транспорте Леонова С.А. 9319/ДОТ"
+                        "пр.Организация и управление производством Балакин А.Ю. 7309/ДОТ",
+                        "пр.Электрические передачи локомотивов Иванов В.В. 7303/ДОТ",
+                        "пр.Локомотивные энергетические установки Сосевич Н.М. 7301/ДОТ",
+                        "пр.Научно-техническая деятельность в инженерной практике Свечников А.А. 7302/ДОТ",
+                        "пр.Системы искусственного интеллекта Локтионов А.А. 1410/ДОТ"
                     )
                 )
 
@@ -127,21 +133,42 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(FragmentScheduleB
                 viewLovePicture()
             }
 
-            lessonAdapter.setOnClickListner {
-                lifecycleScope.launch {
-                    if(Moodle.token.isEmpty() ||
-                        Moodle.userID == - 1) return@launch
 
-                    val courses = getCoursesForLesson(it.lessonName.replace("пр.",""))
-                    contents.value = getAllElementsForCourse(courses[0])
-                }
+        }
+
+        lessonAdapter.setOnClickListner {
+            lifecycleScope.launch {
+                if (Moodle.token.isEmpty() ||
+                    Moodle.userID == -1
+                ) return@launch
+
+                val courses = getCoursesForLesson(it.lessonName.replace("пр.", ""))
+                contents.value = getAllElementsForCourse(courses[0])
+            }
+        }
+        contents.observe(viewLifecycleOwner) {
+            if (it.isEmpty())
+                return@observe
+
+//            val frag = testDialogFragment ()
+//            val ft = requireFragmentManager().beginTransaction()
+//            frag.show(ft, "custom_dialog")
+
+            try {
+                findNavController().navigate(
+                    ScheduleFragmentDirections.actionScheduleFragmentToBooksFragment(
+                        books = contents.value.orEmpty().toTypedArray()
+                    )
+                )
+            } catch (_: Exception) {
 
             }
         }
+
+//        binding.tvDrop.dropDownList(binding.llDrop)
     }
-    private val contents : MutableLiveData<List<Moodle.Content>> by lazy {
-        MutableLiveData<List<Moodle.Content>>()
-    }
+
+
         //endregion
 
     private fun viewLovePicture(){
@@ -176,15 +203,6 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(FragmentScheduleB
                     for (content in module.contents) {
                         if (content.mimetype == "application/pdf") {
                             contents.add(content)
-//                            val alertDialogBuilder = AlertDialog.Builder(requireContext())
-//                            alertDialogBuilder.setMessage(content.filename)
-//                            alertDialogBuilder.setPositiveButton("OK") { dialogInterface: DialogInterface, _: Int ->
-//                                // Здесь можно добавить обработчик для кнопки "OK", если нужно
-//                                dialogInterface.dismiss()
-//                            }
-//
-//                            val alertDialog = alertDialogBuilder.create()
-//                            alertDialog.show()
                         }
                     }
                 }

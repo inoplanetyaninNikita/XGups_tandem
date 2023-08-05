@@ -13,55 +13,72 @@
         tools:context=".ui.schedule.ScheduleFragment">
 
 
+<!--        <Space-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="8dp" />-->
+
+<!--        <LinearLayout-->
+<!--            android:id="@+id/ProfileLayout"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal">-->
+
+<!--            <com.google.android.material.imageview.ShapeableImageView-->
+<!--                android:id="@+id/imageProfile"-->
+<!--                android:layout_width="45dp"-->
+<!--                android:layout_height="45dp"-->
+<!--                android:layout_gravity="center_horizontal|center_vertical"-->
+<!--                android:layout_margin="15dp"-->
+<!--                android:src="@mipmap/user"-->
+<!--                app:shapeAppearanceOverlay="@style/circleImageView"-->
+<!--                app:strokeColor="@android:color/darker_gray" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/names"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:baselineAligned="false"-->
+<!--                android:fontFamily="sans-serif-black"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:lineSpacingExtra="0sp"-->
+<!--                android:text="@string/schedule_names"-->
+<!--                android:textColor="#F2FFFFFF"-->
+<!--                android:textColorHighlight="@color/black"-->
+<!--                android:textColorHint="@color/black"-->
+<!--                android:textSize="24sp"-->
+<!--                android:textStyle="normal"-->
+<!--                tools:text="Никита" />-->
+
+<!--        </LinearLayout>-->
+
         <Space
             android:layout_width="match_parent"
-            android:layout_height="8dp" />
+            android:layout_height="20dp" />
 
-        <LinearLayout
-            android:id="@+id/ProfileLayout"
+        <TextView
+            android:id="@+id/textView5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginStart="20dp"
+            android:text="5 Августа"
+            android:textSize="16dp" />
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imageProfile"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_gravity="center_horizontal|center_vertical"
-                android:layout_margin="15dp"
-                android:src="@mipmap/user"
-                app:shapeAppearanceOverlay="@style/circleImageView"
-                app:strokeColor="@android:color/darker_gray" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/names"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="20dp"
-                    android:baselineAligned="false"
-                    android:fontFamily="sans-serif-black"
-                    android:text="@string/schedule_names"
-                    android:textColor="@color/black"
-                    android:textColorHighlight="@color/black"
-                    android:textColorHint="@color/black"
-                    android:textSize="24sp"
-                    android:textStyle="normal"
-                    tools:text="Toropovsky" />
-
-            </LinearLayout>
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:fontFamily="sans-serif-black"
+            android:text="Сегодня"
+            android:textColor="@color/xgpurple"
+            android:textSize="25dp"
+            android:textStyle="bold" />
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="1dp" />
+            android:layout_height="20dp" />
 
-        <androidx.recyclerview.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/daysRecycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -70,10 +87,6 @@
             tools:listitem="@layout/item_day">
 
         </androidx.recyclerview.widget.RecyclerView>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/lessonsRecycler"
@@ -91,7 +104,7 @@
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_gravity="center_horizontal"
-            android:visibility="invisible"
+            android:visibility="gone"
             app:srcCompat="@mipmap/love" />
 
         <TextView
@@ -106,5 +119,6 @@
             android:visibility="invisible" />
 
     </LinearLayout>
+
 
 </FrameLayout>

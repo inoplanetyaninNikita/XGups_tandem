@@ -139,9 +139,9 @@ class DayAdapter : RecyclerView.Adapter<DayAdapter.Holder>()  {
         {
             when(data.typeNow)
             {
-                HOLIDAY -> changeColors(R.color.white,R.color.black, R.color.xggray)
+                HOLIDAY -> changeColors(R.color.xgtransperent,R.color.black, R.color.xggray)
                 TODAY -> changeColors(R.color.xggray, R.color.black, R.color.black)
-                SELECT -> changeColors(R.color.xgpurple, R.color.white, R.color.xggray)
+                SELECT -> changeColors(R.color.xgpurple, R.color.xgpurple, R.color.xgpurple)
                 NOHOLIDAY -> changeColors(R.color.xggray, R.color.black, R.color.black)
             }
         }
@@ -154,7 +154,8 @@ class DayAdapter : RecyclerView.Adapter<DayAdapter.Holder>()  {
          */
         private fun changeColors(resourceBackgroudColor : Int = 0, resourceNumTextColor : Int = 0, resourceNameTextColor : Int = 0)
         {
-            if (resourceBackgroudColor != 0) binding.root.setCardBackgroundColor(context.resources.getColor(resourceBackgroudColor))
+            if (resourceBackgroudColor != 0) binding.dayIsSelect.setCardBackgroundColor(context.resources.getColor(resourceBackgroudColor))
+//            if (resourceBackgroudColor != 0) binding.root.setCardBackgroundColor(context.resources.getColor(resourceBackgroudColor))
             if (resourceNumTextColor != 0) binding.dayNumber.setTextColor(context.resources.getColor(resourceNumTextColor))
             if (resourceNameTextColor != 0) binding.dayName.setTextColor(context.resources.getColor(resourceNameTextColor))
         }

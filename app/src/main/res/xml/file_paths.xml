@@ -3,4 +3,6 @@
     <external-files-path
         name="camera_photos"
         path="images/"/>
+
+    <external-path name="download" path="Download/" />
 </paths>
