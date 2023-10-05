@@ -100,6 +100,7 @@ class MainActivity : AppCompatActivity() {
         bottomNavigation.setOnNavigationItemSelectedListener { item ->
             val navHostFragment = supportFragmentManager.findFragmentById(R.id.containerMain) as NavHostFragment
 
+//            bottomNavigation.selectedItemId = R.id .bottom_navigation_profile
 
 //            app:navGraph="@navigation/loginnav"
 
@@ -117,4 +118,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun visibleBottomNav(isVisible : Boolean){
+        try {
+            if(isVisible)
+                binding.bottomNavigation.visibility = View.VISIBLE
+            else
+                binding.bottomNavigation.visibility = View.GONE
+        }
+        catch (ex : Exception) {
+            return
+        }
+    }
 }

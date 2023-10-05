@@ -10,9 +10,9 @@ import com.example.xgups_tandem.databinding.ItemLessonBinding
 import com.example.xgups_tandem.ui.schedule.ScheduleViewModel
 
 class ScheduleLessonAdapter : RecyclerView.Adapter<ScheduleLessonAdapter.Holder>() {
-
     lateinit var lessonList : List<LessonModel>
     private var actionOnClick: ((LessonModel) -> Unit)? = null
+
 
     @SuppressLint("NotifyDataSetChanged")
     fun setListOnAdapter(list : List<LessonModel>)
@@ -24,6 +24,9 @@ class ScheduleLessonAdapter : RecyclerView.Adapter<ScheduleLessonAdapter.Holder>
     /**Прикрепление коллекции.*/
     class Holder(item: View) : RecyclerView.ViewHolder(item) {
 
+        private val bestTeacher = listOf("Горбатов С.В.", "Локтионов А.А.",
+            "Тюжина И.В.", "Варламова Н.Х.", "Цой Е.А.", "Васильев Д.В.")
+
         private val binding = ItemLessonBinding.bind(item)
         fun bind(lesson: LessonModel,
                  onClick:((LessonModel)-> Unit)? ) = with(binding)
@@ -34,9 +37,9 @@ class ScheduleLessonAdapter : RecyclerView.Adapter<ScheduleLessonAdapter.Holder>
             val name = String.format(
                 context.resources.getString(R.string.lesson_name),
                 lesson.lessonName)
-            val teacher = String.format(
-                context.resources.getString(R.string.lesson_teacher),
-                lesson.teacher)
+
+            val teacher = if (bestTeacher.contains(lesson.teacher))
+                "❤️ ${lesson.teacher}" else lesson.teacher
             val auditorium = String.format(
                 context.resources.getString(R.string.lesson_auditorium),
                 lesson.auditorium)

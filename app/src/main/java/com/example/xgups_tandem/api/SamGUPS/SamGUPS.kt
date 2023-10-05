@@ -2,7 +2,6 @@ package com.example.xgups_tandem.api.SamGUPS
 
 import android.annotation.SuppressLint
 import android.os.Parcelable
-import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.xgups_tandem.BuildConfig
 import com.example.xgups_tandem.api.SamGUPS.SamGUPS.Companion.AESDemo.decrypt
@@ -276,24 +275,29 @@ interface SamGUPS {
 
         /** Переводит [String] к типу [AuthResponse], сделано так, потому что работаю с динамическим ключом в JSON, а [String.convertJsonToClass] выбивает в этом случае [Exception].*/
         fun AESDecrypt(login: String, cryptoText: String): String? {
-            return decrypt(cryptoText, getKeyForDecrypt(login))
+            return decrypt(cryptoText, getKeyForDecrypt(login)) ?: decrypt(
+                cryptoText,
+                getKeyForDecrypt(login, LocalDate.now().minusDays(1))
+            )
         }
 
         //region Шифрование
-        private fun getKeyForDecrypt(login: String): String {
-            val date = LocalDate.now()
-                .atStartOfDay()
-                .toEpochSecond(ZoneOffset.UTC)
+        private fun getKeyForDecrypt(login: String, dateSetup: LocalDate? = null): String {
+            val date = dateSetup
+                ?: LocalDate.now()
+
+            val time = date.atStartOfDay().toEpochSecond(ZoneOffset.UTC)
 
             val base64date = Base64.getEncoder()
                 .encodeToString(
-                    date.toString()
+                    time.toString()
                         .toByteArray(charset("UTF-8"))
                 )
 
             val key = encrypt(login, base64date)
             return key.toString()
         }
+
 
         private object AESDemo {
             private var secretKey: SecretKeySpec? = null
@@ -344,6 +348,7 @@ interface SamGUPS {
                         )
                     )
                 } catch (e: Exception) {
+
                     println("Error while decrypting: $e")
                 }
                 return null

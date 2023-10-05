@@ -7,20 +7,11 @@
     android:orientation="vertical"
     tools:context=".ui.profile.ProfileFragment">
 
-    <ImageView
-        android:id="@+id/backArrowProfile"
-        android:layout_width="25dp"
-        android:layout_height="20dp"
-
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="30dp"
-        android:src="@mipmap/leftarrow" />
-
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="-20dp">
+        android:layout_marginTop="30dp">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imageProfile2"
@@ -96,7 +87,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
-        android:layout_marginBottom="10dp" />
+        android:layout_marginBottom="10dp"
+        android:visibility="gone" />
 
     <include
         android:id="@+id/logout"
@@ -106,5 +98,9 @@
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:layout_marginBottom="25dp" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

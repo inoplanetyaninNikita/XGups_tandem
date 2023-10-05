@@ -118,17 +118,6 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(FragmentScheduleB
             lessonAdapter.setListOnAdapter(viewModel.lessonList.value!!)
             dayAdapter.setOnClickListner {
                 var day = mainViewModel.schedule.value!!.getDayByDate(it.localDate.toLocalDate())
-                day = SamGUPS.ScheduleResponse.Week.Day(
-                    lessons = listOf(
-                        "Птн,12  мая",
-                        "пр.Организация и управление производством Балакин А.Ю. 7309/ДОТ",
-                        "пр.Электрические передачи локомотивов Иванов В.В. 7303/ДОТ",
-                        "пр.Локомотивные энергетические установки Сосевич Н.М. 7301/ДОТ",
-                        "пр.Научно-техническая деятельность в инженерной практике Свечников А.А. 7302/ДОТ",
-                        "пр.Системы искусственного интеллекта Локтионов А.А. 1410/ДОТ"
-                    )
-                )
-
                 if (day != null) viewModel.viewLessonsOnDay(day) else viewModel.clear()
                 viewLovePicture()
             }
@@ -138,12 +127,23 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(FragmentScheduleB
 
         lessonAdapter.setOnClickListner {
             lifecycleScope.launch {
-                if (Moodle.token.isEmpty() ||
-                    Moodle.userID == -1
-                ) return@launch
+                try
+                {
+                    if (Moodle.token.isEmpty() ||
+                        Moodle.userID == -1
+                    ) return@launch
 
-                val courses = getCoursesForLesson(it.lessonName.replace("пр.", ""))
-                contents.value = getAllElementsForCourse(courses[0])
+                    val courses = getCoursesForLesson(it.
+                    lessonName.replace("пр.", "")
+                        .replace("лаб.", "")
+                        .replace("л.", ""))
+                    contents.value = getAllElementsForCourse(courses[0])
+                }
+                catch(ex :Exception)
+                {
+
+                }
+
             }
         }
         contents.observe(viewLifecycleOwner) {

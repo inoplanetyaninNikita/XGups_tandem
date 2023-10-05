@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.xgups_tandem.MainActivity
 import com.example.xgups_tandem.R
 import com.example.xgups_tandem.base.BaseFragment
 import com.example.xgups_tandem.databinding.FragmentLoginBinding
@@ -34,9 +35,10 @@ class LoginFragment: BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::in
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        (activity as MainActivity).visibleBottomNav(false)
         viewModel.login(
-            "76299@stud.samgups.ru",
-            "Xjk"
+            "78567@stud.samgups.ru",
+            "123Qwe"
         )
     }
     override fun setListeners()  {
@@ -90,10 +92,10 @@ class LoginFragment: BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::in
             mainViewModel.user.value = viewModel.dataUser.value
             mainViewModel.login.value = binding.email.text.toString().split("@")[0]
 
+            (activity as MainActivity).visibleBottomNav(true)
             navigationController.navigate(
                 LoginFragmentDirections.actionLoginFragmentToSchedulenav()
             )
-//            findNavController().setGraph(R.navigation.schedulenav)
         }
 
         viewModel.marks.observe(viewLifecycleOwnerLiveData.value!!){

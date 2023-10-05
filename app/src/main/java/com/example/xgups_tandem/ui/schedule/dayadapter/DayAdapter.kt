@@ -139,7 +139,7 @@ class DayAdapter : RecyclerView.Adapter<DayAdapter.Holder>()  {
         {
             when(data.typeNow)
             {
-                HOLIDAY -> changeColors(R.color.xgtransperent,R.color.black, R.color.xggray)
+                HOLIDAY -> changeColors(R.color.xgtransperent,R.color.xggray, R.color.xggray)
                 TODAY -> changeColors(R.color.xggray, R.color.black, R.color.black)
                 SELECT -> changeColors(R.color.xgpurple, R.color.xgpurple, R.color.xgpurple)
                 NOHOLIDAY -> changeColors(R.color.xggray, R.color.black, R.color.black)

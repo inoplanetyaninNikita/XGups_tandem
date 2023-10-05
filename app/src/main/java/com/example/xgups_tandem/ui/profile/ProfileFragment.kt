@@ -42,9 +42,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     }
     @SuppressLint("ClickableViewAccessibility")
     override fun setListeners() {
-        binding.backArrowProfile.setOnClickListener{
-            onBackPressed()
-        }
+//        binding.backArrowProfile.setOnClickListener{
+//            onBackPressed()
+//        }
         binding.logout.root.setOnClickListener{
             logoutAlert()
         }

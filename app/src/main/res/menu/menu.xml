@@ -4,11 +4,11 @@
     <item
         android:id="@+id/bottom_navigation_schedule"
         android:title="Расписание"
-        android:icon="@drawable/googleg_standard_color_18"/>
+        android:icon="@mipmap/menu_schedule"/>
 
     <item
         android:id="@+id/bottom_navigation_profile"
         android:title="Профиль"
-        android:icon="@drawable/googleg_standard_color_18"/>
+        android:icon="@mipmap/menu_profile"/>
 
 </menu>
