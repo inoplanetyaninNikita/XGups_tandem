@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/startTime"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="sans-serif-light"
             android:text="10:30"
+            android:textAlignment="center"
             android:textAllCaps="false"
             android:textColor="@color/black"
             android:textSize="20dp"
@@ -27,39 +29,11 @@
             android:id="@+id/endTime"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="sans-serif-light"
             android:text="10:20"
             android:textColor="@color/xggray"
             android:textSize="18dp" />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/imageProfile4"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="start"
-            android:layout_marginTop="5dp"
-            android:background="#665353DC"
-            app:shapeAppearanceOverlay="@style/circleImageView"
-            app:strokeColor="@android:color/darker_gray" />
-
-        <View
-            android:id="@+id/divider7"
-            android:layout_width="2dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="5dp"
-            android:background="#665353DC" />
     </LinearLayout>
 
     <LinearLayout
@@ -71,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            app:cardBackgroundColor="#335353DC"
+            app:cardBackgroundColor="#FFFFFF"
             app:cardCornerRadius="15dp"
             app:cardElevation="0dp">
 
@@ -106,7 +80,7 @@
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="15dp"
                         android:layout_marginRight="15dp"
-                        android:fontFamily="sans-serif-black"
+                        android:fontFamily="sans-serif-medium"
                         android:text="Технические средства обеспечения безопасности на железнодорожном транспорте"
                         android:textColor="#000000"
                         android:textSize="14dp"
@@ -120,7 +94,8 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="5dp"
                     android:text="Практика"
-                    android:textSize="12dp" />
+                    android:textSize="12dp"
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -139,7 +114,7 @@
                         android:tint="@color/xgpurple"
                         android:tintMode="src_atop"
                         app:shapeAppearanceOverlay="@style/circleImageView"
-                        app:strokeColor="@android:color/darker_gray" />
+                        app:strokeColor="@color/xgpurple" />
 
                     <TextView
                         android:id="@+id/teacherLesson"
@@ -159,8 +134,8 @@
                         android:foregroundTintMode="add"
                         android:src="@mipmap/schedule_lesson_pin"
                         app:shapeAppearanceOverlay="@style/circleImageView"
-                        app:strokeColor="@android:color/darker_gray"
-                        app:tint="#E6FF2A2A"
+                        app:strokeColor="@color/black"
+                        app:tint="@color/xgpurple"
                         app:tintMode="src_atop" />
 
                     <TextView

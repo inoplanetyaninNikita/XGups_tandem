@@ -1,38 +1,21 @@
 package com.example.xgups_tandem.ui.schedule
 
-import android.annotation.SuppressLint
-import android.app.AlertDialog
-import android.content.DialogInterface
-import android.opengl.Visibility
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.LinearLayout
-import androidx.core.view.children
-import androidx.core.view.forEach
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
-import coil.load
-import coil.transform.CircleCropTransformation
-import com.example.xgups_tandem.R
 import com.example.xgups_tandem.api.SamGUPS.Moodle
-import com.example.xgups_tandem.api.SamGUPS.SamGUPS
-import com.example.xgups_tandem.api.dropDownList
 import com.example.xgups_tandem.base.BaseFragment
 import com.example.xgups_tandem.databinding.FragmentScheduleBinding
-import com.example.xgups_tandem.ui.schedule.bottomSheetDialog.BooksFragment
-import com.example.xgups_tandem.ui.schedule.dayadapter.Day
 import com.example.xgups_tandem.ui.schedule.dayadapter.DayAdapter
-import com.example.xgups_tandem.ui.schedule.lessonAdapter.LessonModel
+import com.example.xgups_tandem.ui.schedule.dayadapter.DayStatus
 import com.example.xgups_tandem.ui.schedule.lessonAdapter.ScheduleLessonAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import java.util.*
 
 @AndroidEntryPoint
 class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(FragmentScheduleBinding::inflate) {
@@ -46,6 +29,8 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(FragmentScheduleB
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        changeColorsForDays()
 
         //region Profile
 
@@ -166,10 +151,11 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(FragmentScheduleB
         }
 
 //        binding.tvDrop.dropDownList(binding.llDrop)
+
+        //endregion
     }
 
 
-        //endregion
 
     private fun viewLovePicture(){
         if(viewModel.lessonList.value?.isEmpty() == true) {
@@ -181,10 +167,23 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(FragmentScheduleB
             binding.tvLessonEmpty.visibility = View.INVISIBLE
         }
     }
+
+    private fun changeColorsForDays(){
+        val days = viewModel.dateList.value!!
+        for (day in days){
+            val dayModel = mainViewModel.schedule.value!!.getDayByDate(day.localDate.toLocalDate())
+            if (dayModel != null && dayModel.lessons.isNotEmpty()) {
+                day.status = DayStatus.NOHOLIDAY
+            }
+            else{
+                day.status = DayStatus.HOLIDAY
+            }
+        }
+    }
     private fun getCoursesForLesson(lessonName : String) : List<Moodle.Course> {
         return mainViewModel.courses.value!!.filter { course ->
             course.fullname
-                .toLowerCase()
+                .toLowerCase(Locale.ROOT)
                 .replace("\"","")
                 .replace(" ","")
 

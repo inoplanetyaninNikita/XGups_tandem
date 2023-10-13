@@ -34,6 +34,7 @@ class ScheduleViewModel : ViewModel() {
         val list = mutableListOf<DayModel>()
         val firstDay = LocalDateTime.now().minusDays(10)
         repeat(40) {
+
             val day = DayModel(firstDay.plusDays(it.toLong()))
             if(day.localDate.dayOfYear == LocalDate.now().dayOfYear) today = day
             list.add(day)

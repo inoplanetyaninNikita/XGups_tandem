@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F7F8FF">
 
 
     <LinearLayout
@@ -13,43 +14,43 @@
         tools:context=".ui.schedule.ScheduleFragment">
 
 
-<!--        <Space-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="8dp" />-->
+        <!--        <Space-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="8dp" />-->
 
-<!--        <LinearLayout-->
-<!--            android:id="@+id/ProfileLayout"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="horizontal">-->
+        <!--        <LinearLayout-->
+        <!--            android:id="@+id/ProfileLayout"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:orientation="horizontal">-->
 
-<!--            <com.google.android.material.imageview.ShapeableImageView-->
-<!--                android:id="@+id/imageProfile"-->
-<!--                android:layout_width="45dp"-->
-<!--                android:layout_height="45dp"-->
-<!--                android:layout_gravity="center_horizontal|center_vertical"-->
-<!--                android:layout_margin="15dp"-->
-<!--                android:src="@mipmap/user"-->
-<!--                app:shapeAppearanceOverlay="@style/circleImageView"-->
-<!--                app:strokeColor="@android:color/darker_gray" />-->
+        <!--            <com.google.android.material.imageview.ShapeableImageView-->
+        <!--                android:id="@+id/imageProfile"-->
+        <!--                android:layout_width="45dp"-->
+        <!--                android:layout_height="45dp"-->
+        <!--                android:layout_gravity="center_horizontal|center_vertical"-->
+        <!--                android:layout_margin="15dp"-->
+        <!--                android:src="@mipmap/user"-->
+        <!--                app:shapeAppearanceOverlay="@style/circleImageView"-->
+        <!--                app:strokeColor="@android:color/darker_gray" />-->
 
-<!--            <TextView-->
-<!--                android:id="@+id/names"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:baselineAligned="false"-->
-<!--                android:fontFamily="sans-serif-black"-->
-<!--                android:gravity="center_vertical"-->
-<!--                android:lineSpacingExtra="0sp"-->
-<!--                android:text="@string/schedule_names"-->
-<!--                android:textColor="#F2FFFFFF"-->
-<!--                android:textColorHighlight="@color/black"-->
-<!--                android:textColorHint="@color/black"-->
-<!--                android:textSize="24sp"-->
-<!--                android:textStyle="normal"-->
-<!--                tools:text="Никита" />-->
+        <!--            <TextView-->
+        <!--                android:id="@+id/names"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="match_parent"-->
+        <!--                android:baselineAligned="false"-->
+        <!--                android:fontFamily="sans-serif-black"-->
+        <!--                android:gravity="center_vertical"-->
+        <!--                android:lineSpacingExtra="0sp"-->
+        <!--                android:text="@string/schedule_names"-->
+        <!--                android:textColor="#F2FFFFFF"-->
+        <!--                android:textColorHighlight="@color/black"-->
+        <!--                android:textColorHint="@color/black"-->
+        <!--                android:textSize="24sp"-->
+        <!--                android:textStyle="normal"-->
+        <!--                tools:text="Никита" />-->
 
-<!--        </LinearLayout>-->
+        <!--        </LinearLayout>-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -76,7 +77,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
-                        android:text="🍁 5 Августа"
+                        android:text="5 Октября"
                         android:textSize="16dp" />
 
                     <TextView

@@ -75,6 +75,7 @@ class DayAdapter : RecyclerView.Adapter<DayAdapter.Holder>()  {
     class Holder(item: View) : RecyclerView.ViewHolder(item) {
         private val binding = ItemDayBinding.bind(item)
         private val context = binding.root.context
+
         private lateinit var data : HolderData
         /**
          * @param date данные о дате
@@ -88,6 +89,15 @@ class DayAdapter : RecyclerView.Adapter<DayAdapter.Holder>()  {
             selectItem: (Holder, HolderData) -> Unit //событие для адаптера для изменения выделенного итема
         ) = with(binding)
         {
+
+            when(date.status) {
+                DayStatus.HOLIDAY -> data.type = HOLIDAY
+                DayStatus.NOHOLIDAY -> data.type = NOHOLIDAY
+                DayStatus.TODAY -> data.type = TODAY
+                else -> {}
+            }
+            data.typeNow = data.type
+
             if (data.typeNow == SELECT) selectItem.invoke(this@Holder, data)
             this@Holder.data = data
 
@@ -139,10 +149,10 @@ class DayAdapter : RecyclerView.Adapter<DayAdapter.Holder>()  {
         {
             when(data.typeNow)
             {
-                HOLIDAY -> changeColors(R.color.xgtransperent,R.color.xggray, R.color.xggray)
+                HOLIDAY -> changeColors(R.color.xgtransperent,R.color.xggraywhite, R.color.xggraywhite)
                 TODAY -> changeColors(R.color.xggray, R.color.black, R.color.black)
                 SELECT -> changeColors(R.color.xgpurple, R.color.xgpurple, R.color.xgpurple)
-                NOHOLIDAY -> changeColors(R.color.xggray, R.color.black, R.color.black)
+                NOHOLIDAY -> changeColors(R.color.xggray, R.color.xggray, R.color.xggray)
             }
         }
 
@@ -152,8 +162,7 @@ class DayAdapter : RecyclerView.Adapter<DayAdapter.Holder>()  {
          * @param resourceNumTextColor цвет текста даты
          * @param resourceNameTextColor цвет текста названия дня недели
          */
-        private fun changeColors(resourceBackgroudColor : Int = 0, resourceNumTextColor : Int = 0, resourceNameTextColor : Int = 0)
-        {
+        private fun changeColors(resourceBackgroudColor : Int = 0, resourceNumTextColor : Int = 0, resourceNameTextColor : Int = 0) {
             if (resourceBackgroudColor != 0) binding.dayIsSelect.setCardBackgroundColor(context.resources.getColor(resourceBackgroudColor))
 //            if (resourceBackgroudColor != 0) binding.root.setCardBackgroundColor(context.resources.getColor(resourceBackgroudColor))
             if (resourceNumTextColor != 0) binding.dayNumber.setTextColor(context.resources.getColor(resourceNumTextColor))
@@ -185,18 +194,4 @@ class DayAdapter : RecyclerView.Adapter<DayAdapter.Holder>()  {
     {
         notifyDataSetChanged()
     }
-}
-
-data class Day(
-    val isHoliday: Boolean,
-    val isSelected: Boolean,
-    val number: String,
-    val dayOfWeek: String
-)
-
-class DaySeregaAdapter : BaseListAdapter<DayModel>() {
-    override fun build() {
-        TODO("Not yet implemented")
-    }
-
 }
